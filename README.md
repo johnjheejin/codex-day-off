@@ -24,6 +24,10 @@ Then visit `http://localhost:8000`.
 
 No login, API key, build step, network request, or external service is required.
 
+## Design
+
+The visual system is documented in [`DESIGN.md`](./DESIGN.md). It uses an original OpenAI-inspired product language while preserving the Afterglow concept and avoiding official logo or layout reproduction.
+
 ## Deployment
 
 - Source: GitHub (`johnjheejin/codex-day-off`)
