@@ -2,6 +2,10 @@
 
 A self-contained, 60-second interactive web experience.
 
+## Live
+
+https://dayoff.tmcowork.com
+
 ## Run
 
 Open `index.html` directly, or serve the folder:
@@ -19,3 +23,9 @@ Then visit `http://localhost:8000`.
 - At 60 seconds, the garden becomes a personalized final scene.
 
 No login, API key, build step, network request, or external service is required.
+
+## Deployment
+
+- Source: GitHub (`johnjheejin/codex-day-off`)
+- Hosting: Cloudflare Pages
+- Custom domain: `dayoff.tmcowork.com`
