@@ -1,6 +1,6 @@
 # Afterglow — Codex's Day Off
 
-A self-contained, 60-second interactive web experience.
+A self-contained, 30-second interactive web experience.
 
 ## Live
 
@@ -20,7 +20,7 @@ Then visit `http://localhost:8000`.
 
 - Move the mouse or use arrow/WASD keys.
 - Collect the drifting lights.
-- At 60 seconds, the garden becomes a personalized final scene.
+- At 30 seconds, the garden becomes a personalized final scene.
 
 No login, API key, build step, network request, or external service is required.
 

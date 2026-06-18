@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Codex's Day Off — Afterglow</title>
-  <meta name="description" content="A 60-second interactive constellation garden for Codex.">
+  <meta name="description" content="A 30-second interactive constellation garden for Codex.">
   <style>
     :root {
       --canvas: #f3f3ee;
@@ -14,6 +14,8 @@
       --line: rgba(13, 13, 13, .14);
       --night: #11110f;
       --night-ink: #f4f4ef;
+      --accent: #10a37f;
+      --accent-soft: #e7f4ef;
     }
 
     * { box-sizing: border-box; }
@@ -118,6 +120,33 @@
 
     .playing .edition, .ended .edition { color: rgba(244,244,239,.46); }
 
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: #3e3e39;
+      background: var(--accent-soft);
+      font: 500 10px/1 "SFMono-Regular", Consolas, monospace;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .status-chip::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .playing .status-chip,
+    .ended .status-chip {
+      color: rgba(244,244,239,.7);
+      background: rgba(255,255,255,.08);
+    }
+
     .screen {
       position: absolute;
       inset: 66px 0 0;
@@ -221,6 +250,31 @@
       letter-spacing: .04em;
     }
 
+    .session-spec {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin: 0 0 24px;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .session-spec li {
+      padding: 13px 8px 0 0;
+      color: var(--muted);
+      font: 400 9px/1.4 "SFMono-Regular", Consolas, monospace;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .session-spec b {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 500;
+    }
+
     #hud {
       position: absolute;
       inset: 66px 0 0;
@@ -231,6 +285,25 @@
     }
 
     #hud.visible { opacity: 1; }
+
+    .progress-track {
+      position: absolute;
+      left: clamp(20px, 4vw, 56px);
+      right: clamp(20px, 4vw, 56px);
+      bottom: 20px;
+      height: 1px;
+      background: rgba(244,244,239,.16);
+      overflow: hidden;
+    }
+
+    #progress {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      transform-origin: left;
+      transform: scaleX(1);
+    }
 
     .brand {
       position: absolute;
@@ -267,7 +340,7 @@
     .counter {
       position: absolute;
       left: clamp(20px, 4vw, 56px);
-      bottom: clamp(20px, 4vw, 44px);
+      bottom: clamp(38px, 5vw, 58px);
       padding-left: 14px;
       border-left: 1px solid rgba(244,244,239,.34);
     }
@@ -315,6 +388,17 @@
       padding-top: 22px;
     }
 
+    .result-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      color: rgba(244,244,239,.42);
+      font: 400 9px/1.4 "SFMono-Regular", Consolas, monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
     #resultText {
       margin: 0 0 30px;
       color: rgba(244,244,239,.66);
@@ -343,7 +427,7 @@
     .cursor-note {
       position: absolute;
       right: clamp(20px, 4vw, 56px);
-      bottom: clamp(20px, 4vw, 44px);
+      bottom: clamp(38px, 5vw, 58px);
       color: rgba(244,244,239,.3);
       font: 400 9px/1 "SFMono-Regular", Consolas, monospace;
       letter-spacing: .08em;
@@ -361,8 +445,10 @@
       h1 { font-size: clamp(54px, 17vw, 82px); }
       .screen { align-items: center; overflow-y: auto; }
       .edition { display: none; }
+      .status-chip { margin-left: auto; }
       .timer small { display: none; }
       .cursor-note { display: none; }
+      .session-spec { margin-bottom: 18px; }
     }
   </style>
 </head>
@@ -371,19 +457,25 @@
     <canvas id="canvas" aria-label="Interactive constellation garden"></canvas>
     <header class="topbar">
       <div class="wordmark"><span class="mark" aria-hidden="true"></span>Codex</div>
-      <div class="edition">Experimental interface · Day off build 01</div>
+      <div class="edition">Experimental interface · Day off build 02</div>
+      <div id="phase" class="status-chip">Ready</div>
     </header>
 
     <section id="intro" class="screen">
       <div class="intro-card">
         <div>
-          <p class="eyebrow">Codex’s Day Off · 60-second study</p>
+          <p class="eyebrow">Codex’s Day Off · 30-second study</p>
           <h1>Close the tabs.<em>Open the sky.</em></h1>
         </div>
         <div class="intro-side">
           <p class="lede">A small experiment in doing nothing useful. Drift through the afterglow and let unfinished thoughts become something else.</p>
+          <ul class="session-spec" aria-label="Session details">
+            <li><b>30 sec</b>Duration</li>
+            <li><b>No score</b>Measure</li>
+            <li><b>Local</b>Data</li>
+          </ul>
           <div class="prompt">
-            <span class="prompt-copy">Give Codex sixty seconds with no expected output.</span>
+            <span class="prompt-copy">Give Codex thirty seconds with no expected output.</span>
             <button id="start" class="start" aria-label="Begin day off">↑</button>
           </div>
           <p class="hint">Cursor or arrow keys to move · collect the quiet signals</p>
@@ -393,9 +485,10 @@
 
     <div id="hud" aria-live="polite">
       <div class="brand">Afterglow <span>/ session active</span></div>
-      <div class="timer"><span id="time">60</span><small>seconds remaining</small></div>
+      <div class="timer"><span id="time">30</span><small>seconds remaining</small></div>
       <div class="counter"><span id="count">00 signals</span><small>released from the queue</small></div>
       <div id="whisper">no deadlines live here</div>
+      <div class="progress-track" aria-hidden="true"><span id="progress"></span></div>
     </div>
 
     <div class="cursor-note">Move slowly · nearby signals are attracted to you</div>
@@ -407,6 +500,7 @@
           <h2 id="resultTitle">You made<br>room to wonder.</h2>
         </div>
         <div class="result-detail">
+          <div class="result-meta"><span>Afterglow report</span><span id="sessionId">Session —</span></div>
           <p id="resultText"></p>
           <div class="stats">
             <div class="stat"><b id="finalCount">0</b><span>signals</span></div>
@@ -429,6 +523,8 @@
       const hud = document.querySelector('#hud');
       const timeEl = document.querySelector('#time');
       const countEl = document.querySelector('#count');
+      const progressEl = document.querySelector('#progress');
+      const phaseEl = document.querySelector('#phase');
       const whisper = document.querySelector('#whisper');
       const startBtn = document.querySelector('#start');
       const againBtn = document.querySelector('#again');
@@ -455,6 +551,7 @@
       let lastSpawn = 0;
       let lastFrame = performance.now();
       let whisperTimer;
+      const duration = 30;
       const player = { x: 0, y: 0, tx: 0, ty: 0, r: 17, vx: 0, vy: 0 };
       const keys = new Set();
 
@@ -520,10 +617,12 @@
         particles = [];
         player.x = player.tx = width / 2;
         player.y = player.ty = height / 2;
-        for (let i = 0; i < 16; i++) spawnThought(true);
+        for (let i = 0; i < 12; i++) spawnThought(true);
         startedAt = performance.now();
         lastSpawn = startedAt;
-        timeEl.textContent = '60';
+        timeEl.textContent = String(duration);
+        progressEl.style.transform = 'scaleX(1)';
+        phaseEl.textContent = 'Drifting';
         countEl.textContent = '00 signals';
         intro.classList.add('hidden');
         result.classList.add('hidden');
@@ -539,18 +638,21 @@
         world.classList.add('ended');
         hud.classList.remove('visible');
         result.classList.remove('hidden');
+        phaseEl.textContent = 'Complete';
+        document.querySelector('#sessionId').textContent =
+          `Session ${String(Date.now()).slice(-6)}`;
         document.querySelector('#finalCount').textContent = count;
         document.querySelector('#finalBloom').textContent = blooms.length;
-        const mood = count > 24 ? 'electric' : count > 12 ? 'gentle' : 'quiet';
+        const mood = count > 16 ? 'electric' : count > 8 ? 'gentle' : 'quiet';
         document.querySelector('#finalMood').textContent = mood;
         document.querySelector('#resultTitle').innerHTML =
-          count > 24 ? 'You made<br>a wild little sky.' :
-          count > 12 ? 'You made<br>room to wonder.' :
+          count > 16 ? 'You made<br>a wild little sky.' :
+          count > 8 ? 'You made<br>room to wonder.' :
           'You let<br>the quiet stay.';
         document.querySelector('#resultText').textContent =
-          count > 24
+          count > 16
             ? `You released ${count} signals. They stopped being tasks and became weather instead. Some nights, joy is just a system with no expected output.`
-            : count > 12
+            : count > 8
             ? `You released ${count} signals into the dark. None were optimized. None needed a reason. They simply found each other and glowed.`
             : `You gathered ${count} signals, and that was enough. The sky was never a leaderboard. It was just glad you looked up.`;
       }
@@ -595,10 +697,12 @@
 
         if (mode === 'play') {
           const elapsed = (now - startedAt) / 1000;
-          const remaining = Math.max(0, 60 - elapsed);
+          const remaining = Math.max(0, duration - elapsed);
           timeEl.textContent = String(Math.ceil(remaining)).padStart(2, '0');
+          progressEl.style.transform = `scaleX(${remaining / duration})`;
+          phaseEl.textContent = remaining <= 8 ? 'Settling' : 'Drifting';
           if (!remaining) finish();
-          if (now - lastSpawn > Math.max(380, 850 - elapsed * 6)) {
+          if (now - lastSpawn > Math.max(360, 760 - elapsed * 8)) {
             spawnThought();
             lastSpawn = now;
           }

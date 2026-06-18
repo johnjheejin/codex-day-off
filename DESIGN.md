@@ -15,6 +15,7 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 2. Quiet base, expressive event
    - The resting interface is warm white, charcoal, gray, and hairline borders.
    - Color appears primarily when a thought is collected.
+   - A restrained teal is the only persistent UI accent.
 
 3. Editorial hierarchy
    - Large, tightly tracked headings.
@@ -39,6 +40,8 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - Night: `#11110f`
 - Night ink: `#f4f4ef`
 - Accent family: coral, amber, blue, green, violet — used sparingly
+- Interface accent: `#10a37f`
+- Interface accent soft: `#e7f4ef`
 - Radius: 12–18px for panels, 999px only for status chips
 
 ## Typography
@@ -52,7 +55,35 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 
 - The start control resembles a compact prompt composer.
 - Cursor or arrow/WASD input moves the focus point.
-- The environment darkens when the 60-second session begins.
+- The environment darkens when the 30-second session begins.
 - Collected thoughts become restrained line-drawn blooms.
 - The ending is rendered as a report, not a celebratory game modal.
+- Progress and phase are always explicit: ready → drifting → settling → complete.
 
+## Layout
+
+- Use a 12-column desktop logic and a single-column mobile flow.
+- Separate major regions with whitespace before adding rules.
+- Keep operational metadata aligned to the perimeter.
+- Primary hierarchy: editorial statement → short explanation → one action.
+
+## Motion
+
+- Control transitions: 150–220ms.
+- Layout transitions: 280–360ms with `cubic-bezier(0.16, 1, 0.3, 1)`.
+- Ambient particles move slowly. Collection feedback may be faster.
+- Never use scroll-jacking, parallax, or continuous ornamental UI animation.
+
+## Voice
+
+- Concise, calm, literal.
+- Product labels explain state rather than adding atmosphere.
+- Poetic language is reserved for the main statement and session result.
+
+## Anti-patterns
+
+- No decorative gradients or glassmorphism.
+- No more than one persistent interface accent.
+- No heavy shadows or oversized cards.
+- No hidden state: progress, controls, and completion should remain legible.
+- No score language, streaks, rankings, or artificial urgency.
