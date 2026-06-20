@@ -39,10 +39,25 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - Hairline: `rgba(13, 13, 13, 0.14)`
 - Night: `#11110f`
 - Night ink: `#f4f4ef`
-- Accent family: coral, amber, blue, green, violet — used sparingly
+- Night muted: `rgba(244, 244, 239, 0.64)`
+- Night faint: `rgba(244, 244, 239, 0.4)`
+- Body ink: `#3e3e39`
+- Secondary ink: `#85857e`
+- Hover ink: `#30302d`
+- Event coral: `#ff6f61`
+- Event amber: `#f3a712`
+- Event blue: `#5b8def`
+- Event green: `#3aa981`
+- Event violet: `#9b7ede`
 - Interface accent: `#10a37f`
 - Interface accent soft: `#e7f4ef`
 - Radius: 12–18px for panels, 999px only for status chips
+
+## Spacing
+
+- Core scale: `4`, `8`, `12`, `16`, `20`, `24`, `32`, `48`, `64`, `96`
+- Component padding should use the core scale.
+- Fluid page gutters may use `clamp()` between `20px` and `64px`.
 
 ## Typography
 
@@ -57,8 +72,10 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - Cursor or arrow/WASD input moves the focus point.
 - The environment darkens when the 30-second session begins.
 - Collected thoughts become restrained line-drawn blooms.
-- The ending is rendered as a report, not a celebratory game modal.
-- Progress and phase are always explicit: ready → drifting → settling → complete.
+- The ending uses an editorial closing layout, without diagnostic or internal report labels.
+- The timer and progress line communicate duration. Do not add technical lifecycle labels.
+- The result becomes a downloadable 1200×630 image that can be handed to social apps.
+- Social buttons provide the image and prepared copy where browser capabilities allow; limitations are stated honestly.
 
 ## Layout
 
@@ -79,6 +96,21 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - Concise, calm, literal.
 - Product labels explain state rather than adding atmosphere.
 - Poetic language is reserved for the main statement and session result.
+- Use “loose thoughts” consistently for collectible objects. Avoid telemetry terms such as signal, queue, state, build, and session ID.
+- Theme line: “Thirty seconds with nothing to ship.”
+
+## Identity
+
+- Primary wordmark: “Afterglow”
+- Descriptor: “Codex’s Day Off”
+- Symbol: an original setting-sun/horizon mark. Do not imitate the OpenAI knot or use the official OpenAI/Codex logo.
+
+## Components
+
+- Primary controls: minimum 44×44px, default/hover/focus-visible/active/disabled states required.
+- Focus-visible: 2px solid current foreground with 3px offset.
+- Social controls: text-first, 44px minimum height, outlined on dark surfaces.
+- Status chips are not used in the product UI.
 
 ## Anti-patterns
 
@@ -87,3 +119,4 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - No heavy shadows or oversized cards.
 - No hidden state: progress, controls, and completion should remain legible.
 - No score language, streaks, rankings, or artificial urgency.
+- No implementation labels such as experimental interface, build number, ready, drifting, settling, or complete.

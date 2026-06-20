@@ -21,8 +21,13 @@ Then visit `http://localhost:8000`.
 - Move the mouse or use arrow/WASD keys.
 - Collect the drifting lights.
 - At 30 seconds, the garden becomes a personalized final scene.
+- Export the result as a 1200 × 630 PNG or hand it to LinkedIn, X, Telegram, KakaoTalk, and the native share sheet with prepared hashtags.
 
 No login, API key, build step, network request, or external service is required.
+
+The animation uses an optimized Canvas 2D renderer with cached glow sprites, an adaptive device-pixel ratio, a static star layer, and background-tab pausing. WebGPU is intentionally not used because this is a small 2D scene and its setup cost would not address the actual rendering bottlenecks.
+
+Append `?debug=1` to the URL to display the active renderer, measured FPS, and device-pixel ratio.
 
 ## Design
 

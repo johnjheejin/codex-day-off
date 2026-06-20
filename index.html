@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Codex's Day Off — Afterglow</title>
+  <title>Afterglow — Codex’s Day Off</title>
   <meta name="description" content="A 30-second interactive constellation garden for Codex.">
   <style>
     :root {
@@ -14,6 +14,11 @@
       --line: rgba(13, 13, 13, .14);
       --night: #11110f;
       --night-ink: #f4f4ef;
+      --night-muted: rgba(244,244,239,.64);
+      --night-faint: rgba(244,244,239,.4);
+      --body-ink: #3e3e39;
+      --secondary-ink: #85857e;
+      --hover-ink: #30302d;
       --accent: #10a37f;
       --accent-soft: #e7f4ef;
     }
@@ -81,70 +86,43 @@
 
     .playing .topbar, .ended .topbar { border-color: rgba(255,255,255,.14); }
 
-    .wordmark {
+    .brand-lockup {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 15px;
+      gap: 12px;
+    }
+
+    .brand-symbol {
+      width: 30px;
+      height: 30px;
+      flex: 0 0 auto;
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 2px;
+    }
+
+    .brand-name {
+      font-size: 17px;
       font-weight: 600;
-      letter-spacing: -.02em;
+      line-height: 1;
+      letter-spacing: -.04em;
     }
 
-    .mark {
-      width: 19px;
-      height: 19px;
-      border: 1.5px solid currentColor;
-      border-radius: 50%;
-      position: relative;
-    }
-
-    .mark::before, .mark::after {
-      content: "";
-      position: absolute;
-      width: 7px;
-      height: 7px;
-      border: 1.5px solid currentColor;
-      border-radius: 50%;
-      top: 4px;
-    }
-
-    .mark::before { left: -4px; }
-    .mark::after { right: -4px; }
-
-    .edition {
+    .brand-desc,
+    .theme-line {
       color: var(--muted);
-      font: 400 10px/1.2 "SFMono-Regular", Consolas, monospace;
-      letter-spacing: .08em;
+      font: 400 11px/1.2 "SFMono-Regular", Consolas, monospace;
+      letter-spacing: .06em;
       text-transform: uppercase;
     }
 
-    .playing .edition, .ended .edition { color: rgba(244,244,239,.46); }
-
-    .status-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      color: #3e3e39;
-      background: var(--accent-soft);
-      font: 500 10px/1 "SFMono-Regular", Consolas, monospace;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-
-    .status-chip::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .playing .status-chip,
-    .ended .status-chip {
-      color: rgba(244,244,239,.7);
-      background: rgba(255,255,255,.08);
+    .playing .brand-desc,
+    .ended .brand-desc,
+    .playing .theme-line,
+    .ended .theme-line {
+      color: var(--night-faint);
     }
 
     .screen {
@@ -201,7 +179,7 @@
 
     .lede {
       margin: 0 0 30px;
-      color: #3e3e39;
+      color: var(--body-ink);
       font-size: clamp(16px, 1.6vw, 20px);
       line-height: 1.55;
       letter-spacing: -.015em;
@@ -222,7 +200,7 @@
     }
 
     .prompt-copy {
-      color: #4d4d47;
+      color: var(--body-ink);
       font-size: 14px;
       line-height: 1.4;
     }
@@ -240,13 +218,24 @@
       transition: transform .18s ease, background .18s ease;
     }
 
-    .start:hover { transform: translateY(-2px); background: #30302d; }
+    .start:hover { transform: translateY(-2px); background: var(--hover-ink); }
+    .start:focus-visible,
+    .share-button:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 3px;
+    }
     .start:active { transform: scale(.97); }
+    .start:disabled,
+    .share-button:disabled {
+      cursor: not-allowed;
+      opacity: .45;
+      transform: none;
+    }
 
     .hint {
       margin: 15px 0 0;
-      color: #85857e;
-      font: 400 10px/1.6 "SFMono-Regular", Consolas, monospace;
+      color: var(--secondary-ink);
+      font: 400 11px/1.6 "SFMono-Regular", Consolas, monospace;
       letter-spacing: .04em;
     }
 
@@ -262,7 +251,7 @@
     .session-spec li {
       padding: 13px 8px 0 0;
       color: var(--muted);
-      font: 400 9px/1.4 "SFMono-Regular", Consolas, monospace;
+      font: 400 11px/1.4 "SFMono-Regular", Consolas, monospace;
       text-transform: uppercase;
       letter-spacing: .06em;
     }
@@ -314,7 +303,7 @@
       letter-spacing: .08em;
     }
 
-    .brand span { color: rgba(244,244,239,.42); font-weight: 400; }
+    .brand span { color: var(--night-faint); font-weight: 400; }
 
     .timer {
       position: absolute;
@@ -331,8 +320,8 @@
     }
 
     .timer small, .counter small {
-      color: rgba(244,244,239,.4);
-      font: 400 9px/1 "SFMono-Regular", Consolas, monospace;
+      color: var(--night-faint);
+      font: 400 11px/1 "SFMono-Regular", Consolas, monospace;
       letter-spacing: .1em;
       text-transform: uppercase;
     }
@@ -356,7 +345,7 @@
       left: 50%;
       top: 8%;
       transform: translate(-50%, 8px);
-      color: rgba(244,244,239,.65);
+      color: var(--night-muted);
       font: 400 12px/1 "SFMono-Regular", Consolas, monospace;
       opacity: 0;
       transition: opacity .4s ease, transform .4s ease;
@@ -373,9 +362,9 @@
       align-items: end;
     }
 
-    .result-card .eyebrow { color: rgba(244,244,239,.46); }
+    .result-card .eyebrow { color: var(--night-faint); }
 
-    .result-card h2 {
+    #resultTitle {
       margin: 0;
       font-size: clamp(54px, 8vw, 105px);
       font-weight: 400;
@@ -393,15 +382,15 @@
       justify-content: space-between;
       gap: 16px;
       margin-bottom: 18px;
-      color: rgba(244,244,239,.42);
-      font: 400 9px/1.4 "SFMono-Regular", Consolas, monospace;
+      color: var(--night-faint);
+      font: 400 11px/1.4 "SFMono-Regular", Consolas, monospace;
       letter-spacing: .06em;
       text-transform: uppercase;
     }
 
     #resultText {
       margin: 0 0 30px;
-      color: rgba(244,244,239,.66);
+      color: var(--night-muted);
       font-size: 15px;
       line-height: 1.65;
     }
@@ -414,7 +403,7 @@
     }
 
     .stat b { display: block; font: 500 20px/1.2 "SFMono-Regular", Consolas, monospace; }
-    .stat span { color: rgba(244,244,239,.4); font: 400 8px/1 "SFMono-Regular", Consolas, monospace; text-transform: uppercase; letter-spacing: .08em; }
+    .stat span { color: var(--night-faint); font: 400 11px/1.2 "SFMono-Regular", Consolas, monospace; text-transform: uppercase; letter-spacing: .08em; }
 
     .result-card .start {
       width: 100%;
@@ -424,12 +413,116 @@
 
     .result-card .start:hover { background: #fff; }
 
+    .share-panel {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(244,244,239,.18);
+    }
+
+    .share-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .share-title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .share-heading span {
+      color: var(--night-faint);
+      font: 400 11px/1.3 "SFMono-Regular", Consolas, monospace;
+    }
+
+    .share-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .share-button {
+      min-height: 44px;
+      padding: 0 12px;
+      border: 1px solid rgba(244,244,239,.22);
+      border-radius: 12px;
+      color: var(--night-ink);
+      background: transparent;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      text-align: left;
+      transition: border-color .18s ease, background .18s ease;
+    }
+
+    .share-button:hover {
+      border-color: rgba(244,244,239,.54);
+      background: rgba(244,244,239,.08);
+    }
+
+    .share-button.primary-share {
+      grid-column: 1 / -1;
+      color: var(--night);
+      background: var(--night-ink);
+      text-align: center;
+    }
+
+    .share-button.primary-share:hover { background: #fff; }
+
+    .share-note {
+      min-height: 16px;
+      margin: 10px 0 0;
+      color: var(--night-faint);
+      font: 400 11px/1.45 "SFMono-Regular", Consolas, monospace;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 20;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 12px);
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--night);
+      background: var(--night-ink);
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .debug-panel {
+      position: fixed;
+      z-index: 30;
+      right: 12px;
+      bottom: 12px;
+      display: none;
+      padding: 8px 10px;
+      border: 1px solid rgba(244,244,239,.2);
+      border-radius: 12px;
+      color: var(--night-ink);
+      background: rgba(17,17,15,.82);
+      font: 400 11px/1.4 "SFMono-Regular", Consolas, monospace;
+      pointer-events: none;
+    }
+
+    .debug-panel.visible { display: block; }
+
     .cursor-note {
       position: absolute;
       right: clamp(20px, 4vw, 56px);
       bottom: clamp(38px, 5vw, 58px);
-      color: rgba(244,244,239,.3);
-      font: 400 9px/1 "SFMono-Regular", Consolas, monospace;
+      color: var(--night-faint);
+      font: 400 11px/1 "SFMono-Regular", Consolas, monospace;
       letter-spacing: .08em;
       text-transform: uppercase;
       pointer-events: none;
@@ -444,11 +537,12 @@
       .intro-card, .result-card { grid-template-columns: 1fr; gap: 38px; }
       h1 { font-size: clamp(54px, 17vw, 82px); }
       .screen { align-items: center; overflow-y: auto; }
-      .edition { display: none; }
-      .status-chip { margin-left: auto; }
+      .theme-line { max-width: 150px; text-align: right; }
       .timer small { display: none; }
       .cursor-note { display: none; }
       .session-spec { margin-bottom: 18px; }
+      .share-actions { grid-template-columns: 1fr 1fr; }
+      .result-card { padding-bottom: 28px; }
     }
   </style>
 </head>
@@ -456,9 +550,18 @@
   <main id="world">
     <canvas id="canvas" aria-label="Interactive constellation garden"></canvas>
     <header class="topbar">
-      <div class="wordmark"><span class="mark" aria-hidden="true"></span>Codex</div>
-      <div class="edition">Experimental interface · Day off build 02</div>
-      <div id="phase" class="status-chip">Ready</div>
+      <div class="brand-lockup">
+        <svg class="brand-symbol" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="13" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M5 20.5h22M8 24h16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M16 3.5v3M6.5 8.5l2.3 1.7M25.5 8.5l-2.3 1.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-copy">
+          <span class="brand-name">Afterglow</span>
+          <span class="brand-desc">Codex’s Day Off</span>
+        </span>
+      </div>
+      <div class="theme-line">Thirty seconds with nothing to ship</div>
     </header>
 
     <section id="intro" class="screen">
@@ -468,55 +571,72 @@
           <h1>Close the tabs.<em>Open the sky.</em></h1>
         </div>
         <div class="intro-side">
-          <p class="lede">A small experiment in doing nothing useful. Drift through the afterglow and let unfinished thoughts become something else.</p>
+          <p class="lede">Leave the unfinished thoughts where they are. Move through the afterglow and watch them turn into a small sky of your own.</p>
           <ul class="session-spec" aria-label="Session details">
             <li><b>30 sec</b>Duration</li>
             <li><b>No score</b>Measure</li>
             <li><b>Local</b>Data</li>
           </ul>
           <div class="prompt">
-            <span class="prompt-copy">Give Codex thirty seconds with no expected output.</span>
+            <span class="prompt-copy">Let Codex step away for thirty seconds.</span>
             <button id="start" class="start" aria-label="Begin day off">↑</button>
           </div>
-          <p class="hint">Cursor or arrow keys to move · collect the quiet signals</p>
+          <p class="hint">Cursor, touch, or arrow keys · gather loose thoughts</p>
         </div>
       </div>
     </section>
 
     <div id="hud" aria-live="polite">
-      <div class="brand">Afterglow <span>/ session active</span></div>
+      <div class="brand">Nothing due <span>/ take your time</span></div>
       <div class="timer"><span id="time">30</span><small>seconds remaining</small></div>
-      <div class="counter"><span id="count">00 signals</span><small>released from the queue</small></div>
-      <div id="whisper">no deadlines live here</div>
+      <div class="counter"><span id="count">00 thoughts</span><small>turned into afterglow</small></div>
+      <div id="whisper">nothing needs your answer right now</div>
       <div class="progress-track" aria-hidden="true"><span id="progress"></span></div>
     </div>
 
-    <div class="cursor-note">Move slowly · nearby signals are attracted to you</div>
+    <div class="cursor-note">Move slowly · loose thoughts drift closer</div>
 
     <section id="result" class="screen hidden">
       <div class="result-card">
         <div>
-          <p class="eyebrow">Session complete · no deliverable created</p>
+          <p class="eyebrow">Nothing was shipped · that was the point</p>
           <h2 id="resultTitle">You made<br>room to wonder.</h2>
         </div>
         <div class="result-detail">
-          <div class="result-meta"><span>Afterglow report</span><span id="sessionId">Session —</span></div>
+          <div class="result-meta"><span>Your small sky</span><span>Made in 30 seconds</span></div>
           <p id="resultText"></p>
           <div class="stats">
-            <div class="stat"><b id="finalCount">0</b><span>signals</span></div>
-            <div class="stat"><b id="finalBloom">0</b><span>forms</span></div>
-            <div class="stat"><b id="finalMood">soft</b><span>weather</span></div>
+            <div class="stat"><b id="finalCount">0</b><span>thoughts</span></div>
+            <div class="stat"><b id="finalBloom">0</b><span>constellations</span></div>
+            <div class="stat"><b id="finalMood">soft</b><span>pace</span></div>
           </div>
-          <button id="again" class="start">Run another quiet session</button>
+          <button id="again" class="start">Take another thirty seconds</button>
+          <div class="share-panel">
+            <div class="share-heading">
+              <h2 class="share-title">Take the afterglow with you</h2>
+              <span>#CodexDayOff #Afterglow</span>
+            </div>
+            <div class="share-actions">
+              <button class="share-button primary-share" data-share="native" disabled>Share image</button>
+              <button class="share-button" data-share="linkedin" disabled>LinkedIn</button>
+              <button class="share-button" data-share="x" disabled>X / Twitter</button>
+              <button class="share-button" data-share="telegram" disabled>Telegram</button>
+              <button class="share-button" data-share="kakao" disabled>KakaoTalk</button>
+              <button class="share-button" data-share="download" disabled>Download PNG</button>
+            </div>
+            <p id="shareNote" class="share-note">A 1200 × 630 image and hashtags are ready.</p>
+          </div>
         </div>
       </div>
     </section>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <div id="debugPanel" class="debug-panel" aria-hidden="true"></div>
   </main>
 
   <script>
     (() => {
       const canvas = document.querySelector('#canvas');
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
       const world = document.querySelector('#world');
       const intro = document.querySelector('#intro');
       const result = document.querySelector('#result');
@@ -524,21 +644,26 @@
       const timeEl = document.querySelector('#time');
       const countEl = document.querySelector('#count');
       const progressEl = document.querySelector('#progress');
-      const phaseEl = document.querySelector('#phase');
       const whisper = document.querySelector('#whisper');
+      const shareNote = document.querySelector('#shareNote');
+      const toast = document.querySelector('#toast');
+      const debugPanel = document.querySelector('#debugPanel');
       const startBtn = document.querySelector('#start');
       const againBtn = document.querySelector('#again');
+      const shareButtons = [...document.querySelectorAll('[data-share]')];
 
       const colors = ['#ff6f61', '#f3a712', '#5b8def', '#3aa981', '#9b7ede'];
       const messages = [
-        'no deadlines live here',
-        'that one was only a maybe',
-        'wonder is useful enough',
-        'nothing needs shipping tonight',
-        'you can keep the strange idea',
-        'a pause is not an error',
-        'the sky accepts rough drafts'
+        'nothing needs your answer right now',
+        'this thought can stay unfinished',
+        'wonder does not need a reason',
+        'nothing is shipping tonight',
+        'keep the strange idea',
+        'a pause is part of the work',
+        'rough drafts look good in the sky'
       ];
+      const shareHashtags = '#CodexDayOff #Afterglow #BuildWithOpenAI';
+      const shareUrl = 'https://dayoff.tmcowork.com';
 
       let width, height, dpr;
       let mode = 'intro';
@@ -550,13 +675,34 @@
       let startedAt = 0;
       let lastSpawn = 0;
       let lastFrame = performance.now();
+      let lastRender = 0;
       let whisperTimer;
+      let toastTimer;
+      let shareBlob = null;
+      let shareFile = null;
+      let backgroundLayer = null;
+      let glowSprites = new Map();
+      let rafId = 0;
+      let paused = false;
+      let fpsFrames = 0;
+      let fpsStartedAt = performance.now();
+      let measuredFps = 0;
       const duration = 30;
+      const debugMode = new URLSearchParams(location.search).has('debug');
       const player = { x: 0, y: 0, tx: 0, ty: 0, r: 17, vx: 0, vy: 0 };
       const keys = new Set();
 
+      function makeCanvas(w, h) {
+        if (typeof OffscreenCanvas !== 'undefined') return new OffscreenCanvas(w, h);
+        const layer = document.createElement('canvas');
+        layer.width = w;
+        layer.height = h;
+        return layer;
+      }
+
       function resize() {
-        dpr = Math.min(devicePixelRatio || 1, 2);
+        const mobile = matchMedia('(max-width: 760px)').matches;
+        dpr = Math.min(devicePixelRatio || 1, mobile ? 1.25 : 1.5);
         width = innerWidth;
         height = innerHeight;
         canvas.width = width * dpr;
@@ -567,6 +713,8 @@
         if (!player.x) player.x = player.tx = width / 2;
         if (!player.y) player.y = player.ty = height / 2;
         makeStars();
+        buildBackgroundLayer();
+        buildGlowSprites();
       }
 
       function makeStars() {
@@ -577,6 +725,235 @@
           a: Math.random() * .5 + .08,
           phase: Math.random() * Math.PI * 2
         }));
+      }
+
+      function buildBackgroundLayer() {
+        backgroundLayer = makeCanvas(Math.round(width * dpr), Math.round(height * dpr));
+        const layerCtx = backgroundLayer.getContext('2d');
+        layerCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        stars.forEach(s => {
+          layerCtx.globalAlpha = s.a * .65;
+          layerCtx.fillStyle = '#ffffff';
+          layerCtx.beginPath();
+          layerCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          layerCtx.fill();
+        });
+        layerCtx.globalAlpha = 1;
+      }
+
+      function buildGlowSprites() {
+        glowSprites = new Map();
+        colors.forEach(color => {
+          const size = 128;
+          const sprite = makeCanvas(size, size);
+          const spriteCtx = sprite.getContext('2d');
+          const gradient = spriteCtx.createRadialGradient(64, 64, 0, 64, 64, 64);
+          gradient.addColorStop(0, '#ffffff');
+          gradient.addColorStop(.08, color);
+          gradient.addColorStop(.28, color + 'aa');
+          gradient.addColorStop(1, color + '00');
+          spriteCtx.fillStyle = gradient;
+          spriteCtx.fillRect(0, 0, size, size);
+          glowSprites.set(color, sprite);
+        });
+      }
+
+      function resultHeading() {
+        return count > 16
+          ? 'A wild little sky.'
+          : count > 8
+          ? 'Room to wonder.'
+          : 'The quiet stayed.';
+      }
+
+      function showToast(message) {
+        clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.classList.add('show');
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+      }
+
+      function wrapText(target, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(' ');
+        let line = '';
+        let offset = 0;
+        words.forEach((word, index) => {
+          const test = line + word + ' ';
+          if (target.measureText(test).width > maxWidth && index > 0) {
+            target.fillText(line.trim(), x, y + offset);
+            line = word + ' ';
+            offset += lineHeight;
+          } else {
+            line = test;
+          }
+        });
+        target.fillText(line.trim(), x, y + offset);
+        return y + offset;
+      }
+
+      function prepareShareImage() {
+        shareNote.textContent = 'Preparing your 1200 × 630 image…';
+        shareButtons.forEach(button => { button.disabled = true; });
+        const card = document.createElement('canvas');
+        card.width = 1200;
+        card.height = 630;
+        const cardCtx = card.getContext('2d');
+
+        cardCtx.fillStyle = '#11110f';
+        cardCtx.fillRect(0, 0, 1200, 630);
+
+        const usedBlooms = blooms.length ? blooms : [{ color: '#10a37f', petals: 6, size: 24, rotation: 0 }];
+        usedBlooms.slice(0, 22).forEach((b, index) => {
+          const x = 720 + ((index * 137) % 420);
+          const y = 80 + ((index * 83) % 470);
+          const size = 16 + (index % 4) * 7;
+          cardCtx.save();
+          cardCtx.translate(x, y);
+          cardCtx.rotate(b.rotation || index * .37);
+          cardCtx.globalAlpha = .28;
+          cardCtx.strokeStyle = b.color;
+          cardCtx.lineWidth = 1.4;
+          const petals = b.petals || 6;
+          for (let i = 0; i < petals; i++) {
+            cardCtx.rotate(Math.PI * 2 / petals);
+            cardCtx.beginPath();
+            cardCtx.ellipse(size, 0, size, size * .32, 0, 0, Math.PI * 2);
+            cardCtx.stroke();
+          }
+          cardCtx.restore();
+        });
+        cardCtx.globalAlpha = 1;
+
+        cardCtx.strokeStyle = 'rgba(244,244,239,.18)';
+        cardCtx.beginPath();
+        cardCtx.moveTo(64, 72);
+        cardCtx.lineTo(1136, 72);
+        cardCtx.stroke();
+
+        cardCtx.fillStyle = '#f4f4ef';
+        cardCtx.font = '600 28px Arial, sans-serif';
+        cardCtx.fillText('Afterglow', 64, 48);
+        cardCtx.fillStyle = 'rgba(244,244,239,.5)';
+        cardCtx.font = '18px Arial, sans-serif';
+        cardCtx.fillText('Codex’s Day Off', 216, 48);
+
+        cardCtx.fillStyle = '#f4f4ef';
+        cardCtx.font = '500 78px Arial, sans-serif';
+        wrapText(cardCtx, resultHeading(), 64, 182, 610, 82);
+
+        cardCtx.fillStyle = 'rgba(244,244,239,.64)';
+        cardCtx.font = '24px Arial, sans-serif';
+        wrapText(cardCtx, `Thirty seconds. ${count} loose thoughts turned into afterglow. Nothing was shipped.`, 64, 374, 560, 34);
+
+        cardCtx.fillStyle = '#10a37f';
+        cardCtx.fillRect(64, 520, 96, 4);
+        cardCtx.fillStyle = '#f4f4ef';
+        cardCtx.font = '600 22px Arial, sans-serif';
+        cardCtx.fillText(`${count} THOUGHTS`, 64, 562);
+        cardCtx.fillStyle = 'rgba(244,244,239,.48)';
+        cardCtx.font = '18px Arial, sans-serif';
+        cardCtx.fillText(shareHashtags, 64, 600);
+        cardCtx.textAlign = 'right';
+        cardCtx.fillText('dayoff.tmcowork.com', 1136, 600);
+        cardCtx.textAlign = 'left';
+
+        card.toBlob(blob => {
+          if (!blob) {
+            shareNote.textContent = 'Image export is unavailable in this browser.';
+            return;
+          }
+          shareBlob = blob;
+          shareFile = new File([blob], 'afterglow-codex-day-off.png', { type: 'image/png' });
+          shareNote.textContent = 'Image and hashtags are ready.';
+          shareButtons.forEach(button => { button.disabled = false; });
+        }, 'image/png');
+      }
+
+      function downloadShareImage() {
+        if (!shareBlob) {
+          showToast('The image is still being prepared.');
+          return false;
+        }
+        const href = URL.createObjectURL(shareBlob);
+        const link = document.createElement('a');
+        link.href = href;
+        link.download = 'afterglow-codex-day-off.png';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(href), 1000);
+        return true;
+      }
+
+      async function copyShareText() {
+        const text = `I gave Codex thirty seconds with nothing to ship — and made a small sky instead. ${shareHashtags}`;
+        try {
+          await navigator.clipboard.writeText(`${text}\n${shareUrl}`);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      async function nativeShare(preferKakao = false) {
+        if (!shareFile) {
+          showToast('The image is still being prepared.');
+          return;
+        }
+        if (!navigator.share) {
+          downloadShareImage();
+          await copyShareText();
+          showToast('Image downloaded and caption copied.');
+          return;
+        }
+        const data = {
+          title: 'Afterglow — Codex’s Day Off',
+          text: `Thirty seconds with nothing to ship. ${shareHashtags}`,
+          url: shareUrl
+        };
+        if (!navigator.canShare || navigator.canShare({ files: [shareFile] })) {
+          data.files = [shareFile];
+        }
+        try {
+          if (preferKakao) showToast('Choose KakaoTalk in the share sheet.');
+          await navigator.share(data);
+          if (!preferKakao) showToast('Shared.');
+        } catch (error) {
+          if (error.name !== 'AbortError') {
+            downloadShareImage();
+            showToast('Image downloaded instead.');
+          }
+        }
+      }
+
+      async function shareTo(network) {
+        if (network === 'native') return nativeShare(false);
+        if (network === 'kakao') return nativeShare(true);
+        if (network === 'download') {
+          if (downloadShareImage()) showToast('Afterglow image downloaded.');
+          return;
+        }
+
+        const popup = window.open('', '_blank');
+        downloadShareImage();
+        const copied = await copyShareText();
+        const encodedUrl = encodeURIComponent(shareUrl);
+        const text = encodeURIComponent('I gave Codex thirty seconds with nothing to ship — and made a small sky instead.');
+        let target = '';
+        if (network === 'linkedin') {
+          target = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+        } else if (network === 'x') {
+          target = `https://twitter.com/intent/tweet?text=${text}&url=${encodedUrl}&hashtags=CodexDayOff,Afterglow,BuildWithOpenAI`;
+        } else if (network === 'telegram') {
+          target = `https://t.me/share/url?url=${encodedUrl}&text=${text}%20${encodeURIComponent(shareHashtags)}`;
+        }
+        if (target && popup) {
+          popup.opener = null;
+          popup.location.href = target;
+        } else if (target) {
+          window.location.href = target;
+        }
+        showToast(copied ? 'Image downloaded. Caption copied.' : 'Image downloaded. Add it to your post.');
       }
 
       function spawnThought(initial = false) {
@@ -622,8 +999,10 @@
         lastSpawn = startedAt;
         timeEl.textContent = String(duration);
         progressEl.style.transform = 'scaleX(1)';
-        phaseEl.textContent = 'Drifting';
-        countEl.textContent = '00 signals';
+        countEl.textContent = '00 thoughts';
+        shareBlob = null;
+        shareFile = null;
+        shareButtons.forEach(button => { button.disabled = true; });
         intro.classList.add('hidden');
         result.classList.add('hidden');
         hud.classList.add('visible');
@@ -638,9 +1017,6 @@
         world.classList.add('ended');
         hud.classList.remove('visible');
         result.classList.remove('hidden');
-        phaseEl.textContent = 'Complete';
-        document.querySelector('#sessionId').textContent =
-          `Session ${String(Date.now()).slice(-6)}`;
         document.querySelector('#finalCount').textContent = count;
         document.querySelector('#finalBloom').textContent = blooms.length;
         const mood = count > 16 ? 'electric' : count > 8 ? 'gentle' : 'quiet';
@@ -651,21 +1027,22 @@
           'You let<br>the quiet stay.';
         document.querySelector('#resultText').textContent =
           count > 16
-            ? `You released ${count} signals. They stopped being tasks and became weather instead. Some nights, joy is just a system with no expected output.`
+            ? `You let go of ${count} loose thoughts. They stopped being tasks and became weather instead. Some nights, joy is simply time with no expected output.`
             : count > 8
-            ? `You released ${count} signals into the dark. None were optimized. None needed a reason. They simply found each other and glowed.`
-            : `You gathered ${count} signals, and that was enough. The sky was never a leaderboard. It was just glad you looked up.`;
+            ? `You let ${count} loose thoughts drift into the dark. None were optimized. None needed a reason. They simply found each other and glowed.`
+            : `You found ${count} loose thoughts, and that was enough. The sky was never a leaderboard. It was just glad you looked up.`;
+        prepareShareImage();
       }
 
       function collect(p) {
         count++;
-        countEl.textContent = String(count).padStart(2, '0') + ' signals';
+        countEl.textContent = String(count).padStart(2, '0') + ' thoughts';
         const petals = 5 + Math.floor(Math.random() * 4);
         blooms.push({
           x: p.x, y: p.y, color: p.color, born: performance.now(),
           petals, size: 13 + Math.random() * 15, rotation: Math.random() * 6.28
         });
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 8; i++) {
           const a = Math.random() * Math.PI * 2;
           const s = .6 + Math.random() * 2.4;
           trails.push({
@@ -700,7 +1077,6 @@
           const remaining = Math.max(0, duration - elapsed);
           timeEl.textContent = String(Math.ceil(remaining)).padStart(2, '0');
           progressEl.style.transform = `scaleX(${remaining / duration})`;
-          phaseEl.textContent = remaining <= 8 ? 'Settling' : 'Drifting';
           if (!remaining) finish();
           if (now - lastSpawn > Math.max(360, 760 - elapsed * 8)) {
             spawnThought();
@@ -744,14 +1120,19 @@
       function draw(now) {
         ctx.clearRect(0, 0, width, height);
 
-        stars.forEach(s => {
-          const flicker = .6 + Math.sin(now * .001 + s.phase) * .4;
-          ctx.globalAlpha = s.a * flicker;
-          ctx.fillStyle = mode === 'intro' ? '#0d0d0d' : '#ffffff';
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-          ctx.fill();
-        });
+        if (mode === 'intro') {
+          stars.forEach(s => {
+            const flicker = .6 + Math.sin(now * .001 + s.phase) * .4;
+            ctx.globalAlpha = s.a * flicker;
+            ctx.fillStyle = '#0d0d0d';
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fill();
+          });
+        } else if (backgroundLayer) {
+          ctx.globalAlpha = 1;
+          ctx.drawImage(backgroundLayer, 0, 0, width, height);
+        }
 
         blooms.forEach((b, index) => {
           const age = Math.min(1, (now - b.born) / 700);
@@ -779,15 +1160,10 @@
 
         particles.forEach(p => {
           const pulse = 1 + Math.sin(p.phase) * .25;
-          const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4.5);
-          glow.addColorStop(0, p.color);
-          glow.addColorStop(.2, p.color + 'aa');
-          glow.addColorStop(1, p.color + '00');
+          const sprite = glowSprites.get(p.color);
+          const size = p.r * 9 * pulse;
           ctx.globalAlpha = .85;
-          ctx.fillStyle = glow;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r * 4.5 * pulse, 0, Math.PI * 2);
-          ctx.fill();
+          if (sprite) ctx.drawImage(sprite, p.x - size / 2, p.y - size / 2, size, size);
           ctx.globalAlpha = 1;
           ctx.fillStyle = '#fff';
           ctx.beginPath();
@@ -830,11 +1206,25 @@
       }
 
       function frame(now) {
+        if (paused) return;
         const dt = Math.min(32, now - lastFrame);
         lastFrame = now;
         update(now, dt);
-        draw(now);
-        requestAnimationFrame(frame);
+        if (mode === 'play' || now - lastRender >= 33) {
+          draw(now);
+          lastRender = now;
+        }
+        if (debugMode) {
+          fpsFrames++;
+          const fpsElapsed = now - fpsStartedAt;
+          if (fpsElapsed >= 500) {
+            measuredFps = Math.round(fpsFrames * 1000 / fpsElapsed);
+            fpsFrames = 0;
+            fpsStartedAt = now;
+            debugPanel.textContent = `Canvas 2D · ${measuredFps} FPS · ${dpr.toFixed(2)}× DPR`;
+          }
+        }
+        rafId = requestAnimationFrame(frame);
       }
 
       function point(e) {
@@ -854,9 +1244,22 @@
       addEventListener('keyup', e => keys.delete(e.key));
       startBtn.addEventListener('click', begin);
       againBtn.addEventListener('click', begin);
+      shareButtons.forEach(button => {
+        button.addEventListener('click', () => shareTo(button.dataset.share));
+      });
+      document.addEventListener('visibilitychange', () => {
+        paused = document.hidden;
+        if (paused) {
+          cancelAnimationFrame(rafId);
+        } else {
+          lastFrame = performance.now();
+          rafId = requestAnimationFrame(frame);
+        }
+      });
 
       resize();
-      requestAnimationFrame(frame);
+      if (debugMode) debugPanel.classList.add('visible');
+      rafId = requestAnimationFrame(frame);
     })();
   </script>
 </body>
