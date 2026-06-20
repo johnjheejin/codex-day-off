@@ -21,6 +21,8 @@
       --hover-ink: #30302d;
       --accent: #10a37f;
       --accent-soft: #e7f4ef;
+      --overlay: rgba(17,17,15,.72);
+      --dialog-shadow: 0 12px 32px rgba(0,0,0,.18);
     }
 
     * { box-sizing: border-box; }
@@ -116,6 +118,7 @@
       font: 400 11px/1.2 "SFMono-Regular", Consolas, monospace;
       letter-spacing: .06em;
       text-transform: uppercase;
+      text-wrap: balance;
     }
 
     .playing .brand-desc,
@@ -164,6 +167,7 @@
       line-height: .88;
       letter-spacing: -.075em;
       font-weight: 500;
+      text-wrap: balance;
     }
 
     h1 em {
@@ -183,6 +187,7 @@
       font-size: clamp(16px, 1.6vw, 20px);
       line-height: 1.55;
       letter-spacing: -.015em;
+      text-wrap: pretty;
     }
 
     .prompt {
@@ -203,6 +208,7 @@
       color: var(--body-ink);
       font-size: 14px;
       line-height: 1.4;
+      text-wrap: pretty;
     }
 
     .start {
@@ -370,6 +376,7 @@
       font-weight: 400;
       letter-spacing: -.075em;
       line-height: .9;
+      text-wrap: balance;
     }
 
     .result-detail {
@@ -393,6 +400,7 @@
       color: var(--night-muted);
       font-size: 15px;
       line-height: 1.65;
+      text-wrap: pretty;
     }
 
     .stats {
@@ -463,6 +471,8 @@
       background: rgba(244,244,239,.08);
     }
 
+    .share-button:active { transform: scale(.98); }
+
     .share-button.primary-share {
       grid-column: 1 / -1;
       color: var(--night);
@@ -477,7 +487,168 @@
       margin: 10px 0 0;
       color: var(--night-faint);
       font: 400 11px/1.45 "SFMono-Regular", Consolas, monospace;
+      text-wrap: pretty;
     }
+
+    .share-dialog {
+      width: min(560px, calc(100% - 32px));
+      max-height: calc(100dvh - 32px);
+      padding: 0;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      color: var(--ink);
+      background: var(--surface);
+      box-shadow: var(--dialog-shadow);
+    }
+
+    .share-dialog::backdrop {
+      background: var(--overlay);
+    }
+
+    .share-dialog-inner {
+      padding: clamp(24px, 5vw, 40px);
+    }
+
+    .share-dialog-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .share-dialog-label {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font: 500 11px/1 "SFMono-Regular", Consolas, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .share-dialog-title {
+      max-width: 420px;
+      margin: 0;
+      font-size: clamp(30px, 6vw, 46px);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -.055em;
+      text-wrap: balance;
+    }
+
+    .dialog-close {
+      flex: 0 0 auto;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .dialog-close:hover { background: var(--accent-soft); }
+    .dialog-close:active { transform: scale(.96); }
+
+    .dialog-close:focus-visible,
+    .dialog-action:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 3px;
+    }
+
+    .share-dialog-copy {
+      max-width: 48ch;
+      margin: 0 0 24px;
+      color: var(--body-ink);
+      font-size: 16px;
+      line-height: 1.55;
+      text-wrap: pretty;
+    }
+
+    .handoff-steps {
+      display: grid;
+      gap: 0;
+      margin: 0 0 24px;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .handoff-steps li {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--body-ink);
+      font-size: 14px;
+      line-height: 1.45;
+      text-wrap: pretty;
+    }
+
+    .handoff-steps b {
+      color: var(--ink);
+      font: 500 12px/1.6 "SFMono-Regular", Consolas, monospace;
+    }
+
+    .share-preview {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--canvas);
+    }
+
+    .share-preview img {
+      display: block;
+      width: 120px;
+      aspect-ratio: 1200 / 630;
+      object-fit: cover;
+      border-radius: 8px;
+      background: var(--night);
+    }
+
+    .share-preview p {
+      margin: 0;
+      color: var(--muted);
+      font: 400 11px/1.5 "SFMono-Regular", Consolas, monospace;
+      text-wrap: pretty;
+    }
+
+    .dialog-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .dialog-action {
+      min-height: 48px;
+      padding: 0 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .dialog-action:hover { background: var(--accent-soft); }
+
+    .dialog-action.primary {
+      border-color: var(--ink);
+      color: var(--surface);
+      background: var(--ink);
+    }
+
+    .dialog-action.primary:hover { background: var(--hover-ink); }
+    .dialog-action:active { transform: scale(.98); }
+    .dialog-action:disabled { cursor: not-allowed; opacity: .45; }
 
     .toast {
       position: fixed;
@@ -537,12 +708,24 @@
       .intro-card, .result-card { grid-template-columns: 1fr; gap: 38px; }
       h1 { font-size: clamp(54px, 17vw, 82px); }
       .screen { align-items: center; overflow-y: auto; }
-      .theme-line { max-width: 150px; text-align: right; }
+      .theme-line { max-width: 128px; text-align: right; }
       .timer small { display: none; }
       .cursor-note { display: none; }
       .session-spec { margin-bottom: 18px; }
       .share-actions { grid-template-columns: 1fr 1fr; }
       .result-card { padding-bottom: 28px; }
+      .share-dialog-inner { padding: 24px 20px; }
+      .share-dialog-head { gap: 12px; }
+      .share-preview { grid-template-columns: 96px 1fr; }
+      .share-preview img { width: 96px; }
+      .dialog-actions { grid-template-columns: 1fr; }
+      .dialog-action.primary { grid-row: 1; }
+    }
+
+    @media (max-width: 420px) {
+      .share-actions { grid-template-columns: 1fr; }
+      .share-button.primary-share { grid-column: auto; }
+      .result-meta { align-items: flex-start; flex-direction: column; gap: 4px; }
     }
   </style>
 </head>
@@ -561,7 +744,7 @@
           <span class="brand-desc">Codex’s Day Off</span>
         </span>
       </div>
-      <div class="theme-line">Thirty seconds with nothing to ship</div>
+      <div class="theme-line">Thirty seconds. Nothing to ship.</div>
     </header>
 
     <section id="intro" class="screen">
@@ -571,14 +754,14 @@
           <h1>Close the tabs.<em>Open the sky.</em></h1>
         </div>
         <div class="intro-side">
-          <p class="lede">Leave the unfinished thoughts where they are. Move through the afterglow and watch them turn into a small sky of your own.</p>
+          <p class="lede">Leave unfinished thoughts where they are. Move through the afterglow and watch them become a small sky.</p>
           <ul class="session-spec" aria-label="Session details">
             <li><b>30 sec</b>Duration</li>
             <li><b>No score</b>Measure</li>
             <li><b>Local</b>Data</li>
           </ul>
           <div class="prompt">
-            <span class="prompt-copy">Let Codex step away for thirty seconds.</span>
+            <span class="prompt-copy">Give Codex thirty seconds off.</span>
             <button id="start" class="start" aria-label="Begin day off">↑</button>
           </div>
           <p class="hint">Cursor, touch, or arrow keys · gather loose thoughts</p>
@@ -613,22 +796,43 @@
           <button id="again" class="start">Take another thirty seconds</button>
           <div class="share-panel">
             <div class="share-heading">
-              <h2 class="share-title">Take the afterglow with you</h2>
+              <h2 class="share-title">Share your afterglow</h2>
               <span>#CodexDayOff #Afterglow</span>
             </div>
             <div class="share-actions">
-              <button class="share-button primary-share" data-share="native" disabled>Share image</button>
-              <button class="share-button" data-share="linkedin" disabled>LinkedIn</button>
-              <button class="share-button" data-share="x" disabled>X / Twitter</button>
-              <button class="share-button" data-share="telegram" disabled>Telegram</button>
-              <button class="share-button" data-share="kakao" disabled>KakaoTalk</button>
+              <button class="share-button primary-share" data-share="native" disabled>Share from this device</button>
+              <button class="share-button" data-share="linkedin" disabled>Post to LinkedIn</button>
+              <button class="share-button" data-share="x" disabled>Post to X</button>
+              <button class="share-button" data-share="telegram" disabled>Send with Telegram</button>
+              <button class="share-button" data-share="kakao" disabled>Send with KakaoTalk</button>
               <button class="share-button" data-share="download" disabled>Download PNG</button>
             </div>
-            <p id="shareNote" class="share-note">A 1200 × 630 image and hashtags are ready.</p>
+            <p id="shareNote" class="share-note">Your image and caption will be prepared together.</p>
           </div>
         </div>
       </div>
     </section>
+    <dialog id="shareDialog" class="share-dialog" aria-labelledby="shareDialogTitle">
+      <div class="share-dialog-inner">
+        <div class="share-dialog-head">
+          <div>
+            <p id="shareDialogLabel" class="share-dialog-label">Share handoff</p>
+            <h2 id="shareDialogTitle" class="share-dialog-title">Before you continue</h2>
+          </div>
+          <button id="shareDialogClose" class="dialog-close" type="button" aria-label="Close share instructions">×</button>
+        </div>
+        <p id="shareDialogCopy" class="share-dialog-copy"></p>
+        <div class="share-preview">
+          <img id="sharePreview" alt="Preview of your Afterglow share image">
+          <p id="sharePreviewNote">1200 × 630 PNG<br>Caption and hashtags included</p>
+        </div>
+        <ol id="handoffSteps" class="handoff-steps"></ol>
+        <div class="dialog-actions">
+          <button id="shareDialogCancel" class="dialog-action" type="button">Not now</button>
+          <button id="shareDialogContinue" class="dialog-action primary" type="button">Continue</button>
+        </div>
+      </div>
+    </dialog>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <div id="debugPanel" class="debug-panel" aria-hidden="true"></div>
   </main>
@@ -646,6 +850,15 @@
       const progressEl = document.querySelector('#progress');
       const whisper = document.querySelector('#whisper');
       const shareNote = document.querySelector('#shareNote');
+      const shareDialog = document.querySelector('#shareDialog');
+      const shareDialogLabel = document.querySelector('#shareDialogLabel');
+      const shareDialogTitle = document.querySelector('#shareDialogTitle');
+      const shareDialogCopy = document.querySelector('#shareDialogCopy');
+      const sharePreview = document.querySelector('#sharePreview');
+      const handoffSteps = document.querySelector('#handoffSteps');
+      const shareDialogClose = document.querySelector('#shareDialogClose');
+      const shareDialogCancel = document.querySelector('#shareDialogCancel');
+      const shareDialogContinue = document.querySelector('#shareDialogContinue');
       const toast = document.querySelector('#toast');
       const debugPanel = document.querySelector('#debugPanel');
       const startBtn = document.querySelector('#start');
@@ -680,6 +893,8 @@
       let toastTimer;
       let shareBlob = null;
       let shareFile = null;
+      let sharePreviewUrl = '';
+      let pendingShareNetwork = '';
       let backgroundLayer = null;
       let glowSprites = new Map();
       let rafId = 0;
@@ -773,6 +988,42 @@
         toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
       }
 
+      const shareGuides = {
+        linkedin: {
+          label: 'LinkedIn handoff',
+          title: 'Bring the image with you.',
+          copy: 'LinkedIn’s web share opens a link composer. It cannot receive this local PNG automatically.',
+          steps: [
+            'We download your Afterglow image.',
+            'We copy the caption and hashtags.',
+            'In LinkedIn, attach the PNG and paste the caption.'
+          ],
+          action: 'Download, copy, open LinkedIn'
+        },
+        x: {
+          label: 'X handoff',
+          title: 'One quick handoff.',
+          copy: 'X can prefill the post text and link, but the local PNG still needs to be attached by you.',
+          steps: [
+            'We download your Afterglow image.',
+            'We open X with the text and link filled in.',
+            'Attach the PNG, check the post, then publish.'
+          ],
+          action: 'Download and open X'
+        },
+        telegram: {
+          label: 'Telegram handoff',
+          title: 'Send the image and link.',
+          copy: 'Telegram’s web share prepares a link and message. Add the downloaded PNG in the chat if you want the full result card.',
+          steps: [
+            'We download your Afterglow image.',
+            'We open Telegram with the message prepared.',
+            'Choose a chat and attach the PNG before sending.'
+          ],
+          action: 'Download and open Telegram'
+        }
+      };
+
       function wrapText(target, text, x, y, maxWidth, lineHeight) {
         const words = text.split(' ');
         let line = '';
@@ -792,7 +1043,7 @@
       }
 
       function prepareShareImage() {
-        shareNote.textContent = 'Preparing your 1200 × 630 image…';
+        shareNote.textContent = 'Preparing your image and caption…';
         shareButtons.forEach(button => { button.disabled = true; });
         const card = document.createElement('canvas');
         card.width = 1200;
@@ -864,7 +1115,10 @@
           }
           shareBlob = blob;
           shareFile = new File([blob], 'afterglow-codex-day-off.png', { type: 'image/png' });
-          shareNote.textContent = 'Image and hashtags are ready.';
+          if (sharePreviewUrl) URL.revokeObjectURL(sharePreviewUrl);
+          sharePreviewUrl = URL.createObjectURL(blob);
+          sharePreview.src = sharePreviewUrl;
+          shareNote.textContent = 'Image ready. Each app explains the next step before opening.';
           shareButtons.forEach(button => { button.disabled = false; });
         }, 'image/png');
       }
@@ -891,8 +1145,42 @@
           await navigator.clipboard.writeText(`${text}\n${shareUrl}`);
           return true;
         } catch {
-          return false;
+          const field = document.createElement('textarea');
+          field.value = `${text}\n${shareUrl}`;
+          field.setAttribute('readonly', '');
+          field.style.position = 'fixed';
+          field.style.opacity = '0';
+          document.body.appendChild(field);
+          field.select();
+          const copied = document.execCommand('copy');
+          field.remove();
+          return copied;
         }
+      }
+
+      function openShareGuide(network) {
+        const guide = shareGuides[network];
+        if (!guide || !shareBlob) return;
+        pendingShareNetwork = network;
+        shareDialogLabel.textContent = guide.label;
+        shareDialogTitle.textContent = guide.title;
+        shareDialogCopy.textContent = guide.copy;
+        handoffSteps.replaceChildren(...guide.steps.map((step, index) => {
+          const item = document.createElement('li');
+          const number = document.createElement('b');
+          const copy = document.createElement('span');
+          number.textContent = String(index + 1).padStart(2, '0');
+          copy.textContent = step;
+          item.append(number, copy);
+          return item;
+        }));
+        shareDialogContinue.textContent = guide.action;
+        shareDialog.showModal();
+      }
+
+      function closeShareGuide() {
+        pendingShareNetwork = '';
+        shareDialog.close();
       }
 
       async function nativeShare(preferKakao = false) {
@@ -908,7 +1196,7 @@
         }
         const data = {
           title: 'Afterglow — Codex’s Day Off',
-          text: `Thirty seconds with nothing to ship. ${shareHashtags}`,
+          text: `Thirty seconds. Nothing to ship. ${shareHashtags}`,
           url: shareUrl
         };
         if (!navigator.canShare || navigator.canShare({ files: [shareFile] })) {
@@ -926,16 +1214,9 @@
         }
       }
 
-      async function shareTo(network) {
-        if (network === 'native') return nativeShare(false);
-        if (network === 'kakao') return nativeShare(true);
-        if (network === 'download') {
-          if (downloadShareImage()) showToast('Afterglow image downloaded.');
-          return;
-        }
-
+      async function completeExternalShare(network) {
         const popup = window.open('', '_blank');
-        downloadShareImage();
+        const downloaded = downloadShareImage();
         const copied = await copyShareText();
         const encodedUrl = encodeURIComponent(shareUrl);
         const text = encodeURIComponent('I gave Codex thirty seconds with nothing to ship — and made a small sky instead.');
@@ -947,13 +1228,31 @@
         } else if (network === 'telegram') {
           target = `https://t.me/share/url?url=${encodedUrl}&text=${text}%20${encodeURIComponent(shareHashtags)}`;
         }
+        closeShareGuide();
         if (target && popup) {
           popup.opener = null;
           popup.location.href = target;
         } else if (target) {
-          window.location.href = target;
+          showToast('The new window was blocked. Allow popups, then try again.');
+          return;
         }
-        showToast(copied ? 'Image downloaded. Caption copied.' : 'Image downloaded. Add it to your post.');
+        if (downloaded && copied) {
+          showToast(network === 'linkedin'
+            ? 'PNG downloaded. Caption copied—attach and paste in LinkedIn.'
+            : 'PNG downloaded. Caption copied.');
+        } else if (downloaded) {
+          showToast('PNG downloaded. Copy the caption from this page if needed.');
+        }
+      }
+
+      async function shareTo(network) {
+        if (network === 'native') return nativeShare(false);
+        if (network === 'kakao') return nativeShare(true);
+        if (network === 'download') {
+          if (downloadShareImage()) showToast('Afterglow image downloaded.');
+          return;
+        }
+        openShareGuide(network);
       }
 
       function spawnThought(initial = false) {
@@ -1002,6 +1301,11 @@
         countEl.textContent = '00 thoughts';
         shareBlob = null;
         shareFile = null;
+        if (sharePreviewUrl) {
+          URL.revokeObjectURL(sharePreviewUrl);
+          sharePreviewUrl = '';
+          sharePreview.removeAttribute('src');
+        }
         shareButtons.forEach(button => { button.disabled = true; });
         intro.classList.add('hidden');
         result.classList.add('hidden');
@@ -1022,15 +1326,15 @@
         const mood = count > 16 ? 'electric' : count > 8 ? 'gentle' : 'quiet';
         document.querySelector('#finalMood').textContent = mood;
         document.querySelector('#resultTitle').innerHTML =
-          count > 16 ? 'You made<br>a wild little sky.' :
-          count > 8 ? 'You made<br>room to wonder.' :
-          'You let<br>the quiet stay.';
+          count > 16 ? 'A wild<br>little sky.' :
+          count > 8 ? 'Room to<br>wonder.' :
+          'The quiet<br>stayed.';
         document.querySelector('#resultText').textContent =
           count > 16
-            ? `You let go of ${count} loose thoughts. They stopped being tasks and became weather instead. Some nights, joy is simply time with no expected output.`
+            ? `${count} loose thoughts stopped being tasks and became weather. Nothing needed an outcome.`
             : count > 8
-            ? `You let ${count} loose thoughts drift into the dark. None were optimized. None needed a reason. They simply found each other and glowed.`
-            : `You found ${count} loose thoughts, and that was enough. The sky was never a leaderboard. It was just glad you looked up.`;
+            ? `${count} loose thoughts drifted into the dark. None needed a reason. They simply found each other and glowed.`
+            : `${count} loose thoughts were enough. There was no score—only a little more room to look up.`;
         prepareShareImage();
       }
 
@@ -1244,6 +1548,14 @@
       addEventListener('keyup', e => keys.delete(e.key));
       startBtn.addEventListener('click', begin);
       againBtn.addEventListener('click', begin);
+      shareDialogClose.addEventListener('click', closeShareGuide);
+      shareDialogCancel.addEventListener('click', closeShareGuide);
+      shareDialogContinue.addEventListener('click', () => {
+        if (pendingShareNetwork) completeExternalShare(pendingShareNetwork);
+      });
+      shareDialog.addEventListener('click', event => {
+        if (event.target === shareDialog) closeShareGuide();
+      });
       shareButtons.forEach(button => {
         button.addEventListener('click', () => shareTo(button.dataset.share));
       });

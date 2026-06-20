@@ -51,6 +51,8 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - Event violet: `#9b7ede`
 - Interface accent: `#10a37f`
 - Interface accent soft: `#e7f4ef`
+- Modal overlay: `rgba(17, 17, 15, 0.72)`
+- Dialog shadow: `0 12px 32px rgba(0, 0, 0, 0.18)`
 - Radius: 12–18px for panels, 999px only for status chips
 
 ## Spacing
@@ -76,6 +78,8 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - The timer and progress line communicate duration. Do not add technical lifecycle labels.
 - The result becomes a downloadable 1200×630 image that can be handed to social apps.
 - Social buttons provide the image and prepared copy where browser capabilities allow; limitations are stated honestly.
+- External social handoffs pause before navigation. The handoff names what is downloaded or copied and tells the user exactly what to attach or paste in the destination app.
+- Native device sharing may pass the image directly. URL-based LinkedIn, X, and Telegram handoffs must never imply that a local image was attached automatically.
 
 ## Layout
 
@@ -97,7 +101,8 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - Product labels explain state rather than adding atmosphere.
 - Poetic language is reserved for the main statement and session result.
 - Use “loose thoughts” consistently for collectible objects. Avoid telemetry terms such as signal, queue, state, build, and session ID.
-- Theme line: “Thirty seconds with nothing to ship.”
+- Theme line: “Thirty seconds. Nothing to ship.”
+- Prefer short interface sentences and balanced lines. Rewrite copy before accepting a one-word final line.
 
 ## Identity
 
@@ -110,6 +115,7 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - Primary controls: minimum 44×44px, default/hover/focus-visible/active/disabled states required.
 - Focus-visible: 2px solid current foreground with 3px offset.
 - Social controls: text-first, 44px minimum height, outlined on dark surfaces.
+- Share handoff dialogs: editorial white surface, explicit numbered steps, image preview, and one destination-specific primary action.
 - Status chips are not used in the product UI.
 
 ## Anti-patterns
