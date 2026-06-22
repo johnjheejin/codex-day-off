@@ -707,13 +707,37 @@
     @media (max-width: 760px) {
       .intro-card, .result-card { grid-template-columns: 1fr; gap: 38px; }
       h1 { font-size: clamp(54px, 17vw, 82px); }
-      .screen { align-items: center; overflow-y: auto; }
+      .screen {
+        place-items: start center;
+        padding: 32px 20px max(48px, env(safe-area-inset-bottom));
+        overflow-y: auto;
+      }
       .theme-line { max-width: 128px; text-align: right; }
       .timer small { display: none; }
       .cursor-note { display: none; }
       .session-spec { margin-bottom: 18px; }
       .share-actions { grid-template-columns: 1fr 1fr; }
-      .result-card { padding-bottom: 28px; }
+      .result-card { padding-bottom: 28px; gap: 32px; }
+      .result-detail { padding-top: 20px; }
+      .share-panel {
+        margin: 0 0 24px;
+        padding: 20px 0 0;
+      }
+      .share-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .share-button {
+        min-height: 52px;
+        padding: 0 16px;
+        font-size: 14px;
+      }
+      .share-note {
+        min-height: auto;
+        font-size: 12px;
+        line-height: 1.55;
+      }
       .share-dialog-inner { padding: 24px 20px; }
       .share-dialog-head { gap: 12px; }
       .share-preview { grid-template-columns: 96px 1fr; }
@@ -793,7 +817,6 @@
             <div class="stat"><b id="finalBloom">0</b><span>constellations</span></div>
             <div class="stat"><b id="finalMood">soft</b><span>pace</span></div>
           </div>
-          <button id="again" class="start">Take another thirty seconds</button>
           <div class="share-panel">
             <div class="share-heading">
               <h2 class="share-title">Share your afterglow</h2>
@@ -809,6 +832,7 @@
             </div>
             <p id="shareNote" class="share-note">Your image and caption will be prepared together.</p>
           </div>
+          <button id="again" class="start">Take another thirty seconds</button>
         </div>
       </div>
     </section>
@@ -1053,59 +1077,115 @@
         cardCtx.fillStyle = '#11110f';
         cardCtx.fillRect(0, 0, 1200, 630);
 
-        const usedBlooms = blooms.length ? blooms : [{ color: '#10a37f', petals: 6, size: 24, rotation: 0 }];
-        usedBlooms.slice(0, 22).forEach((b, index) => {
-          const x = 720 + ((index * 137) % 420);
-          const y = 80 + ((index * 83) % 470);
-          const size = 16 + (index % 4) * 7;
+        const scaleX = 1200 / Math.max(width, 1);
+        const scaleY = 630 / Math.max(height, 1);
+        const scale = Math.min(scaleX, scaleY);
+
+        stars.slice(0, 120).forEach((star, index) => {
+          const x = (star.x / Math.max(width, 1)) * 1200;
+          const y = (star.y / Math.max(height, 1)) * 630;
+          cardCtx.globalAlpha = Math.min(.42, star.a * (.55 + (index % 3) * .08));
+          cardCtx.fillStyle = '#f4f4ef';
+          cardCtx.beginPath();
+          cardCtx.arc(x, y, Math.max(.5, star.r * scale), 0, Math.PI * 2);
+          cardCtx.fill();
+        });
+
+        const usedBlooms = blooms.length ? blooms : [{
+          x: width / 2,
+          y: height / 2,
+          color: '#10a37f',
+          petals: 6,
+          size: 24,
+          rotation: 0
+        }];
+        usedBlooms.slice(0, 36).forEach((b, index) => {
+          const x = (b.x / Math.max(width, 1)) * 1200;
+          const y = (b.y / Math.max(height, 1)) * 630;
+          const size = Math.max(10, b.size * scale);
           cardCtx.save();
           cardCtx.translate(x, y);
-          cardCtx.rotate(b.rotation || index * .37);
-          cardCtx.globalAlpha = .28;
+          cardCtx.rotate((b.rotation || 0) + Math.sin(index) * .12);
+          cardCtx.globalAlpha = .47;
           cardCtx.strokeStyle = b.color;
-          cardCtx.lineWidth = 1.4;
+          cardCtx.lineWidth = 1.2;
           const petals = b.petals || 6;
           for (let i = 0; i < petals; i++) {
             cardCtx.rotate(Math.PI * 2 / petals);
             cardCtx.beginPath();
-            cardCtx.ellipse(size, 0, size, size * .32, 0, 0, Math.PI * 2);
+            cardCtx.ellipse(size, 0, size, size * .34, 0, 0, Math.PI * 2);
             cardCtx.stroke();
           }
+          cardCtx.globalAlpha = .8;
+          cardCtx.fillStyle = b.color;
+          cardCtx.beginPath();
+          cardCtx.arc(0, 0, 2.5, 0, Math.PI * 2);
+          cardCtx.fill();
           cardCtx.restore();
         });
         cardCtx.globalAlpha = 1;
 
-        cardCtx.strokeStyle = 'rgba(244,244,239,.18)';
+        cardCtx.strokeStyle = 'rgba(244,244,239,.14)';
         cardCtx.beginPath();
-        cardCtx.moveTo(64, 72);
-        cardCtx.lineTo(1136, 72);
+        cardCtx.moveTo(0, 66);
+        cardCtx.lineTo(1200, 66);
         cardCtx.stroke();
 
         cardCtx.fillStyle = '#f4f4ef';
-        cardCtx.font = '600 28px Arial, sans-serif';
-        cardCtx.fillText('Afterglow', 64, 48);
-        cardCtx.fillStyle = 'rgba(244,244,239,.5)';
-        cardCtx.font = '18px Arial, sans-serif';
-        cardCtx.fillText('Codex’s Day Off', 216, 48);
+        cardCtx.font = '600 20px Arial, sans-serif';
+        cardCtx.fillText('Afterglow', 44, 34);
+        cardCtx.fillStyle = 'rgba(244,244,239,.4)';
+        cardCtx.font = '12px Arial, sans-serif';
+        cardCtx.fillText('CODEX’S DAY OFF', 44, 52);
 
-        cardCtx.fillStyle = '#f4f4ef';
-        cardCtx.font = '500 78px Arial, sans-serif';
-        wrapText(cardCtx, resultHeading(), 64, 182, 610, 82);
-
-        cardCtx.fillStyle = 'rgba(244,244,239,.64)';
-        cardCtx.font = '24px Arial, sans-serif';
-        wrapText(cardCtx, `Thirty seconds. ${count} loose thoughts turned into afterglow. Nothing was shipped.`, 64, 374, 560, 34);
-
-        cardCtx.fillStyle = '#10a37f';
-        cardCtx.fillRect(64, 520, 96, 4);
-        cardCtx.fillStyle = '#f4f4ef';
-        cardCtx.font = '600 22px Arial, sans-serif';
-        cardCtx.fillText(`${count} THOUGHTS`, 64, 562);
-        cardCtx.fillStyle = 'rgba(244,244,239,.48)';
-        cardCtx.font = '18px Arial, sans-serif';
-        cardCtx.fillText(shareHashtags, 64, 600);
         cardCtx.textAlign = 'right';
-        cardCtx.fillText('dayoff.tmcowork.com', 1136, 600);
+        cardCtx.fillStyle = 'rgba(244,244,239,.4)';
+        cardCtx.font = '12px Consolas, monospace';
+        cardCtx.fillText('THIRTY SECONDS. NOTHING TO SHIP.', 1156, 40);
+
+        cardCtx.textAlign = 'left';
+        cardCtx.fillStyle = '#f4f4ef';
+        cardCtx.font = '500 16px Consolas, monospace';
+        cardCtx.fillText('NOTHING DUE', 44, 108);
+        cardCtx.fillStyle = 'rgba(244,244,239,.4)';
+        cardCtx.font = '12px Consolas, monospace';
+        cardCtx.fillText('/ TAKE YOUR TIME', 174, 108);
+
+        cardCtx.textAlign = 'right';
+        cardCtx.fillStyle = '#f4f4ef';
+        cardCtx.font = '400 58px Consolas, monospace';
+        cardCtx.fillText('00', 1156, 126);
+        cardCtx.fillStyle = 'rgba(244,244,239,.4)';
+        cardCtx.font = '12px Consolas, monospace';
+        cardCtx.fillText('SECONDS REMAINING', 1156, 148);
+
+        cardCtx.textAlign = 'left';
+        cardCtx.strokeStyle = 'rgba(244,244,239,.34)';
+        cardCtx.beginPath();
+        cardCtx.moveTo(44, 516);
+        cardCtx.lineTo(44, 570);
+        cardCtx.stroke();
+        cardCtx.fillStyle = '#f4f4ef';
+        cardCtx.font = '500 22px Consolas, monospace';
+        cardCtx.fillText(`${String(count).padStart(2, '0')} THOUGHTS`, 60, 540);
+        cardCtx.fillStyle = 'rgba(244,244,239,.4)';
+        cardCtx.font = '12px Consolas, monospace';
+        cardCtx.fillText('TURNED INTO AFTERGLOW', 60, 562);
+
+        cardCtx.textAlign = 'right';
+        cardCtx.fillStyle = 'rgba(244,244,239,.4)';
+        cardCtx.fillText('MOVE SLOWLY · LOOSE THOUGHTS DRIFT CLOSER', 1156, 556);
+
+        cardCtx.fillStyle = 'rgba(244,244,239,.16)';
+        cardCtx.fillRect(44, 594, 1112, 1);
+        cardCtx.fillStyle = '#10a37f';
+        cardCtx.fillRect(44, 594, 1112, 2);
+        cardCtx.fillStyle = 'rgba(244,244,239,.48)';
+        cardCtx.font = '12px Consolas, monospace';
+        cardCtx.textAlign = 'left';
+        cardCtx.fillText(shareHashtags, 44, 618);
+        cardCtx.textAlign = 'right';
+        cardCtx.fillText('dayoff.tmcowork.com', 1156, 618);
         cardCtx.textAlign = 'left';
 
         card.toBlob(blob => {

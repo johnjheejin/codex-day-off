@@ -77,6 +77,7 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - The ending uses an editorial closing layout, without diagnostic or internal report labels.
 - The timer and progress line communicate duration. Do not add technical lifecycle labels.
 - The result becomes a downloadable 1200×630 image that can be handed to social apps.
+- The exported image preserves the played scene: the user’s bloom positions, night field, and in-session perimeter HUD. It should not switch to a separate promotional-card composition.
 - Social buttons provide the image and prepared copy where browser capabilities allow; limitations are stated honestly.
 - External social handoffs pause before navigation. The handoff names what is downloaded or copied and tells the user exactly what to attach or paste in the destination app.
 - Native device sharing may pass the image directly. URL-based LinkedIn, X, and Telegram handoffs must never imply that a local image was attached automatically.
@@ -84,6 +85,7 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 ## Layout
 
 - Use a 12-column desktop logic and a single-column mobile flow.
+- On mobile, sharing appears before replay and remains fully available; do not reduce the destination choices or hide them below a centered overflow trap.
 - Separate major regions with whitespace before adding rules.
 - Keep operational metadata aligned to the perimeter.
 - Primary hierarchy: editorial statement → short explanation → one action.

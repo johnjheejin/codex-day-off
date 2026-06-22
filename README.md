@@ -21,7 +21,7 @@ Then visit `http://localhost:8000`.
 - Move the mouse or use arrow/WASD keys.
 - Collect the drifting lights.
 - At 30 seconds, the garden becomes a personalized final scene.
-- Export the result as a 1200 × 630 PNG or hand it to LinkedIn, X, Telegram, KakaoTalk, and the native share sheet. External handoffs explain when the PNG must be attached separately.
+- Export the played night-sky scene as a 1200 × 630 PNG or hand it to LinkedIn, X, Telegram, KakaoTalk, and the native share sheet. Mobile keeps every destination available and places sharing before replay. External handoffs explain when the PNG must be attached separately.
 
 No login, API key, build step, network request, or external service is required.
 
