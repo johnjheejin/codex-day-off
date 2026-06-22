@@ -69,6 +69,7 @@
       inset: 0;
       width: 100%;
       height: 100%;
+      touch-action: none;
     }
 
     .topbar {
@@ -366,6 +367,16 @@
       grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
       gap: clamp(42px, 8vw, 120px);
       align-items: end;
+    }
+
+    #result {
+      place-items: start center;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    #result .result-card {
+      margin: auto 0;
     }
 
     .result-card .eyebrow { color: var(--night-faint); }
@@ -712,6 +723,7 @@
         padding: 32px 20px max(48px, env(safe-area-inset-bottom));
         overflow-y: auto;
       }
+      #result .result-card { margin: 0; }
       .theme-line { max-width: 128px; text-align: right; }
       .timer small { display: none; }
       .cursor-note { display: none; }
@@ -919,6 +931,7 @@
       let shareFile = null;
       let sharePreviewUrl = '';
       let pendingShareNetwork = '';
+      let activeTouchPointer = null;
       let backgroundLayer = null;
       let glowSprites = new Map();
       let rafId = 0;
@@ -1338,12 +1351,14 @@
       function spawnThought(initial = false) {
         const edge = Math.floor(Math.random() * 4);
         const margin = 50;
+        const mobile = matchMedia('(max-width: 760px)').matches;
         let x, y;
         if (initial) {
+          const safeRadius = mobile ? Math.min(210, height * .3) : Math.min(220, width * .22);
           do {
             x = width * (.12 + Math.random() * .76);
             y = height * (.16 + Math.random() * .68);
-          } while (Math.hypot(x - width / 2, y - height / 2) < Math.min(220, width * .22));
+          } while (Math.hypot(x - width / 2, y - height / 2) < safeRadius);
         } else if (edge < 2) {
           x = edge ? width + margin : -margin;
           y = Math.random() * height;
@@ -1373,7 +1388,8 @@
         particles = [];
         player.x = player.tx = width / 2;
         player.y = player.ty = height / 2;
-        for (let i = 0; i < 12; i++) spawnThought(true);
+        const initialThoughts = matchMedia('(max-width: 760px)').matches ? 4 : 12;
+        for (let i = 0; i < initialThoughts; i++) spawnThought(true);
         startedAt = performance.now();
         lastSpawn = startedAt;
         timeEl.textContent = String(duration);
@@ -1462,7 +1478,8 @@
           timeEl.textContent = String(Math.ceil(remaining)).padStart(2, '0');
           progressEl.style.transform = `scaleX(${remaining / duration})`;
           if (!remaining) finish();
-          if (now - lastSpawn > Math.max(360, 760 - elapsed * 8)) {
+          const mobileSpawnDelay = matchMedia('(max-width: 760px)').matches ? 1050 : 760;
+          if (now - lastSpawn > Math.max(420, mobileSpawnDelay - elapsed * 8)) {
             spawnThought();
             lastSpawn = now;
           }
@@ -1611,15 +1628,35 @@
         rafId = requestAnimationFrame(frame);
       }
 
-      function point(e) {
+      function movePoint(e) {
         if (mode !== 'play') return;
+        if (e.pointerType === 'touch' && e.pointerId !== activeTouchPointer) return;
         player.tx = e.clientX;
         player.ty = e.clientY;
       }
 
+      function beginPoint(e) {
+        if (mode !== 'play') return;
+        if (e.pointerType === 'touch') {
+          activeTouchPointer = e.pointerId;
+          canvas.setPointerCapture?.(e.pointerId);
+          e.preventDefault();
+        }
+        player.tx = e.clientX;
+        player.ty = e.clientY;
+      }
+
+      function endPoint(e) {
+        if (e.pointerType !== 'touch' || e.pointerId !== activeTouchPointer) return;
+        canvas.releasePointerCapture?.(e.pointerId);
+        activeTouchPointer = null;
+      }
+
       addEventListener('resize', resize);
-      addEventListener('pointermove', point);
-      addEventListener('pointerdown', point);
+      canvas.addEventListener('pointermove', movePoint);
+      canvas.addEventListener('pointerdown', beginPoint);
+      canvas.addEventListener('pointerup', endPoint);
+      canvas.addEventListener('pointercancel', endPoint);
       addEventListener('keydown', e => {
         keys.add(e.key);
         if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();

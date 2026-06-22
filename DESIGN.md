@@ -72,6 +72,7 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 
 - The start control resembles a compact prompt composer.
 - Cursor or arrow/WASD input moves the focus point.
+- On touch devices, pressing and dragging directly steers the focus point; the play surface must suppress browser panning while the gesture is active.
 - The environment darkens when the 30-second session begins.
 - Collected thoughts become restrained line-drawn blooms.
 - The ending uses an editorial closing layout, without diagnostic or internal report labels.
@@ -86,6 +87,7 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 
 - Use a 12-column desktop logic and a single-column mobile flow.
 - On mobile, sharing appears before replay and remains fully available; do not reduce the destination choices or hide them below a centered overflow trap.
+- Result content must remain vertically scrollable on every viewport when its full height exceeds the available screen.
 - Separate major regions with whitespace before adding rules.
 - Keep operational metadata aligned to the perimeter.
 - Primary hierarchy: editorial statement → short explanation → one action.

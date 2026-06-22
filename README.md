@@ -19,6 +19,7 @@ Then visit `http://localhost:8000`.
 ## Controls
 
 - Move the mouse or use arrow/WASD keys.
+- On mobile, press and drag anywhere on the play surface to steer directly.
 - Collect the drifting lights.
 - At 30 seconds, the garden becomes a personalized final scene.
 - Export the played night-sky scene as a 1200 × 630 PNG or hand it to LinkedIn, X, Telegram, KakaoTalk, and the native share sheet. Mobile keeps every destination available and places sharing before replay. External handoffs explain when the PNG must be attached separately.
