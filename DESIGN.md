@@ -86,7 +86,7 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 ## Layout
 
 - Use a 12-column desktop logic and a single-column mobile flow.
-- On mobile, sharing appears before replay and remains fully available; do not reduce the destination choices or hide them below a centered overflow trap.
+- On result screens, sharing appears before stats and replay. On mobile it should be visible immediately after completion and remain fully available; do not reduce the destination choices or hide them below a centered overflow trap.
 - Result content must remain vertically scrollable on every viewport when its full height exceeds the available screen.
 - Separate major regions with whitespace before adding rules.
 - Keep operational metadata aligned to the perimeter.
