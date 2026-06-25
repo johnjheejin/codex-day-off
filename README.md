@@ -6,6 +6,14 @@ A self-contained, 30-second interactive web experience.
 
 https://dayoff.tmcowork.com
 
+## Screenshots
+
+| State | Desktop | Mobile |
+| --- | --- | --- |
+| Initial | ![Desktop initial screen](./assets/screenshots/desktop-01-initial.png) | ![Mobile initial screen](./assets/screenshots/mobile-01-initial.png) |
+| Playing | ![Desktop playing screen](./assets/screenshots/desktop-02-playing.png) | ![Mobile playing screen](./assets/screenshots/mobile-02-playing.png) |
+| Result | ![Desktop result screen](./assets/screenshots/desktop-03-result.png) | ![Mobile result screen](./assets/screenshots/mobile-03-result.png) |
+
 ## Run
 
 Open `index.html` directly, or serve the folder:
