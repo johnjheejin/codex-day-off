@@ -73,12 +73,12 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - The start control resembles a compact prompt composer.
 - Cursor or arrow/WASD input moves the focus point.
 - On touch devices, pressing and dragging directly steers the focus point; the play surface must suppress browser panning while the gesture is active.
-- The environment darkens when the 30-second session begins.
+- The environment darkens by default when the 30-second session begins. A persistent `Light field / Night field` control lets the user choose a bright canvas without changing the interaction.
 - Collected thoughts become restrained line-drawn blooms.
 - The ending uses an editorial closing layout, without diagnostic or internal report labels.
 - The timer and progress line communicate duration. Do not add technical lifecycle labels.
 - The result becomes a downloadable 1200×630 image that can be handed to social apps.
-- The exported image preserves the played scene: the user’s bloom positions, night field, and in-session perimeter HUD. It should not switch to a separate promotional-card composition.
+- The exported image preserves the played scene: the user’s bloom positions, selected light or night field, and in-session perimeter HUD. It should not switch to a separate promotional-card composition.
 - Social buttons provide the image and prepared copy where browser capabilities allow; limitations are stated honestly.
 - External social handoffs pause before navigation. The handoff names what is downloaded or copied and tells the user exactly what to attach or paste in the destination app.
 - Native device sharing may pass the image directly. URL-based LinkedIn, X, and Telegram handoffs must never imply that a local image was attached automatically.
@@ -98,6 +98,9 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - Layout transitions: 280–360ms with `cubic-bezier(0.16, 1, 0.3, 1)`.
 - Ambient particles move slowly. Collection feedback may be faster.
 - Never use scroll-jacking, parallax, or continuous ornamental UI animation.
+- Touch or coarse-pointer hardware targets 45fps in the normal mobile layout. When desktop-site mode expands the viewport past 760px it uses a 30fps safety path; ambient screens remain at or below 12fps.
+- Canvas resolution follows a bounded pixel budget rather than viewport width alone. Repeated resize events are debounced and must not allocate full-size buffers continuously.
+- Full-screen procedural grain and blend effects are not used. The star field provides texture without a separate full-viewport compositing layer.
 
 ## Voice
 
@@ -121,6 +124,7 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - Social controls: text-first, 44px minimum height, outlined on dark surfaces.
 - Share handoff dialogs: editorial white surface, explicit numbered steps, image preview, and one destination-specific primary action.
 - Status chips are not used in the product UI.
+- The appearance control is a text-first 44px minimum button in the persistent top bar. Its label names the field the action will switch to.
 
 ## Anti-patterns
 
@@ -130,3 +134,4 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - No hidden state: progress, controls, and completion should remain legible.
 - No score language, streaks, rankings, or artificial urgency.
 - No implementation labels such as experimental interface, build number, ready, drifting, settling, or complete.
+- Do not infer device performance from CSS width alone; desktop-site mode on a phone must retain the mobile rendering budget.
