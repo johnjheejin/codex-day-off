@@ -43,3 +43,12 @@
 - 그래픽 품질은 픽셀 예산과 장식 비용을 먼저 낮춰 보호한다.
 - 실제 기기 장애를 사용자에게 다시 재현하도록 요구하지 않는다.
 - 새 GPU 렌더러는 fallback, 컨텍스트 손실과 메모리 상한을 갖춘 실험으로만 도입한다.
+
+## 해결 상태
+
+- 해결 커밋: `d7c2d58` — `harden mobile rendering and add light field`
+- GitHub `main` 반영: 2026-07-13
+- Cloudflare Pages 배포: `cd6f228c.codex-day-off.pages.dev`
+- 공개 도메인 확인: <https://dayoff.tmcowork.com> HTTP 200
+- 라이브 HTML 확인: appearance control, 150만 픽셀 모바일 예산, 45/30fps 분기 포함; `feTurbulence` 제거
+- 남은 운영 확인: Galaxy S24의 Chrome Beta와 Samsung Internet에서 일반 모바일 모드 1회 실행. 이전 데스크톱 사이트 장애 재현은 요구하지 않음.

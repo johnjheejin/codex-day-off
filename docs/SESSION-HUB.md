@@ -41,6 +41,7 @@
 - LinkedIn 공유 초안은 `docs/social/linkedin-2026-07-11.md`에 장문·단문 두 버전으로 기록했다.
 - 2026-07-13 Galaxy S24 Chrome Beta 데스크톱 사이트 전환 사고를 P0로 기록하고 모바일 렌더링 안전 패치를 구현했다.
 - 그래픽 기술 결정은 `docs/decisions/0002-mobile-rendering-safety-and-gpu-strategy.md`, 초기 목표 갭은 `docs/audits/2026-07-13-original-goals-gap.md`에서 관리한다.
+- 모바일 안전 패치는 커밋 `d7c2d58`로 GitHub `main`에 반영하고 Cloudflare Pages 배포 `cd6f228c`로 공개했다.
 
 ## 우선순위
 
