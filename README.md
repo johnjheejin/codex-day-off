@@ -25,7 +25,7 @@ The four-milestone, same-viewport comparison is preserved in **[the July 13 visu
 | June 2026 | “What would a day off for Codex look like?” became a 30-second constellation garden for a Codex community meetup. |
 | June 20–25 | The visual language was rebuilt around an original Afterglow identity, documented in `DESIGN.md`, reviewed through a project-local OmD pilot, and deployed through GitHub and Cloudflare Pages. |
 | July 11 | The repository was reopened with GPT-5.6 Sol. The live experience was tested again, missed accessibility states were fixed, reduced-motion support was added, and the moment was recorded instead of being allowed to disappear into commit history. |
-| July 13 | A Galaxy S24 failure report turned the revisit into a rendering-safety pass: mobile pixel and frame budgets were bounded, desktop-site mode gained its own safety path, a persistent light field was added, and the first build was visually audited against the current experience. |
+| July 13 | A Galaxy S24 report turned the revisit into a rendering-safety and mobile-UX pass: pixel and frame budgets were bounded, desktop-site mode gained a safety path, `Night Sky / Paper Sky` became explicit play scenes, sharing moved into the first result viewport, and the first build was visually audited against the current experience. |
 
 Read the full entry: **[2026-07-11 — revisiting Afterglow](./docs/journal/2026-07-11.md)**.
 
@@ -47,7 +47,7 @@ Then visit `http://localhost:8000`.
 - On mobile, press and drag anywhere on the play surface to steer directly.
 - Collect the drifting lights.
 - At 30 seconds, the garden becomes a personalized final scene.
-- Switch between `Light field` and `Night field`; the choice persists and is preserved in the exported scene.
+- Play in `🌙 Night Sky` or `☀️ Paper Sky`; the current scene is always visible, persists locally, and is preserved in the exported image.
 - Export the played scene as a 1200 × 630 PNG or hand it to LinkedIn, X, Telegram, KakaoTalk, and the native share sheet. Mobile keeps every destination available and places sharing before replay. External handoffs explain when the PNG must be attached separately.
 
 No login, API key, build step, network request, or external service is required.

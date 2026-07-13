@@ -73,12 +73,12 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - The start control resembles a compact prompt composer.
 - Cursor or arrow/WASD input moves the focus point.
 - On touch devices, pressing and dragging directly steers the focus point; the play surface must suppress browser panning while the gesture is active.
-- The environment darkens by default when the 30-second session begins. A persistent `Light field / Night field` control lets the user choose a bright canvas without changing the interaction.
+- The experience has two named play scenes rather than a light/dark display preference: `🌙 Night Sky` darkens when play begins, while `☀️ Paper Sky` keeps the warm-white canvas. The persistent scene control shows the current scene with its sun or moon emoji; its accessible label also names the scene it will switch to.
 - Collected thoughts become restrained line-drawn blooms.
 - The ending uses an editorial closing layout, without diagnostic or internal report labels.
 - The timer and progress line communicate duration. Do not add technical lifecycle labels.
 - The result becomes a downloadable 1200×630 image that can be handed to social apps.
-- The exported image preserves the played scene: the user’s bloom positions, selected light or night field, and in-session perimeter HUD. It should not switch to a separate promotional-card composition.
+- The exported image preserves the played scene: the user’s bloom positions, selected `Night Sky` or `Paper Sky`, and in-session perimeter HUD. It should not switch to a separate promotional-card composition.
 - Social buttons provide the image and prepared copy where browser capabilities allow; limitations are stated honestly.
 - External social handoffs pause before navigation. The handoff names what is downloaded or copied and tells the user exactly what to attach or paste in the destination app.
 - Native device sharing may pass the image directly. URL-based LinkedIn, X, and Telegram handoffs must never imply that a local image was attached automatically.
@@ -86,7 +86,7 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 ## Layout
 
 - Use a 12-column desktop logic and a single-column mobile flow.
-- On result screens, sharing appears before stats and replay. On mobile it should be visible immediately after completion and remain fully available; do not reduce the destination choices or hide them below a centered overflow trap.
+- On result screens, sharing appears before stats and replay. On mobile the share panel is the first detail after the compact result heading, with the primary device action in the initial viewport and all six destinations preserved in the scroll flow; do not hide them below a centered overflow trap.
 - Result content must remain vertically scrollable on every viewport when its full height exceeds the available screen.
 - Separate major regions with whitespace before adding rules.
 - Keep operational metadata aligned to the perimeter.
@@ -124,7 +124,7 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - Social controls: text-first, 44px minimum height, outlined on dark surfaces.
 - Share handoff dialogs: editorial white surface, explicit numbered steps, image preview, and one destination-specific primary action.
 - Status chips are not used in the product UI.
-- The appearance control is a text-first 44px minimum button in the persistent top bar. Its label names the field the action will switch to.
+- The scene control is a text-first 44px minimum button in the persistent top bar. Its visible sun/moon emoji and `Paper Sky / Night Sky` label name the current scene; its accessible label names both the current scene and the switch action.
 
 ## Anti-patterns
 

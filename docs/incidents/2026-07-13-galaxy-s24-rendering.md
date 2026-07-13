@@ -29,7 +29,7 @@
 - 반복 스프라이트 생성 제거와 이전 배경 버퍼 선해제
 - 전체 화면 procedural grain 및 blend 제거
 - 페이지 이탈 시 대형 자원 해제
-- `Light field / Night field` 선택과 로컬 저장
+- `🌙 Night Sky / ☀️ Paper Sky` 두 플레이 장면 선택과 로컬 저장
 - 선택한 필드를 1200×630 결과 PNG에도 반영
 - `color-scheme: only light`로 브라우저의 임의 재착색 방지
 
@@ -52,3 +52,18 @@
 - 공개 도메인 확인: <https://dayoff.tmcowork.com> HTTP 200
 - 라이브 HTML 확인: appearance control, 150만 픽셀 모바일 예산, 45/30fps 분기 포함; `feTurbulence` 제거
 - 남은 운영 확인: Galaxy S24의 Chrome Beta와 Samsung Internet에서 일반 모바일 모드 1회 실행. 이전 데스크톱 사이트 장애 재현은 요구하지 않음.
+
+## 같은 날 실기기 후속 피드백
+
+Galaxy S24 일반 모바일 모드에서 성능 장애는 다시 보고되지 않았지만 두 UX 문제가 남아 있었다.
+
+1. `Light field / Night field`가 화면 설정처럼 읽혀 현재 선택을 알아보기 어려웠다.
+2. 30초가 끝난 뒤 공유 목적지가 사용자에게 보이지 않았다.
+
+후속 교정에서는 화면 설정이라는 표현을 버리고 장면을 `🌙 Night Sky`와 `☀️ Paper Sky`로 이름 붙였다. 상단 컨트롤은 현재 장면을 이모지와 함께 표시하고, 접근성 라벨은 현재 장면과 전환될 장면을 모두 설명한다.
+
+모바일 결과 DOM 순서는 `결과 제목 → 공유 → 장면 설명 → 통계·재시작`으로 바꿨다. 결과 스크롤 영역에는 `touch-action: pan-y`, iOS 계열 관성 스크롤과 명시적 `scrollTop = 0`을 적용했다. 360×720 재현에서 기본 공유 행동은 화면 상단 347px 안에 들어왔고 여섯 목적지가 모두 활성화됐다.
+
+| Paper Sky | Night Sky |
+| --- | --- |
+| ![Galaxy S24 크기의 Paper Sky 결과와 즉시 보이는 공유 선택지](../../assets/history/2026-07-13/s24-share-fixed-paper.png) | ![Galaxy S24 크기의 Night Sky 결과와 즉시 보이는 공유 선택지](../../assets/history/2026-07-13/s24-share-fixed-night.png) |

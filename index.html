@@ -100,7 +100,7 @@
     }
 
     .appearance-toggle {
-      min-width: 84px;
+      min-width: 108px;
       min-height: 44px;
       padding: 0 12px;
       border: 1px solid var(--line);
@@ -456,6 +456,8 @@
       place-items: start center;
       overflow-y: auto;
       overscroll-behavior: contain;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
     }
 
     #result .result-card {
@@ -824,7 +826,7 @@
 
     @media (max-width: 760px) {
       .intro-card, .result-card { grid-template-columns: 1fr; gap: 38px; }
-      #result .result-card { gap: 24px; }
+      #result .result-card { gap: 20px; }
       h1 { font-size: clamp(54px, 17vw, 82px); }
       .screen {
         place-items: start center;
@@ -838,10 +840,17 @@
       .session-spec { margin-bottom: 18px; }
       .share-actions { grid-template-columns: 1fr 1fr; }
       .result-card { padding-bottom: 28px; gap: 32px; }
-      .result-detail { padding-top: 20px; }
+      #resultTitle { font-size: clamp(48px, 14vw, 68px); }
+      .result-card .eyebrow { margin-bottom: 16px; }
+      .result-detail {
+        display: flex;
+        flex-direction: column;
+        padding-top: 0;
+        border-top: 0;
+      }
       .share-panel {
         margin: 0 0 24px;
-        padding: 20px 0 0;
+        padding: 16px 0 0;
       }
       .share-heading {
         align-items: flex-start;
@@ -869,13 +878,17 @@
     @media (max-width: 560px) {
       .theme-line { display: none; }
       .topbar-actions { gap: 8px; }
-      .appearance-toggle { min-width: 76px; padding: 0 8px; }
+      .appearance-toggle { min-width: 104px; padding: 0 12px; }
     }
 
     @media (max-width: 420px) {
+      .share-button { padding: 0 12px; font-size: 12px; }
+      .result-meta { align-items: flex-start; flex-direction: column; gap: 4px; }
+    }
+
+    @media (max-width: 340px) {
       .share-actions { grid-template-columns: 1fr; }
       .share-button.primary-share { grid-column: auto; }
-      .result-meta { align-items: flex-start; flex-direction: column; gap: 4px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -906,7 +919,7 @@
       </div>
       <div class="topbar-actions">
         <div class="theme-line">Thirty seconds. Nothing to ship.</div>
-        <button id="appearanceToggle" class="appearance-toggle" type="button" aria-pressed="false">Light field</button>
+        <button id="appearanceToggle" class="appearance-toggle" type="button" aria-pressed="false">🌙 Night Sky</button>
       </div>
     </header>
 
@@ -949,8 +962,6 @@
           <h2 id="resultTitle" tabindex="-1">You made<br>room to wonder.</h2>
         </div>
         <div class="result-detail">
-          <div class="result-meta"><span>Your small sky</span><span>Made in 30 seconds</span></div>
-          <p id="resultText"></p>
           <div class="share-panel">
             <div class="share-heading">
               <h2 class="share-title">Share your afterglow</h2>
@@ -966,6 +977,8 @@
             </div>
             <p id="shareNote" class="share-note">Your image and caption will be prepared together.</p>
           </div>
+          <div class="result-meta"><span id="sceneName">Your Night Sky</span><span>Made in 30 seconds</span></div>
+          <p id="resultText"></p>
           <div class="stats">
             <div class="stat"><b id="finalCount">0</b><span>thoughts</span></div>
             <div class="stat"><b id="finalBloom">0</b><span>constellations</span></div>
@@ -1029,6 +1042,7 @@
       const startBtn = document.querySelector('#start');
       const againBtn = document.querySelector('#again');
       const appearanceToggle = document.querySelector('#appearanceToggle');
+      const sceneName = document.querySelector('#sceneName');
       const shareButtons = [...document.querySelectorAll('[data-share]')];
 
       const colors = ['#ff6f61', '#f3a712', '#5b8def', '#3aa981', '#9b7ede'];
@@ -1193,8 +1207,15 @@
       function setLightField(enabled, persist = true) {
         world.classList.toggle('light-field', enabled);
         appearanceToggle.setAttribute('aria-pressed', String(enabled));
-        appearanceToggle.textContent = enabled ? 'Night field' : 'Light field';
-        appearanceToggle.setAttribute('aria-label', enabled ? 'Use night field' : 'Use light field');
+        appearanceToggle.textContent = enabled ? '☀️ Paper Sky' : '🌙 Night Sky';
+        appearanceToggle.setAttribute(
+          'aria-label',
+          enabled
+            ? 'Current scene: Paper Sky. Switch to Night Sky.'
+            : 'Current scene: Night Sky. Switch to Paper Sky.'
+        );
+        appearanceToggle.title = enabled ? 'Switch to Night Sky' : 'Switch to Paper Sky';
+        sceneName.textContent = enabled ? 'Your Paper Sky' : 'Your Night Sky';
         if (persist) {
           try { localStorage.setItem('afterglow-field', enabled ? 'light' : 'night'); } catch (_) {}
         }
@@ -1618,6 +1639,7 @@
         result.classList.remove('hidden');
         result.setAttribute('aria-hidden', 'false');
         result.inert = false;
+        result.scrollTop = 0;
         document.querySelector('#finalCount').textContent = count;
         document.querySelector('#finalBloom').textContent = blooms.length;
         const mood = count > 16 ? 'electric' : count > 8 ? 'gentle' : 'quiet';
