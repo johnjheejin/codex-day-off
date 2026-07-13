@@ -16,6 +16,8 @@ https://dayoff.tmcowork.com
 | Playing | ![Desktop playing screen](./assets/screenshots/desktop-02-playing.png) | ![Mobile playing screen](./assets/screenshots/mobile-02-playing.png) |
 | Result | ![Desktop result screen](./assets/screenshots/desktop-03-result.png) | ![Mobile result screen](./assets/screenshots/mobile-03-result.png) |
 
+The four-milestone, same-viewport comparison is preserved in **[the July 13 visual history audit](./docs/audits/2026-07-13-visual-history-audit.md)**.
+
 ## The story so far
 
 | Date | Episode |
@@ -23,8 +25,11 @@ https://dayoff.tmcowork.com
 | June 2026 | “What would a day off for Codex look like?” became a 30-second constellation garden for a Codex community meetup. |
 | June 20–25 | The visual language was rebuilt around an original Afterglow identity, documented in `DESIGN.md`, reviewed through a project-local OmD pilot, and deployed through GitHub and Cloudflare Pages. |
 | July 11 | The repository was reopened with GPT-5.6 Sol. The live experience was tested again, missed accessibility states were fixed, reduced-motion support was added, and the moment was recorded instead of being allowed to disappear into commit history. |
+| July 13 | A Galaxy S24 failure report turned the revisit into a rendering-safety pass: mobile pixel and frame budgets were bounded, desktop-site mode gained its own safety path, a persistent light field was added, and the first build was visually audited against the current experience. |
 
 Read the full entry: **[2026-07-11 — revisiting Afterglow](./docs/journal/2026-07-11.md)**.
+
+The follow-through is recorded in the **[Galaxy S24 incident report](./docs/incidents/2026-07-13-galaxy-s24-rendering.md)** and **[mobile rendering decision](./docs/decisions/0002-mobile-rendering-safety-and-gpu-strategy.md)**.
 
 ## Run
 
