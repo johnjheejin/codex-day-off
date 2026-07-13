@@ -56,6 +56,22 @@ The animation uses an optimized Canvas 2D renderer with cached glow sprites, a b
 
 Append `?debug=1` to the URL to display the active renderer, measured FPS, and device-pixel ratio.
 
+### Phone verification
+
+Use the direct result preview to inspect sharing without waiting for the 30-second play session:
+
+- Result and all six share destinations: <https://dayoff.tmcowork.com/?preview=result>
+- Result plus renderer/FPS diagnostics: <https://dayoff.tmcowork.com/?preview=result&debug=1>
+
+On Galaxy S24, open each link in Chrome Beta and Samsung Internet in the normal mobile layout. Confirm that `🌙 Night Sky` opens on a dark surface, `☀️ Paper Sky` switches immediately to warm white, the primary device share action appears in the first result viewport, and all six destinations remain reachable by vertical scrolling. The preview uses a fixed sample sky and does not change the normal entry flow. Full measurements and the distinction between automated approximation and physical-device testing are recorded in the **[S24 scenes and sharing verification](./docs/verification/2026-07-13-s24-scenes-and-sharing.md)**.
+
+| State | Screenshot | What it proves |
+| --- | --- | --- |
+| Night Sky · before | ![Galaxy S24-sized Night Sky intro before the scene-surface correction](./assets/verification/2026-07-13/s24-night-intro-before.jpg) | The selected Night label previously remained on a warm-white intro, making the state ambiguous. |
+| Night Sky · after | ![Galaxy S24-sized Night Sky intro after the dark surface correction](./assets/verification/2026-07-13/s24-night-intro-after.jpg) | Night selection now changes the intro background, text, borders, and prompt contrast immediately. |
+| Paper Sky · after | ![Galaxy S24-sized Paper Sky intro on the warm-white surface](./assets/verification/2026-07-13/s24-paper-intro-after.jpg) | Paper selection remains visibly distinct and readable on the warm-white surface. |
+| Paper Sky · result | ![Galaxy S24-sized Paper Sky result with sharing visible](./assets/verification/2026-07-13/s24-paper-result-share.jpg) | The primary share action and the six-destination panel are exposed without playing for 30 seconds. |
+
 ## Design
 
 The visual system is documented in [`DESIGN.md`](./DESIGN.md). It uses an original OpenAI-inspired product language while preserving the Afterglow concept and avoiding official logo or layout reproduction.

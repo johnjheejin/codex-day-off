@@ -46,18 +46,12 @@
       position: fixed;
       inset: 0;
       overflow: hidden;
-      background: var(--canvas);
-      transition: background 1.2s cubic-bezier(.2,.7,.2,1), color 1.2s ease;
-    }
-
-    #world.playing,
-    #world.ended {
       color: var(--night-ink);
       background: var(--night);
+      transition: background 320ms cubic-bezier(.16, 1, .3, 1), color 320ms cubic-bezier(.16, 1, .3, 1);
     }
 
-    #world.light-field.playing,
-    #world.light-field.ended {
+    #world.light-field {
       color: var(--ink);
       background: var(--canvas);
     }
@@ -86,12 +80,11 @@
       justify-content: space-between;
       padding: 0 clamp(20px, 4vw, 56px);
       border-bottom: 1px solid var(--line);
-      transition: border-color 1s ease, color 1s ease;
+      transition: border-color 320ms cubic-bezier(.16, 1, .3, 1), color 320ms cubic-bezier(.16, 1, .3, 1);
     }
 
-    .playing .topbar, .ended .topbar { border-color: rgba(255,255,255,.14); }
-    .light-field.playing .topbar,
-    .light-field.ended .topbar { border-color: var(--line); }
+    .topbar { border-color: rgba(244,244,239,.14); }
+    .light-field .topbar { border-color: var(--line); }
 
     .topbar-actions {
       display: flex;
@@ -113,11 +106,9 @@
       transition: background .18s ease, border-color .18s ease;
     }
 
-    .playing .appearance-toggle,
-    .ended .appearance-toggle { border-color: rgba(244,244,239,.22); }
+    .appearance-toggle { border-color: rgba(244,244,239,.22); }
     .appearance-toggle:hover { background: var(--accent-soft); }
-    .playing .appearance-toggle:hover,
-    .ended .appearance-toggle:hover { color: var(--ink); }
+    .appearance-toggle:hover { color: var(--ink); }
     .appearance-toggle:active { transform: scale(.97); }
     .appearance-toggle:disabled {
       cursor: not-allowed;
@@ -163,17 +154,13 @@
       text-wrap: balance;
     }
 
-    .playing .brand-desc,
-    .ended .brand-desc,
-    .playing .theme-line,
-    .ended .theme-line {
+    .brand-desc,
+    .theme-line {
       color: var(--night-muted);
     }
 
-    .light-field.playing .brand-desc,
-    .light-field.ended .brand-desc,
-    .light-field.playing .theme-line,
-    .light-field.ended .theme-line { color: var(--muted); }
+    .light-field .brand-desc,
+    .light-field .theme-line { color: var(--muted); }
 
     .screen {
       position: absolute;
@@ -290,6 +277,24 @@
       color: var(--muted);
       font: 400 11px/1.6 "SFMono-Regular", Consolas, monospace;
       letter-spacing: .04em;
+    }
+
+    #world:not(.light-field) .intro-card .eyebrow,
+    #world:not(.light-field) h1 em,
+    #world:not(.light-field) .session-spec li,
+    #world:not(.light-field) .hint { color: var(--night-muted); }
+
+    #world:not(.light-field) .lede { color: var(--night-ink); }
+
+    #world:not(.light-field) .session-spec {
+      border-color: rgba(244,244,239,.22);
+    }
+
+    #world:not(.light-field) .session-spec b { color: var(--night-ink); }
+
+    #world:not(.light-field) .prompt {
+      border-color: rgba(244,244,239,.22);
+      background: var(--night-ink);
     }
 
     .session-spec {
@@ -1088,7 +1093,9 @@
       let resizeTimer = 0;
       let sharePrepareTimer = 0;
       const duration = 30;
-      const debugMode = new URLSearchParams(location.search).has('debug');
+      const query = new URLSearchParams(location.search);
+      const debugMode = query.has('debug');
+      const previewMode = query.get('preview');
       const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
       const coarsePointer = coarsePointerHint;
       const mobilePerformance = coarsePointer;
@@ -1627,13 +1634,15 @@
         canvas.focus({ preventScroll: true });
       }
 
-      function finish() {
-        if (mode !== 'play') return;
+      function showResult() {
         mode = 'result';
         particles = [];
         trails = [];
         world.classList.remove('playing');
         world.classList.add('ended');
+        intro.classList.add('hidden');
+        intro.setAttribute('aria-hidden', 'true');
+        intro.inert = true;
         hud.classList.remove('visible');
         hud.setAttribute('aria-hidden', 'true');
         result.classList.remove('hidden');
@@ -1656,6 +1665,26 @@
             : `${count} loose thoughts were enough. There was no score—only a little more room to look up.`;
         prepareShareImage();
         document.querySelector('#resultTitle').focus({ preventScroll: true });
+      }
+
+      function finish() {
+        if (mode !== 'play') return;
+        showResult();
+      }
+
+      function previewResult() {
+        count = 12;
+        const previewColors = colors.slice(0, 4);
+        blooms = Array.from({ length: count }, (_, index) => ({
+          x: width * (.18 + (index % 4) * .21),
+          y: height * (.2 + Math.floor(index / 4) * .24),
+          color: previewColors[index % previewColors.length],
+          born: performance.now() - 1000,
+          petals: 5 + (index % 4),
+          size: 15 + (index % 3) * 4,
+          rotation: index * .47
+        }));
+        showResult();
       }
 
       function collect(p) {
@@ -1749,7 +1778,7 @@
           stars.forEach(s => {
             const flicker = reducedMotion ? 1 : .6 + Math.sin(now * .001 + s.phase) * .4;
             ctx.globalAlpha = s.a * flicker;
-            ctx.fillStyle = '#0d0d0d';
+            ctx.fillStyle = world.classList.contains('light-field') ? '#0d0d0d' : '#f4f4ef';
             ctx.beginPath();
             ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
             ctx.fill();
@@ -1931,6 +1960,7 @@
       try { savedField = localStorage.getItem('afterglow-field') || ''; } catch (_) {}
       setLightField(savedField === 'light', false);
       resize(true);
+      if (previewMode === 'result') previewResult();
       if (debugMode) debugPanel.classList.add('visible');
       rafId = requestAnimationFrame(frame);
     })();

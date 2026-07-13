@@ -73,7 +73,7 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 - The start control resembles a compact prompt composer.
 - Cursor or arrow/WASD input moves the focus point.
 - On touch devices, pressing and dragging directly steers the focus point; the play surface must suppress browser panning while the gesture is active.
-- The experience has two named play scenes rather than a light/dark display preference: `🌙 Night Sky` darkens when play begins, while `☀️ Paper Sky` keeps the warm-white canvas. The persistent scene control shows the current scene with its sun or moon emoji; its accessible label also names the scene it will switch to.
+- The experience has two named play scenes rather than a light/dark display preference: selecting `🌙 Night Sky` immediately previews the night surface from the intro onward, while `☀️ Paper Sky` immediately previews the warm-white surface. The persistent scene control shows the current scene with its sun or moon emoji; its accessible label also names the scene it will switch to.
 - Collected thoughts become restrained line-drawn blooms.
 - The ending uses an editorial closing layout, without diagnostic or internal report labels.
 - The timer and progress line communicate duration. Do not add technical lifecycle labels.

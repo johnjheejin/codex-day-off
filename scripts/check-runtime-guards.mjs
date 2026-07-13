@@ -18,6 +18,10 @@ const required = [
   ['paper scene label', '☀️ Paper Sky'],
   ['mobile result scrolling', 'touch-action: pan-y'],
   ['result scroll reset', 'result.scrollTop = 0'],
+  ['direct result preview', "previewMode === 'result'"],
+  ['night intro surface', 'background: var(--night)'],
+  ['scene transition budget', 'background 320ms cubic-bezier(.16, 1, .3, 1)'],
+  ['topbar transition budget', 'border-color 320ms cubic-bezier(.16, 1, .3, 1)'],
   ['browser recolor guard', 'color-scheme: only light'],
   ['page-exit resource release', "addEventListener('pagehide'"],
 ];
