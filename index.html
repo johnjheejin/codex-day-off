@@ -260,13 +260,13 @@
 
     .start:hover { transform: translateY(-2px); background: var(--hover-ink); }
     .start:focus-visible,
-    .share-button:focus-visible {
+    .afterglow-handoff-button:focus-visible {
       outline: 2px solid currentColor;
       outline-offset: 3px;
     }
     .start:active { transform: scale(.97); }
     .start:disabled,
-    .share-button:disabled {
+    .afterglow-handoff-button:disabled {
       cursor: not-allowed;
       opacity: .45;
       transform: none;
@@ -419,15 +419,15 @@
     .light-field .result-card .eyebrow,
     .light-field .result-meta,
     .light-field .stat span,
-    .light-field .share-heading span,
-    .light-field .share-note,
+    .light-field .afterglow-handoff-heading span,
+    .light-field .afterglow-handoff-note,
     .light-field .project-note,
     .light-field .cursor-note { color: var(--muted); }
     .light-field #whisper,
     .light-field #resultText { color: var(--body-ink); }
     .light-field .counter,
     .light-field .result-detail,
-    .light-field .share-panel { border-color: var(--line); }
+    .light-field .afterglow-handoff { border-color: var(--line); }
     .light-field #resultTitle:focus-visible { outline-color: var(--ink); }
     .light-field .result-card .start {
       color: var(--surface);
@@ -435,19 +435,19 @@
     }
     .light-field .result-card .start:hover { background: var(--hover-ink); }
     .light-field .project-note:hover { color: var(--ink); }
-    .light-field .share-button {
+    .light-field .afterglow-handoff-button {
       border-color: var(--line);
       color: var(--ink);
     }
-    .light-field .share-button:hover {
+    .light-field .afterglow-handoff-button:hover {
       border-color: var(--muted);
       background: var(--accent-soft);
     }
-    .light-field .share-button.primary-share {
+    .light-field .afterglow-handoff-button.afterglow-handoff-primary {
       color: var(--surface);
       background: var(--ink);
     }
-    .light-field .share-button.primary-share:hover { background: var(--hover-ink); }
+    .light-field .afterglow-handoff-button.afterglow-handoff-primary:hover { background: var(--hover-ink); }
 
     .result-card {
       width: min(980px, 100%);
@@ -546,13 +546,13 @@
       outline-offset: 3px;
     }
 
-    .share-panel {
+    .afterglow-handoff {
       margin: 0 0 24px;
       padding-top: 20px;
       border-top: 1px solid rgba(244,244,239,.18);
     }
 
-    .share-heading {
+    .afterglow-handoff-heading {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
@@ -560,24 +560,24 @@
       margin-bottom: 12px;
     }
 
-    .share-title {
+    .afterglow-handoff-title {
       margin: 0;
       font-size: 14px;
       font-weight: 500;
     }
 
-    .share-heading span {
+    .afterglow-handoff-heading span {
       color: var(--night-muted);
       font: 400 11px/1.3 "SFMono-Regular", Consolas, monospace;
     }
 
-    .share-actions {
+    .afterglow-handoff-actions {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
     }
 
-    .share-button {
+    .afterglow-handoff-button {
       min-height: 44px;
       padding: 0 12px;
       border: 1px solid rgba(244,244,239,.22);
@@ -591,23 +591,23 @@
       transition: border-color .18s ease, background .18s ease;
     }
 
-    .share-button:hover {
+    .afterglow-handoff-button:hover {
       border-color: rgba(244,244,239,.54);
       background: rgba(244,244,239,.08);
     }
 
-    .share-button:active { transform: scale(.98); }
+    .afterglow-handoff-button:active { transform: scale(.98); }
 
-    .share-button.primary-share {
+    .afterglow-handoff-button.afterglow-handoff-primary {
       grid-column: 1 / -1;
       color: var(--night);
       background: var(--night-ink);
       text-align: center;
     }
 
-    .share-button.primary-share:hover { background: #fff; }
+    .afterglow-handoff-button.afterglow-handoff-primary:hover { background: #fff; }
 
-    .share-note {
+    .afterglow-handoff-note {
       min-height: 16px;
       margin: 10px 0 0;
       color: var(--night-muted);
@@ -615,7 +615,7 @@
       text-wrap: pretty;
     }
 
-    .share-dialog {
+    .afterglow-handoff-dialog {
       width: min(560px, calc(100% - 32px));
       max-height: calc(100dvh - 32px);
       padding: 0;
@@ -627,15 +627,15 @@
       box-shadow: var(--dialog-shadow);
     }
 
-    .share-dialog::backdrop {
+    .afterglow-handoff-dialog::backdrop {
       background: var(--overlay);
     }
 
-    .share-dialog-inner {
+    .afterglow-handoff-dialog-inner {
       padding: clamp(24px, 5vw, 40px);
     }
 
-    .share-dialog-head {
+    .afterglow-handoff-dialog-head {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
@@ -643,7 +643,7 @@
       margin-bottom: 24px;
     }
 
-    .share-dialog-label {
+    .afterglow-handoff-dialog-label {
       margin: 0 0 8px;
       color: var(--muted);
       font: 500 11px/1 "SFMono-Regular", Consolas, monospace;
@@ -651,7 +651,7 @@
       text-transform: uppercase;
     }
 
-    .share-dialog-title {
+    .afterglow-handoff-dialog-title {
       max-width: 420px;
       margin: 0;
       font-size: clamp(30px, 6vw, 46px);
@@ -683,7 +683,7 @@
       outline-offset: 3px;
     }
 
-    .share-dialog-copy {
+    .afterglow-handoff-dialog-copy {
       max-width: 48ch;
       margin: 0 0 24px;
       color: var(--body-ink);
@@ -718,7 +718,7 @@
       font: 500 12px/1.6 "SFMono-Regular", Consolas, monospace;
     }
 
-    .share-preview {
+    .afterglow-handoff-preview {
       display: grid;
       grid-template-columns: 120px 1fr;
       gap: 16px;
@@ -730,7 +730,7 @@
       background: var(--canvas);
     }
 
-    .share-preview img {
+    .afterglow-handoff-preview img {
       display: block;
       width: 120px;
       aspect-ratio: 1200 / 630;
@@ -739,7 +739,7 @@
       background: var(--night);
     }
 
-    .share-preview p {
+    .afterglow-handoff-preview p {
       margin: 0;
       color: var(--muted);
       font: 400 11px/1.5 "SFMono-Regular", Consolas, monospace;
@@ -843,7 +843,7 @@
       .timer small { display: none; }
       .cursor-note { display: none; }
       .session-spec { margin-bottom: 18px; }
-      .share-actions { grid-template-columns: 1fr 1fr; }
+      .afterglow-handoff-actions { grid-template-columns: 1fr 1fr; }
       .result-card { padding-bottom: 28px; gap: 32px; }
       #resultTitle { font-size: clamp(48px, 14vw, 68px); }
       .result-card .eyebrow { margin-bottom: 16px; }
@@ -853,29 +853,29 @@
         padding-top: 0;
         border-top: 0;
       }
-      .share-panel {
+      .afterglow-handoff {
         margin: 0 0 24px;
         padding: 16px 0 0;
       }
-      .share-heading {
+      .afterglow-handoff-heading {
         align-items: flex-start;
         flex-direction: column;
         gap: 8px;
       }
-      .share-button {
+      .afterglow-handoff-button {
         min-height: 50px;
         padding: 0 16px;
         font-size: 14px;
       }
-      .share-note {
+      .afterglow-handoff-note {
         min-height: auto;
         font-size: 12px;
         line-height: 1.55;
       }
-      .share-dialog-inner { padding: 24px 20px; }
-      .share-dialog-head { gap: 12px; }
-      .share-preview { grid-template-columns: 96px 1fr; }
-      .share-preview img { width: 96px; }
+      .afterglow-handoff-dialog-inner { padding: 24px 20px; }
+      .afterglow-handoff-dialog-head { gap: 12px; }
+      .afterglow-handoff-preview { grid-template-columns: 96px 1fr; }
+      .afterglow-handoff-preview img { width: 96px; }
       .dialog-actions { grid-template-columns: 1fr; }
       .dialog-action.primary { grid-row: 1; }
     }
@@ -887,13 +887,13 @@
     }
 
     @media (max-width: 420px) {
-      .share-button { padding: 0 12px; font-size: 12px; }
+      .afterglow-handoff-button { padding: 0 12px; font-size: 12px; }
       .result-meta { align-items: flex-start; flex-direction: column; gap: 4px; }
     }
 
     @media (max-width: 340px) {
-      .share-actions { grid-template-columns: 1fr; }
-      .share-button.primary-share { grid-column: auto; }
+      .afterglow-handoff-actions { grid-template-columns: 1fr; }
+      .afterglow-handoff-button.afterglow-handoff-primary { grid-column: auto; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -967,21 +967,21 @@
           <h2 id="resultTitle" tabindex="-1">You made<br>room to wonder.</h2>
         </div>
         <div class="result-detail">
-          <div class="share-panel">
-            <div class="share-heading">
-              <h2 class="share-title">Share your afterglow</h2>
+          <section class="afterglow-handoff" aria-labelledby="afterglowHandoffTitle">
+            <div class="afterglow-handoff-heading">
+              <h2 id="afterglowHandoffTitle" class="afterglow-handoff-title">Share your afterglow</h2>
               <span>#CodexDayOff #Afterglow</span>
             </div>
-            <div class="share-actions">
-              <button class="share-button primary-share" data-share="native" disabled>Share from this device</button>
-              <button class="share-button" data-share="linkedin" disabled>Post to LinkedIn</button>
-              <button class="share-button" data-share="x" disabled>Post to X</button>
-              <button class="share-button" data-share="telegram" disabled>Send with Telegram</button>
-              <button class="share-button" data-share="kakao" disabled>Send with KakaoTalk</button>
-              <button class="share-button" data-share="download" disabled>Download PNG</button>
+            <div class="afterglow-handoff-actions">
+              <button class="afterglow-handoff-button afterglow-handoff-primary" data-afterglow-destination="native" disabled>Share from this device</button>
+              <button class="afterglow-handoff-button" data-afterglow-destination="linkedin" disabled>Post to LinkedIn</button>
+              <button class="afterglow-handoff-button" data-afterglow-destination="x" disabled>Post to X</button>
+              <button class="afterglow-handoff-button" data-afterglow-destination="telegram" disabled>Send with Telegram</button>
+              <button class="afterglow-handoff-button" data-afterglow-destination="kakao" disabled>Send with KakaoTalk</button>
+              <button class="afterglow-handoff-button" data-afterglow-destination="download" disabled>Download PNG</button>
             </div>
-            <p id="shareNote" class="share-note">Your image and caption will be prepared together.</p>
-          </div>
+            <p id="afterglowHandoffNote" class="afterglow-handoff-note">Your image and caption will be prepared together.</p>
+          </section>
           <div class="result-meta"><span id="sceneName">Your Night Sky</span><span>Made in 30 seconds</span></div>
           <p id="resultText"></p>
           <div class="stats">
@@ -994,24 +994,24 @@
         </div>
       </div>
     </section>
-    <dialog id="shareDialog" class="share-dialog" aria-labelledby="shareDialogTitle">
-      <div class="share-dialog-inner">
-        <div class="share-dialog-head">
+    <dialog id="afterglowHandoffDialog" class="afterglow-handoff-dialog" aria-labelledby="afterglowHandoffDialogTitle">
+      <div class="afterglow-handoff-dialog-inner">
+        <div class="afterglow-handoff-dialog-head">
           <div>
-            <p id="shareDialogLabel" class="share-dialog-label">Share handoff</p>
-            <h2 id="shareDialogTitle" class="share-dialog-title">Before you continue</h2>
+            <p id="afterglowHandoffDialogLabel" class="afterglow-handoff-dialog-label">Share handoff</p>
+            <h2 id="afterglowHandoffDialogTitle" class="afterglow-handoff-dialog-title">Before you continue</h2>
           </div>
-          <button id="shareDialogClose" class="dialog-close" type="button" aria-label="Close share instructions">×</button>
+          <button id="afterglowHandoffDialogClose" class="dialog-close" type="button" aria-label="Close share instructions">×</button>
         </div>
-        <p id="shareDialogCopy" class="share-dialog-copy"></p>
-        <div class="share-preview">
-          <img id="sharePreview" alt="Preview of your Afterglow share image">
-          <p id="sharePreviewNote">1200 × 630 PNG<br>Caption and hashtags included</p>
+        <p id="afterglowHandoffDialogCopy" class="afterglow-handoff-dialog-copy"></p>
+        <div class="afterglow-handoff-preview">
+          <img id="afterglowHandoffPreview" alt="Preview of your Afterglow share image">
+          <p id="afterglowHandoffPreviewNote">1200 × 630 PNG<br>Caption and hashtags included</p>
         </div>
         <ol id="handoffSteps" class="handoff-steps"></ol>
         <div class="dialog-actions">
-          <button id="shareDialogCancel" class="dialog-action" type="button">Not now</button>
-          <button id="shareDialogContinue" class="dialog-action primary" type="button">Continue</button>
+          <button id="afterglowHandoffDialogCancel" class="dialog-action" type="button">Not now</button>
+          <button id="afterglowHandoffDialogContinue" class="dialog-action primary" type="button">Continue</button>
         </div>
       </div>
     </dialog>
@@ -1032,23 +1032,24 @@
       const countEl = document.querySelector('#count');
       const progressEl = document.querySelector('#progress');
       const whisper = document.querySelector('#whisper');
-      const shareNote = document.querySelector('#shareNote');
-      const shareDialog = document.querySelector('#shareDialog');
-      const shareDialogLabel = document.querySelector('#shareDialogLabel');
-      const shareDialogTitle = document.querySelector('#shareDialogTitle');
-      const shareDialogCopy = document.querySelector('#shareDialogCopy');
-      const sharePreview = document.querySelector('#sharePreview');
+      const afterglowHandoff = document.querySelector('.afterglow-handoff');
+      const shareNote = document.querySelector('#afterglowHandoffNote');
+      const shareDialog = document.querySelector('#afterglowHandoffDialog');
+      const shareDialogLabel = document.querySelector('#afterglowHandoffDialogLabel');
+      const shareDialogTitle = document.querySelector('#afterglowHandoffDialogTitle');
+      const shareDialogCopy = document.querySelector('#afterglowHandoffDialogCopy');
+      const sharePreview = document.querySelector('#afterglowHandoffPreview');
       const handoffSteps = document.querySelector('#handoffSteps');
-      const shareDialogClose = document.querySelector('#shareDialogClose');
-      const shareDialogCancel = document.querySelector('#shareDialogCancel');
-      const shareDialogContinue = document.querySelector('#shareDialogContinue');
+      const shareDialogClose = document.querySelector('#afterglowHandoffDialogClose');
+      const shareDialogCancel = document.querySelector('#afterglowHandoffDialogCancel');
+      const shareDialogContinue = document.querySelector('#afterglowHandoffDialogContinue');
       const toast = document.querySelector('#toast');
       const debugPanel = document.querySelector('#debugPanel');
       const startBtn = document.querySelector('#start');
       const againBtn = document.querySelector('#again');
       const appearanceToggle = document.querySelector('#appearanceToggle');
       const sceneName = document.querySelector('#sceneName');
-      const shareButtons = [...document.querySelectorAll('[data-share]')];
+      const shareButtons = [...document.querySelectorAll('[data-afterglow-destination]')];
 
       const colors = ['#ff6f61', '#f3a712', '#5b8def', '#3aa981', '#9b7ede'];
       const messages = [
@@ -1634,6 +1635,23 @@
         canvas.focus({ preventScroll: true });
       }
 
+      function ensureAfterglowHandoffVisible(recheck = false) {
+        const style = getComputedStyle(afterglowHandoff);
+        const hidden = style.display === 'none'
+          || style.visibility === 'hidden'
+          || style.visibility === 'collapse'
+          || Number.parseFloat(style.opacity) === 0
+          || afterglowHandoff.getBoundingClientRect().height < 1;
+        if (!hidden) return;
+
+        afterglowHandoff.removeAttribute('class');
+        afterglowHandoff.removeAttribute('hidden');
+        afterglowHandoff.style.setProperty('display', 'block', 'important');
+        afterglowHandoff.style.setProperty('visibility', 'visible', 'important');
+        afterglowHandoff.style.setProperty('opacity', '1', 'important');
+        if (!recheck) setTimeout(() => ensureAfterglowHandoffVisible(true), 250);
+      }
+
       function showResult() {
         mode = 'result';
         particles = [];
@@ -1649,6 +1667,7 @@
         result.setAttribute('aria-hidden', 'false');
         result.inert = false;
         result.scrollTop = 0;
+        requestAnimationFrame(() => ensureAfterglowHandoffVisible());
         document.querySelector('#finalCount').textContent = count;
         document.querySelector('#finalBloom').textContent = blooms.length;
         const mood = count > 16 ? 'electric' : count > 8 ? 'gentle' : 'quiet';
@@ -1935,7 +1954,7 @@
         if (event.target === shareDialog) closeShareGuide();
       });
       shareButtons.forEach(button => {
-        button.addEventListener('click', () => shareTo(button.dataset.share));
+        button.addEventListener('click', () => shareTo(button.dataset.afterglowDestination));
       });
       document.addEventListener('visibilitychange', () => {
         paused = document.hidden;

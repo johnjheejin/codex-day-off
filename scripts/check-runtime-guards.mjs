@@ -24,17 +24,35 @@ const required = [
   ['topbar transition budget', 'border-color 320ms cubic-bezier(.16, 1, .3, 1)'],
   ['browser recolor guard', 'color-scheme: only light'],
   ['page-exit resource release', "addEventListener('pagehide'"],
+  ['handoff visibility resilience guard', 'function ensureAfterglowHandoffVisible'],
 ];
 
 for (const [label, needle] of required) {
   if (!html.includes(needle)) throw new Error(`Missing runtime guard: ${label}`);
 }
 
-const resultMarkup = html.match(/<section id="result"[\s\S]*?<\/section>/)?.[0] || '';
-const shareButtonCount = (resultMarkup.match(/data-share=/g) || []).length;
-if (shareButtonCount !== 6) throw new Error(`Expected 6 share destinations, found ${shareButtonCount}.`);
-if (resultMarkup.indexOf('class="share-panel"') > resultMarkup.indexOf('class="result-meta"')) {
-  throw new Error('The mobile-first share panel must precede result metadata in the result flow.');
+const resultMarkup = html.match(/<section id="result"[\s\S]*?(?=<dialog id="afterglowHandoffDialog")/)?.[0] || '';
+const css = html.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
+const genericShareHook = /(?:class|id|data-[\w-]+)=["'][^"']*share/i;
+const genericShareSelector = /[.#][\w-]*share[\w-]*/i;
+if (genericShareHook.test(html)
+  || genericShareSelector.test(css)
+  || html.includes('[data-share')
+  || html.includes('dataset.share')) {
+  throw new Error('Generic share-named DOM hooks can trigger cosmetic social filters.');
+}
+
+const destinations = [...resultMarkup.matchAll(/data-afterglow-destination="([^"]+)"/g)].map(match => match[1]);
+const expectedDestinations = ['native', 'linkedin', 'x', 'telegram', 'kakao', 'download'];
+if (destinations.length !== expectedDestinations.length
+  || expectedDestinations.some((destination, index) => destinations[index] !== destination)) {
+  throw new Error(`Expected six Afterglow handoff destinations, found: ${destinations.join(', ')}`);
+}
+if (!resultMarkup.includes('<section class="afterglow-handoff" aria-labelledby="afterglowHandoffTitle">')) {
+  throw new Error('The Afterglow handoff must remain a labelled semantic section.');
+}
+if (resultMarkup.indexOf('class="afterglow-handoff"') > resultMarkup.indexOf('class="result-meta"')) {
+  throw new Error('The mobile-first handoff section must precede result metadata in the result flow.');
 }
 
 for (const forbidden of ['feTurbulence', 'mix-blend-mode: multiply']) {
