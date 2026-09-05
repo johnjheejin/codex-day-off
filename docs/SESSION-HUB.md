@@ -4,15 +4,15 @@
 
 마지막 확인: 2026-09-06
 
-## 2026-09-06 라이브 하늘 공개 완료 · 자동 배포 토큰 확인 대기
+## 2026-09-06 GitHub 자동 배포 완료
 
-- 결과의 Explore sky에서 Touch the sky와 Turn in 3D를 사용한다. 꽃을 스치거나 드래그·방향키로 시점을 돌리며 원본 PNG는 유지한다. 입력이 가라앉으면 렌더링을 멈추고, 기본 소리는 켜되 직접 음소거한 선택을 기억한다. 4K 회전의 카메라 깊이도 교정했다.
-- 기능 커밋 `25f8949`와 `07de646`을 GitHub main에 게시했다. 기존 로그인 인증으로 Cloudflare production `6e0df2f1-5d25-4ed2-b2db-4a6d7e21f168`을 게시했다(source `07de646`). 공개 도메인 8개 파일 대조와 브라우저 29개가 통과했다.
-- GitHub 검사도 단위 16개·브라우저 29개, 총 45개를 통과했다. [검증](./verification/2026-09-06-living-sky.md)과 [새 제작 일지](./journal/2026-09-06.md)를 게시했다.
-- **GitHub Actions 자동 배포는 아직 미완료**다. 워크플로 실행의 검사 단계는 성공했지만 CLOUDFLARE_API_TOKEN 미연결로 게시 단계는 실패했다. 새 접근 토큰 발급은 브라우저 도구 규칙에 따라 사용자 확인을 요청했고 아직 응답이 없다. Chrome Beta의 토큰 요약 화면은 계정 하나의 Pages Edit만 선택한 상태이며 생성 버튼은 누르지 않았다. [운영 상태와 재실행](./deployment.md).
-- 최종 workflow run `33990631243`에서도 검사 45개 성공, `Check deployment credential` 단계에서 토큰 미연결로 중단됐다. 이 실행은 자동 배포를 시도하지 않았다. Wrangler 4.129.0과 잠금 파일을 사용하며 배포 대조 기록은 브라우저 검사 정리와 분리해 보존한다.
-- 계정 식별자 repository variable은 연결했다. 다음에는 토큰 승인 응답을 확인한 뒤 발급·GitHub secret 저장·워크플로 재실행·공개 검증까지 마무리한다. 토큰은 만료일 없는 계정 Pages Edit 범위로 제안했으며 다른 계정·DNS·Workers 권한은 포함하지 않는다.
-- 추가 스킬·하위 에이전트·옛 ZIP 변경은 없다. 실기기 열 검증과 새로고침 후 작품 복원·라이브 공유 링크는 남아 있다. 기존 27송이 작품이 열려 있던 공개 탭은 보존하고 새 공개본은 별도 탭에 열었다.
+- 사용자가 토큰 발급을 승인했고, 이미 생성한 `Afterglow GitHub production deploy` 토큰을 추가 발급 없이 사용했다. 활성 상태와 프로젝트 접근을 확인한 뒤 GitHub `CLOUDFLARE_API_TOKEN` 비밀값에 연결했다. 계정 하나의 Pages Edit 범위이며 개인 Wrangler OAuth는 GitHub에 저장하지 않았다.
+- [GitHub push run 33998524892](https://github.com/johnjheejin/codex-day-off/actions/runs/33998524892) 성공. source `0d19ba4`. 배포 전 단위 19개·브라우저 29개(48개), 배포 후 고정 URL 8개 파일 대조·브라우저 29개 검사와 실제 production·공개 도메인 연결을 확인했다.
+- Cloudflare production `5aee512b-ad0e-40b7-9a41-b5574e9211ba`, [고정 배포 URL](https://5aee512b.codex-day-off.pages.dev), 공개 주소 https://dayoff.tmcowork.com/ 이다. `main`의 런타임·테스트·배포 설정 변경은 자동 검사 후 게시된다. 문서·캡처만의 변경은 배포하지 않는다. [운영과 증거](./deployment.md).
+- GitHub에서 공개 도메인의 HTML·서체 README는 `403 / cf-mitigated: challenge`이며 나머지 6개 파일은 일치한다. 전체 공개 콘텐츠 검증 미완료 경고로 남긴다. 같은 공개 주소는 로컬에서 8개 파일·브라우저 29개를 다시 통과했다. 보안 설정은 변경하지 않았다.
+- 라이브 하늘·기본 소리 기능은 `25f8949`와 `07de646`에서 구현했다. Explore sky의 손길 반응·Turn in 3D는 원본 PNG를 보존하며 입력이 가라앉으면 렌더링을 멈춘다. 소리는 시작 후 기본으로 켜고 직접 음소거한 선택은 기억한다. 4K 회전의 카메라 깊이도 교정했다.
+- [기능 검증](./verification/2026-09-06-living-sky.md)과 [제작 일지](./journal/2026-09-06.md)를 게시했다. 실기기 열 검증, 새로고침 후 작품 복원과 라이브 공유 링크는 남아 있다.
+- 추가 스킬·하위 에이전트·옛 ZIP 변경은 없다. 기존 작품이 열린 공개 탭도 보존했다. 아래 기록은 각 작업 당시 이력이다.
 
 ## 2026-09-06 공개 반영 완료
 

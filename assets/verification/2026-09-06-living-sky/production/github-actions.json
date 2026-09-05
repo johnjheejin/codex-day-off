@@ -1,0 +1,342 @@
+{
+  "run": "https://github.com/johnjheejin/codex-day-off/actions/runs/33998524892",
+  "head": "0d19ba46be0902c92a3c3e796c159548ed88104a",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "verify",
+      "conclusion": "success",
+      "url": "https://github.com/johnjheejin/codex-day-off/actions/runs/33998524892/job/101393193397"
+    },
+    {
+      "name": "publish",
+      "conclusion": "success",
+      "url": "https://github.com/johnjheejin/codex-day-off/actions/runs/33998524892/job/101393515779"
+    }
+  ],
+  "productionBinding": {
+    "checkedAt": "2026-09-05T23:28:57.830Z",
+    "project": "codex-day-off",
+    "domain": "dayoff.tmcowork.com",
+    "domainStatus": "active",
+    "deploymentId": "5aee512b-ad0e-40b7-9a41-b5574e9211ba",
+    "deploymentURL": "https://5aee512b.codex-day-off.pages.dev",
+    "commit": "0d19ba46be0902c92a3c3e796c159548ed88104a"
+  },
+  "manifest": [
+    {
+      "file": "index.html",
+      "bytes": 125862,
+      "sha256": "4150000bbfcb519f3d58772f893b346683c5efd78fb1ad14bc7a075cf6d3a72e"
+    },
+    {
+      "file": "assets/afterglow-three.js",
+      "bytes": 544282,
+      "sha256": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc"
+    },
+    {
+      "file": "assets/afterglow-garden.js",
+      "bytes": 5890,
+      "sha256": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c"
+    },
+    {
+      "file": "assets/afterglow-three.js.LEGAL.txt",
+      "bytes": 188,
+      "sha256": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674"
+    },
+    {
+      "file": "assets/THREE-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    {
+      "file": "assets/fonts/newsreader-display-latin.woff2",
+      "bytes": 21704,
+      "sha256": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821"
+    },
+    {
+      "file": "assets/fonts/NEWSREADER-OFL.txt",
+      "bytes": 4394,
+      "sha256": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8"
+    },
+    {
+      "file": "assets/fonts/README.md",
+      "bytes": 1056,
+      "sha256": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41"
+    }
+  ],
+  "immutableFiles": {
+    "base": "https://5aee512b.codex-day-off.pages.dev",
+    "checkedAt": "2026-09-05T23:26:34.087Z",
+    "state": "verified",
+    "files": [
+      {
+        "file": "index.html",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a368ffe60907f15f-ORD",
+        "expected": "4150000bbfcb519f3d58772f893b346683c5efd78fb1ad14bc7a075cf6d3a72e",
+        "actual": "4150000bbfcb519f3d58772f893b346683c5efd78fb1ad14bc7a075cf6d3a72e",
+        "normalized": "4150000bbfcb519f3d58772f893b346683c5efd78fb1ad14bc7a075cf6d3a72e",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a368ffe5f98fb32d-MSP",
+        "expected": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "actual": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "normalized": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-garden.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a368ffe60fadacd5-MSP",
+        "expected": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+        "actual": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+        "normalized": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js.LEGAL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a368ffe5fd1dad18-MSP",
+        "expected": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "actual": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "normalized": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "matches": true
+      },
+      {
+        "file": "assets/THREE-LICENSE.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a368ffe5fdadacf0-MSP",
+        "expected": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "actual": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "normalized": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/newsreader-display-latin.woff2",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a368ffe5fd3b7816-MSP",
+        "expected": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "actual": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "normalized": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/NEWSREADER-OFL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a368ffe60e2de895-MSP",
+        "expected": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "actual": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "normalized": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/README.md",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a368ffe5fb82ae26-MSP",
+        "expected": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "actual": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "normalized": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "matches": true
+      }
+    ]
+  },
+  "publicFilesFromGitHub": {
+    "base": "https://dayoff.tmcowork.com",
+    "checkedAt": "2026-09-05T23:28:58.112Z",
+    "state": "challenged",
+    "files": [
+      {
+        "file": "index.html",
+        "status": 403,
+        "mitigated": "challenge",
+        "ray": "a369036a9b79e6c0-ORD",
+        "expected": "4150000bbfcb519f3d58772f893b346683c5efd78fb1ad14bc7a075cf6d3a72e",
+        "actual": "0e0ace15b4d6f66ae420e3e493e0b2db9cff63257b6ae1535c5bb13f604f539a",
+        "normalized": "0e0ace15b4d6f66ae420e3e493e0b2db9cff63257b6ae1535c5bb13f604f539a",
+        "matches": false
+      },
+      {
+        "file": "assets/afterglow-three.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369036aa964b271-ORD",
+        "expected": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "actual": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "normalized": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-garden.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369036a985961df-ORD",
+        "expected": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+        "actual": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+        "normalized": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js.LEGAL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369036a9c243f2a-ORD",
+        "expected": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "actual": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "normalized": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "matches": true
+      },
+      {
+        "file": "assets/THREE-LICENSE.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369036a9f53fa19-ORD",
+        "expected": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "actual": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "normalized": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/newsreader-display-latin.woff2",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369036a9e422288-ORD",
+        "expected": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "actual": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "normalized": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/NEWSREADER-OFL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369036a9b78fc36-ORD",
+        "expected": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "actual": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "normalized": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/README.md",
+        "status": 403,
+        "mitigated": "challenge",
+        "ray": "a369036aab35e0fa-ORD",
+        "expected": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "actual": "d163476a6ceb404900732dcc01987d315c79c5629557828ae073863b2b46c6f1",
+        "normalized": "d163476a6ceb404900732dcc01987d315c79c5629557828ae073863b2b46c6f1",
+        "matches": false
+      }
+    ]
+  },
+  "publicFilesFromLocal": {
+    "base": "https://dayoff.tmcowork.com",
+    "checkedAt": "2026-09-05T23:27:07.687Z",
+    "state": "verified",
+    "files": [
+      {
+        "file": "index.html",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a36900b3fddf5e02-HKG",
+        "expected": "4150000bbfcb519f3d58772f893b346683c5efd78fb1ad14bc7a075cf6d3a72e",
+        "actual": "4eb8c7ee1157ff8f29ebfb9044ca6a18cfba6e9fd9873cf6785f4d7b134b45b5",
+        "normalized": "4150000bbfcb519f3d58772f893b346683c5efd78fb1ad14bc7a075cf6d3a72e",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a36900b45edf4e53-HKG",
+        "expected": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "actual": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "normalized": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-garden.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a36900b3f9970855-HKG",
+        "expected": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+        "actual": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+        "normalized": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js.LEGAL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a36900b449ab859d-HKG",
+        "expected": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "actual": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "normalized": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "matches": true
+      },
+      {
+        "file": "assets/THREE-LICENSE.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a36900b40897b1e9-HKG",
+        "expected": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "actual": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "normalized": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/newsreader-display-latin.woff2",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a36900b49dac2442-HKG",
+        "expected": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "actual": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "normalized": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/NEWSREADER-OFL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a36900b41c40e300-HKG",
+        "expected": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "actual": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "normalized": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/README.md",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a36900b45c13e2f1-HKG",
+        "expected": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "actual": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "normalized": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "matches": true
+      }
+    ]
+  },
+  "publicBrowserFromLocal": {
+    "base": "https://dayoff.tmcowork.com",
+    "stats": {
+      "startTime": "2026-09-05T23:27:08.555Z",
+      "duration": 116529.386,
+      "expected": 29,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "browser": "Chrome Beta",
+    "scope": "29 existing browser scenarios; physical device thermals not measured"
+  }
+}
