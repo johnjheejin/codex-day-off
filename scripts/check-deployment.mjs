@@ -9,6 +9,14 @@ export const normalizeHTML = html => html
   .replace(/(?<=<body>)<a href="(?:https:\/\/dayoff\.tmcowork\.com)?\/cdn-cgi\/content\?id=[^"<>]+" aria-hidden="true" rel="nofollow noopener" style="display: none !important; visibility: hidden !important"><\/a>/, '')
   .replace(cloudflareLoader, '');
 
+// A challenge is an unverified response, never a matching site file.
+export function deliveryState(results) {
+  if (results.length && results.every(file => file.matches)) return 'verified';
+  if (results.length && results.every(file => file.matches ||
+    (file.status === 403 && file.mitigated === 'challenge'))) return 'challenged';
+  return 'failed';
+}
+
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
 const base = process.argv[2];
 if (!base || new URL(base).protocol !== 'https:') throw new Error('Pass the HTTPS deployment URL.');
@@ -20,18 +28,25 @@ for (let attempt = 0; attempt < 12; attempt++) {
     const actual = Buffer.from(await response.arrayBuffer());
     const expected = await readFile(file);
     const normalized = file === 'index.html' ? Buffer.from(normalizeHTML(actual.toString())) : actual;
-    return { file, status: response.status, expected: digest(expected), actual: digest(actual), normalized: digest(normalized), matches: response.ok && digest(expected) === digest(normalized) };
+    return { file, status: response.status, mitigated: response.headers.get('cf-mitigated'), ray: response.headers.get('cf-ray'), expected: digest(expected), actual: digest(actual), normalized: digest(normalized), matches: response.ok && digest(expected) === digest(normalized) };
     } catch (error) { return { file, matches: false, error: error.name }; }
   }));
   last = results;
-  if (results.every(file => file.matches)) {
+  const state = deliveryState(results);
+  if (state !== 'failed' || attempt === 11) {
     await mkdir('release-results', { recursive: true });
-    await writeFile(`release-results/${new URL(base).hostname}.json`, JSON.stringify({ base, checkedAt: new Date().toISOString(), files: results }, null, 2) + '\n');
-    console.log(`Verified all ${results.length} files at ${base}`);
-    process.exit(0);
+    await writeFile(`release-results/${new URL(base).hostname}.json`, JSON.stringify({ base, checkedAt: new Date().toISOString(), state, files: results }, null, 2) + '\n');
+    if (state === 'verified') {
+      console.log(`Verified all ${results.length} files at ${base}`);
+      process.exit(0);
+    }
+    if (state === 'challenged') {
+      console.error(`Cloudflare challenged ${results.filter(file => !file.matches).length}/${results.length} files at ${base}; public content verification is incomplete.`);
+      process.exit(2);
+    }
   }
   console.log(`Waiting for deployment (${attempt + 1}/12): ${results.filter(file => !file.matches).map(file => file.file).join(', ')}`);
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  if (attempt < 11) await new Promise(resolve => setTimeout(resolve, 10000));
 }
 console.error(JSON.stringify(last, null, 2));
 process.exit(1);

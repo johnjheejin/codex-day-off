@@ -78,14 +78,31 @@ jobs:
         run: node scripts/check-deployment.mjs "$DEPLOYMENT_URL"
         env:
           DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
-      - name: Verify the public domain
-        run: node scripts/check-deployment.mjs https://dayoff.tmcowork.com
       - run: npx playwright install --with-deps chromium
-      - name: Check the public experience
+      - name: Check the deployed experience
         run: npx playwright test
         env:
-          AFTERGLOW_BASE_URL: https://dayoff.tmcowork.com
-          AFTERGLOW_EVIDENCE_DIR: test-results/public-evidence
+          AFTERGLOW_BASE_URL: ${{ steps.deploy.outputs.deployment-url }}
+          AFTERGLOW_EVIDENCE_DIR: test-results/deployed-evidence
+      - name: Confirm the public domain serves this production deployment
+        run: node scripts/check-pages-production.mjs "$DEPLOYMENT_URL" "$GITHUB_SHA"
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Check public delivery and report security challenges
+        run: |
+          status=0
+          node scripts/check-deployment.mjs https://dayoff.tmcowork.com || status=$?
+          if [ "$status" -eq 2 ]; then
+            echo "::warning::Cloudflare challenged this GitHub runner. Public-domain content verification is incomplete; the immutable deployment passed integrity and browser checks."
+            echo '### Public-domain verification incomplete' >> "$GITHUB_STEP_SUMMARY"
+            echo 'Cloudflare returned a managed challenge to this GitHub runner. The active domain binding, immutable deployment files and deployed browser experience were verified. Challenged responses are recorded as unmatched in production-verification; this is not a successful public-domain browser check.' >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$status" -ne 0 ]; then
+            exit "$status"
+          else
+            echo 'All eight public-domain files match the verified deployment.' >> "$GITHUB_STEP_SUMMARY"
+          fi
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: always()
         with:
