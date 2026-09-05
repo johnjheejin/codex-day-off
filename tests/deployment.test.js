@@ -23,7 +23,7 @@ test('HTML comparison preserves unknown scripts and content modifications', () =
 
 const commit = 'a'.repeat(40);
 const url = 'https://12345678.codex-day-off.pages.dev';
-const project = { name: 'codex-day-off', domains: ['dayoff.tmcowork.com'], production_deployment: {
+const project = { name: 'codex-day-off', domains: ['dayoff.tmcowork.com'], canonical_deployment: {
   id: '12345678-uuid', environment: 'production', latest_stage: { status: 'success' }, url,
   deployment_trigger: { metadata: { commit_hash: commit } }
 } };
@@ -36,6 +36,6 @@ test('production binding requires the intended domain, deployed URL and exact co
     [{ ...project, domains: [] }, domain, url, commit],
     [project, domain, 'https://other.codex-day-off.pages.dev', commit],
     [project, domain, url, 'b'.repeat(40)],
-    [{ ...project, production_deployment: { ...project.production_deployment, environment: 'preview' } }, domain, url, commit]
+    [{ ...project, canonical_deployment: { ...project.canonical_deployment, environment: 'preview' } }, domain, url, commit]
   ]) assert.throws(() => confirmProduction(p, d, u, c));
 });

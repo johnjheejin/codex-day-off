@@ -6,7 +6,7 @@ const projectName = 'codex-day-off';
 const domainName = 'dayoff.tmcowork.com';
 
 export function confirmProduction(project, domain, deploymentURL, commit) {
-  const deployment = project.production_deployment;
+  const deployment = project.canonical_deployment;
   if (project.name !== projectName || !project.domains?.includes(domainName) ||
       domain.name !== domainName || domain.status !== 'active') {
     throw new Error('The public domain is not active on the expected Pages project.');
