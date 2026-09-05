@@ -1,0 +1,41 @@
+name: Inspect public delivery
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Inspect HTTP and browser responses without deploying
+        run: |
+          node --input-type=module <<'JS'
+          import { chromium } from '@playwright/test';
+          const urls = ['https://dayoff.tmcowork.com/', 'https://dayoff.tmcowork.com/assets/fonts/README.md'];
+          const report = (client, url, status, headers, body) => console.log(JSON.stringify({
+            client, url, status,
+            headers: Object.fromEntries(Object.entries(headers).filter(([key]) => ['content-type', 'server', 'cf-ray', 'cf-mitigated', 'cf-cache-status'].includes(key))),
+            title: body.match(/<title>(.*?)<\/title>/is)?.[1],
+            excerpt: status >= 400 ? body.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').slice(0, 1200) : undefined
+          }));
+          for (const url of urls) {
+            const response = await fetch(url, { signal: AbortSignal.timeout(20000) });
+            report('node', url, response.status, Object.fromEntries(response.headers), await response.text());
+          }
+          const browser = await chromium.launch();
+          try {
+            const page = await browser.newPage();
+            for (const url of urls) {
+              const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+              report('chromium', url, response.status(), await response.allHeaders(), await response.text());
+            }
+          } finally { await browser.close(); }
+          JS
