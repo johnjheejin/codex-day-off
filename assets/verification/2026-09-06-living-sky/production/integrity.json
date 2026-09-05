@@ -1,0 +1,70 @@
+{
+  "base": "https://dayoff.tmcowork.com",
+  "checkedAt": "2026-09-05T20:34:40.977Z",
+  "files": [
+    {
+      "file": "index.html",
+      "status": 200,
+      "expected": "4150000bbfcb519f3d58772f893b346683c5efd78fb1ad14bc7a075cf6d3a72e",
+      "actual": "8e266d76f8f0dac6e5b15231c18ab2cb4b0c5a137094a284654c9e776000410b",
+      "normalized": "4150000bbfcb519f3d58772f893b346683c5efd78fb1ad14bc7a075cf6d3a72e",
+      "matches": true
+    },
+    {
+      "file": "assets/afterglow-three.js",
+      "status": 200,
+      "expected": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+      "actual": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+      "normalized": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+      "matches": true
+    },
+    {
+      "file": "assets/afterglow-garden.js",
+      "status": 200,
+      "expected": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+      "actual": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+      "normalized": "265c2d3db7dde6e398e6e47d47423e90a1bb76ae349895d1b9fa8e6813ad737c",
+      "matches": true
+    },
+    {
+      "file": "assets/afterglow-three.js.LEGAL.txt",
+      "status": 200,
+      "expected": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+      "actual": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+      "normalized": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+      "matches": true
+    },
+    {
+      "file": "assets/THREE-LICENSE.txt",
+      "status": 200,
+      "expected": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "actual": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "normalized": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "matches": true
+    },
+    {
+      "file": "assets/fonts/newsreader-display-latin.woff2",
+      "status": 200,
+      "expected": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+      "actual": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+      "normalized": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+      "matches": true
+    },
+    {
+      "file": "assets/fonts/NEWSREADER-OFL.txt",
+      "status": 200,
+      "expected": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+      "actual": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+      "normalized": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+      "matches": true
+    },
+    {
+      "file": "assets/fonts/README.md",
+      "status": 200,
+      "expected": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+      "actual": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+      "normalized": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+      "matches": true
+    }
+  ]
+}

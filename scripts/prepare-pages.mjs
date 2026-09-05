@@ -22,7 +22,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     await copyFile(file, target);
     manifest.push({ file, bytes: data.length, sha256: digest(data) });
   }
-  await mkdir('test-results', { recursive: true });
-  await writeFile('test-results/pages-manifest.json', JSON.stringify(manifest, null, 2) + '\n');
+  await mkdir('release-results', { recursive: true });
+  await writeFile('release-results/pages-manifest.json', JSON.stringify(manifest, null, 2) + '\n');
   console.log(`Prepared ${files.length} public files (${manifest.reduce((n, file) => n + file.bytes, 0)} bytes) in dist/`);
 }

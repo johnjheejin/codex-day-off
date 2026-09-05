@@ -25,8 +25,8 @@ for (let attempt = 0; attempt < 12; attempt++) {
   }));
   last = results;
   if (results.every(file => file.matches)) {
-    await mkdir('test-results', { recursive: true });
-    await writeFile('test-results/deployment-integrity.json', JSON.stringify({ base, checkedAt: new Date().toISOString(), files: results }, null, 2) + '\n');
+    await mkdir('release-results', { recursive: true });
+    await writeFile(`release-results/${new URL(base).hostname}.json`, JSON.stringify({ base, checkedAt: new Date().toISOString(), files: results }, null, 2) + '\n');
     console.log(`Verified all ${results.length} files at ${base}`);
     process.exit(0);
   }

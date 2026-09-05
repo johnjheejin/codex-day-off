@@ -113,7 +113,7 @@ The visual system is documented in [`DESIGN.md`](./DESIGN.md). It uses an origin
 - Custom domain: `dayoff.tmcowork.com`
 - Deployment mode: **GitHub Actions → Direct Upload**. The Pages project stays `Git Provider: No`; the repository workflow builds and verifies relevant `main` changes before uploading to the existing project. [Setup and actual run status](./docs/deployment.md).
 - Publish the prepared static files with `wrangler pages deploy` targeting project `codex-day-off` and branch `main`. Include `index.html`, both renderer/garden bundles, the Three.js license files, and `assets/fonts/`. Keep development dependencies, local credentials and the obsolete ZIP out of the upload directory.
-- September 6 production deployment: `26f3a895-319c-4c76-b8fb-14b0ae90e1b0`. [Release and public verification](./docs/verification/2026-09-06-deployment.md).
+- Current production: `6e0df2f1-5d25-4ed2-b2db-4a6d7e21f168`, source `07de646`. The living sky and default-on sound are live; 29 public browser tests passed. GitHub automatic publishing still awaits the dedicated token; this release used the existing local deployment login. [Deployment status](./docs/deployment.md).
 
 Run the browser checks against the published site without starting a local server:
 
