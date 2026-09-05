@@ -123,3 +123,21 @@ test('sound can start when preference storage is unavailable', async ({ page }) 
   await page.locator('#start').click();
   await expect(page.locator('#world')).toHaveClass(/playing/);
 });
+
+test('a turned 4K sky keeps the outer flowers inside the camera depth range', async ({ page }) => {
+  await page.setViewportSize({ width: 3840, height: 2160 });
+  await observe(page); await enter(page);
+  await page.locator('#skyOrbit').click();
+  await page.mouse.move(1800, 1100); await page.mouse.down(); await page.mouse.move(3270, 1100, { steps: 12 }); await page.mouse.up();
+  await expect.poll(() => page.evaluate(() => window.observedSky.view.yaw)).toBeGreaterThan(1.4);
+  const screenshot = await page.locator('#skyCanvas').screenshot();
+  const redPixels = await page.evaluate(async png => {
+    const img = new Image(); img.src = `data:image/png;base64,${png}`; await img.decode();
+    const canvas = document.createElement('canvas'); canvas.width = img.width; canvas.height = img.height;
+    const ctx = canvas.getContext('2d'); ctx.drawImage(img,0,0);
+    const data = ctx.getImageData(0,0,img.width,img.height).data; let red = 0;
+    for (let i=0;i<data.length;i+=4) if (data[i] > data[i+1] + 35 && data[i] > data[i+2] + 35) red++;
+    return red;
+  }, screenshot.toString('base64'));
+  expect(redPixels).toBeGreaterThan(50);
+});

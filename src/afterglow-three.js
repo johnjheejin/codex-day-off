@@ -231,6 +231,9 @@ window.createAfterglowRenderer = ({ host, anchor, mobile, reducedMotion, onFailu
     camera.right = width / 2;
     camera.top = height / 2;
     camera.bottom = -height / 2;
+    // Turning a wide sky must not carry its outer blooms behind the camera.
+    camera.position.z = Math.max(1000, Math.hypot(width, height));
+    camera.far = camera.position.z * 2 + 1000;
     camera.updateProjectionMatrix();
   }
 
