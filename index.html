@@ -954,11 +954,37 @@
     #pauseDialog h2 { margin: 0 0 16px; font-size: 40px; font-weight: 500; letter-spacing: -.055em; }
     #pauseDialog p { margin: 0 0 28px; color: var(--muted); font-size: 15px; line-height: 1.6; }
     #resumeButton { width: 100%; }
-    #skyReturn { display: none; position: absolute; z-index: 9; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--night); }
-    .light-field #skyReturn { background: var(--canvas); }
-    .viewing #skyReturn { display: inline-flex; }
+    #skyTools { position: absolute; inset: 0; z-index: 9; pointer-events: none; color: var(--night-ink); }
+    #skyTools[hidden] { display: none; }
+    .light-field #skyTools { color: var(--ink); }
+    .sky-heading { position: absolute; top: max(88px, calc(env(safe-area-inset-top) + 72px)); left: 28px; right: 28px; text-align: center; }
+    .sky-heading > span { font: 400 32px/1.1 "Afterglow Newsreader", Georgia, serif; letter-spacing: -.035em; }
+    #skyHint { margin: 8px 0 0; color: var(--night-muted); font: 12px/1.5 Arial, sans-serif; }
+    .light-field #skyHint { color: var(--muted); }
+    .sky-controls { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); left: 16px; right: 16px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px 16px; }
+    .sky-controls button { pointer-events: auto; min-height: 44px; padding: 0 14px; border: 0; border-radius: 6px; background: var(--night); color: inherit; font: 12px/1.3 Arial, sans-serif; cursor: pointer; }
+    .light-field .sky-controls button { background: var(--canvas); }
+    .sky-modes { display: flex; padding: 3px; border: 1px solid rgba(244,244,239,.22); border-radius: 9px; }
+    .light-field .sky-modes { border-color: var(--line); }
+    .sky-modes button[aria-pressed="true"] { color: var(--night); background: var(--canvas); }
+    .light-field .sky-modes button[aria-pressed="true"] { color: var(--canvas); background: var(--ink); }
+    #skyReturn { text-decoration: underline; text-underline-offset: 4px; }
+    .viewing #canvas { cursor: crosshair; }
+    .viewing.sky-orbit #canvas { cursor: grab; }
+    .viewing.sky-orbit.sky-dragging #canvas { cursor: grabbing; }
+    @media (max-width: 600px) {
+      .sky-controls { gap: 4px 12px; bottom: max(12px, env(safe-area-inset-bottom)); }
+      #skyReturn { flex-basis: 100%; background: transparent; }
+      .sky-heading { top: max(84px, calc(env(safe-area-inset-top) + 72px)); }
+      .sky-controls button { padding-inline: 10px; }
+      .sky-heading > span { font-size: 28px; }
+    }
     .viewing.ended #skyCanvas, .viewing.ended:not(.three-ready) #canvas { opacity: 1; }
     .viewing .cursor-note { opacity: 0; }
+    .viewing #result { visibility: hidden; }
+    .sky-controls button:hover { outline: 1px solid currentColor; outline-offset: -1px; }
+    .sky-controls button:active { opacity: .7; }
+    .sky-controls button:disabled { opacity: .4; cursor: default; }
     /* Result: the artwork, its short colophon, then clear ways to keep it. */
     #result { padding: clamp(28px, 4vw, 56px); }
     #result .result-card { margin: auto 0; width: min(1160px, 100%); grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 24px 64px; }
@@ -1157,9 +1183,9 @@
       </div>
       <div class="topbar-actions">
         <div class="theme-line">Thirty seconds. Nothing to ship.</div>
-        <button id="soundToggle" class="utility-button" type="button" aria-label="Turn sound on" aria-pressed="false">
+        <button id="soundToggle" class="utility-button" type="button" aria-label="Turn sound off" aria-pressed="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path class="sound-wave" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/><path class="sound-mute" d="m16 9 6 6m0-6-6 6"/></svg>
-          <span id="soundLabel">Sound off</span>
+          <span id="soundLabel">Sound on</span>
         </button>
         <button id="appearanceToggle" class="appearance-toggle" type="button" aria-pressed="false">🌙 Night Sky</button>
       </div>
@@ -1204,7 +1230,17 @@
 
     <button id="pauseButton" class="utility-button" type="button" aria-label="Pause your day off"><span aria-hidden="true">Ⅱ</span> Pause</button>
     <button id="keepSky" class="utility-button" type="button" hidden>Keep this sky →</button>
-    <button id="skyReturn" class="utility-button" type="button">← Back to your afterglow</button>
+    <section id="skyTools" aria-label="Explore your sky" hidden>
+      <div class="sky-heading"><span>Still yours.</span><p id="skyHint" aria-live="polite">Brush past the flowers</p></div>
+      <div class="sky-controls">
+        <div class="sky-modes" role="group" aria-label="How to explore">
+          <button id="skyTouch" type="button" aria-pressed="true">Touch the sky</button>
+          <button id="skyOrbit" type="button" aria-pressed="false">Turn in 3D</button>
+        </div>
+        <button id="skyReset" type="button" aria-label="Reset view">Reset</button>
+        <button id="skyReturn" type="button">← Back to your afterglow</button>
+      </div>
+    </section>
     <div id="gardenAnnouncement" class="sr-only" role="status" aria-live="polite"></div>
     <div class="cursor-note" aria-hidden="true">Move slowly · loose thoughts drift closer</div>
 
@@ -1217,7 +1253,7 @@
         </div>
         <button id="viewSky" class="result-artwork" type="button" aria-label="View your sky at full size" disabled>
           <img id="resultPreview" alt="The sky you made, with your blooms and constellations">
-          <span class="result-artwork-caption"><span>Your moment, kept.</span><span>View sky <span aria-hidden="true">↗</span></span></span>
+          <span class="result-artwork-caption"><span>Your sky is still here.</span><span>Explore sky <span aria-hidden="true">↗</span></span></span>
         </button>
           <section class="afterglow-handoff" aria-labelledby="afterglowHandoffTitle">
             <div class="afterglow-handoff-heading">
@@ -1328,6 +1364,10 @@
       const resumeButton = document.querySelector('#resumeButton');
       const viewSky = document.querySelector('#viewSky');
       const skyReturn = document.querySelector('#skyReturn');
+      const skyTools = document.querySelector('#skyTools');
+      const skyTouch = document.querySelector('#skyTouch');
+      const skyOrbit = document.querySelector('#skyOrbit');
+      const skyHint = document.querySelector('#skyHint');
       const resultPreview = document.querySelector('#resultPreview');
       const studyTurn = document.querySelector('#studyTurn');
       const announcement = document.querySelector('#gardenAnnouncement');
@@ -1387,7 +1427,8 @@
       let suspendedAt = 0;
       let playPaused = false;
       let playPausedAt = 0;
-      let soundEnabled = false;
+      let soundEnabled = true;
+      let skyDrag = null;
       let audioContext = null;
       let audioVoices = 0;
       let studyDrag = null;
@@ -1405,6 +1446,7 @@
       const garden = window.AfterglowGarden;
       const gesture = garden ? new garden.GestureTrace() : null;
       const bloomResponse = garden ? new garden.BloomResponse(mobilePerformance ? 4 : 6) : null;
+      const liveSky = garden ? new garden.SkyView({ mobile: mobilePerformance, reducedMotion }) : null;
       const keys = new Set();
 
       function makeCanvas(w, h) {
@@ -1514,16 +1556,23 @@
         });
       }
 
-      function sceneState(now = performance.now()) {
-        return { now: mode === 'result' ? finishedAt : playPaused ? playPausedAt : now, mode, stars, particles, trails, blooms, connections, player, studyRotation, startedAt, light: world.classList.contains('light-field') };
+      function sceneState(now = performance.now(), useView = true) {
+        const view = useView && liveSky?.open ? liveSky.layout(width, height) : null;
+        return {
+          now: mode === 'result' ? finishedAt : playPaused ? playPausedAt : now,
+          mode, view, stars, particles, trails, player, studyRotation, startedAt,
+          blooms: view ? liveSky.blooms : blooms,
+          connections: view ? liveSky.links : connections,
+          light: world.classList.contains('light-field')
+        };
       }
 
-      function setSound(enabled) {
+      function setSound(enabled, remember = false) {
         soundEnabled = enabled;
         soundToggle.setAttribute('aria-pressed', String(enabled));
         soundToggle.setAttribute('aria-label', enabled ? 'Turn sound off' : 'Turn sound on');
         soundLabel.textContent = enabled ? 'Sound on' : 'Sound off';
-        try { localStorage.setItem('afterglow-sound', enabled ? 'on' : 'off'); } catch (_) {}
+        if (remember) try { localStorage.setItem('afterglow-sound-preference', enabled ? 'on' : 'off'); } catch (_) {}
         if (!enabled && audioContext) {
           const previous = audioContext;
           audioContext = null;
@@ -1606,14 +1655,47 @@
         wakeFrame();
       }
 
+      function requestSkyFrame() {
+        if (!paused && liveSky?.needsFrame(performance.now()) && !rafId) {
+          lastFrame = performance.now();
+          rafId = requestAnimationFrame(frame);
+        }
+      }
+
+      function setSkyMode(next) {
+        if (!liveSky) return;
+        skyDrag = null;
+        world.classList.remove('sky-dragging');
+        liveSky.mode = next;
+        liveSky.suspend();
+        skyTouch.setAttribute('aria-pressed', String(next === 'touch'));
+        skyOrbit.setAttribute('aria-pressed', String(next === 'orbit'));
+        world.classList.toggle('sky-orbit', next === 'orbit');
+        skyHint.textContent = next === 'orbit' ? 'Drag to turn · arrow keys work too' : reducedMotion ? 'A still sky · turn it in 3D to explore' : coarsePointer ? 'Brush a finger past the flowers' : 'Brush past the flowers · arrow keys work too';
+        requestSkyFrame();
+      }
+
       function inspectSky(enabled) {
         if (mode !== 'result') return;
+        skyDrag = null;
+        world.classList.remove('sky-dragging');
         world.classList.toggle('viewing', enabled);
         result.classList.toggle('hidden', enabled);
         result.setAttribute('aria-hidden', String(enabled));
         result.inert = enabled;
-        if (enabled) skyReturn.focus({ preventScroll: true });
-        else viewSky.focus({ preventScroll: true });
+        skyTools.hidden = !enabled;
+        canvas.tabIndex = enabled ? 0 : -1;
+        if (enabled) {
+          liveSky?.enter(blooms, connections);
+          setSkyMode('touch');
+          canvas.setAttribute('aria-label', 'Your living sky. Brush past flowers or choose Turn in 3D. Arrow keys explore; R resets; Escape returns.');
+          canvas.focus({ preventScroll: true });
+          if (!liveSky) skyHint.textContent = 'Your sky, at rest.';
+        } else {
+          liveSky?.leave();
+          cancelAnimationFrame(rafId); rafId = 0;
+          viewSky.focus({ preventScroll: true });
+        }
         draw(performance.now());
       }
 
@@ -1798,9 +1880,10 @@
 
         let captured = false;
         if (skyRenderer) {
-          try { captured = skyRenderer.capture(cardCtx, sceneState()); }
+          try { captured = skyRenderer.capture(cardCtx, sceneState(performance.now(), false)); }
           catch (_) { useCanvasFallback(); }
         }
+        if (liveSky?.open) draw(performance.now());
         if (!captured) {
         stars.slice(0, 120).forEach((star, index) => {
           const x = star.x * scaleX;
@@ -2123,6 +2206,8 @@
         playPaused = false;
         if (pauseDialog.open) pauseDialog.close();
         world.classList.remove('viewing', 'closing');
+        liveSky?.leave(); skyDrag = null; skyTools.hidden = true;
+        canvas.setAttribute('aria-label', 'Interactive constellation garden. Use the cursor, touch, or arrow keys to gather loose thoughts.');
         keepSky.hidden = true;
         unlockSound();
         shareGeneration++;
@@ -2301,6 +2386,10 @@
 
       function update(now, dt) {
         if (playPaused) return;
+        if (mode === 'result') {
+          if (liveSky?.open) liveSky.update(now, dt, width, height);
+          return;
+        }
         if (mode === 'closing') {
           bloomResponse?.update(blooms, player, dt, { enabled: false, reducedMotion });
           if (now - closingAt >= 1600) { showResult(); return; }
@@ -2371,8 +2460,9 @@
       function draw(now) {
         if (playPaused) now = playPausedAt;
         if (mode === 'result') now = finishedAt;
+        const state = sceneState(now);
         if (skyRenderer) {
-          try { if (skyRenderer.render(sceneState(now))) return; }
+          try { if (skyRenderer.render(state)) return; }
           catch (_) { useCanvasFallback(); }
         }
         ctx.clearRect(0, 0, width, height);
@@ -2394,12 +2484,14 @@
         ctx.globalAlpha = .2;
         ctx.strokeStyle = world.classList.contains('light-field') ? '#0d0d0d' : '#f4f4ef';
         ctx.lineWidth = .7;
-        connections.forEach(link => {
-          ctx.beginPath(); ctx.moveTo(link.from.x, link.from.y); ctx.lineTo(link.to.x, link.to.y); ctx.stroke();
+        state.connections.forEach(link => {
+          const from = state.view ? garden.projectSkyPoint(link.from, state.view) : link.from;
+          const to = state.view ? garden.projectSkyPoint(link.to, state.view) : link.to;
+          ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x, to.y); ctx.stroke();
         });
-        blooms.forEach((b, index) => {
+        state.blooms.forEach((b, index) => {
           if (garden) {
-            garden.paintBloom(ctx, b, index, now, { reducedMotion, finished: mode === 'result', mobile: mobilePerformance, light: world.classList.contains('light-field') });
+            garden.paintBloom(ctx, b, index, now, { view: state.view, reducedMotion, finished: mode === 'result', mobile: mobilePerformance, light: world.classList.contains('light-field') });
             return;
           }
           const age = mode === 'result' || reducedMotion ? 1 : Math.min(1, (now - b.born) / 700);
@@ -2508,10 +2600,12 @@
       }
 
       function frame(now) {
+        rafId = 0;
         if (paused || playPaused) return;
         const playFps = frameBudget?.targetFps ?? 60;
-        const frameInterval = mode === 'play' || mode === 'closing' ? 1000 / playFps : 1000 / 12;
-        if (mode === 'play') frameBudget?.tick(now);
+        const live = mode === 'result' && liveSky?.open;
+        const frameInterval = live ? 1000 / Math.min(60, playFps) : mode === 'play' || mode === 'closing' ? 1000 / playFps : 1000 / 12;
+        if (mode === 'play' || live) frameBudget?.tick(now);
         if (now - lastRender >= frameInterval - .75) {
           const workStartedAt = performance.now();
           const dt = Math.min(50, now - lastFrame);
@@ -2519,18 +2613,18 @@
           lastFrame = now;
           update(now, dt);
           draw(now);
-          if (mode === 'play' && frameBudget?.record(now, performance.now() - workStartedAt, skyRenderer?.diagnostics.gpuMs ?? null, renderInterval)) resize();
+          if ((mode === 'play' || live) && frameBudget?.record(now, performance.now() - workStartedAt, skyRenderer?.diagnostics.gpuMs ?? null, renderInterval)) resize();
           lastRender = now - Math.max(0, (now - lastRender) % frameInterval);
           fpsFrames++;
         }
         if (debugMode) {
           const fpsElapsed = now - fpsStartedAt;
           if (fpsElapsed >= 500 || mode === 'result') {
-            measuredFps = mode === 'result' ? 0 : Math.round(fpsFrames * 1000 / fpsElapsed);
+            measuredFps = mode === 'result' && !liveSky?.needsFrame(now) ? 0 : Math.round(fpsFrames * 1000 / fpsElapsed);
             fpsFrames = 0;
             fpsStartedAt = now;
             const stats = skyRenderer?.diagnostics;
-            debugPanel.textContent = `${skyRenderer ? 'Three.js' : 'Canvas 2D'} · ${measuredFps} FPS / ${mode === 'play' || mode === 'closing' ? playFps : mode === 'intro' && !reducedMotion ? 12 : 0} · ${frameBudget?.refreshHz ?? 60} Hz · ${dpr.toFixed(2)}× DPR · ${Math.floor(width * dpr)}×${Math.floor(height * dpr)} · CPU ${(frameBudget?.cpuMs ?? 0).toFixed(1)}ms · GPU ${stats?.gpuMs == null ? 'n/a' : stats.gpuMs.toFixed(1) + 'ms'}`;
+            debugPanel.textContent = `${skyRenderer ? 'Three.js' : 'Canvas 2D'} · ${measuredFps} FPS / ${live && liveSky.needsFrame(now) ? Math.min(60, playFps) : mode === 'play' || mode === 'closing' ? playFps : mode === 'intro' && !reducedMotion ? 12 : 0} · ${frameBudget?.refreshHz ?? 60} Hz · ${dpr.toFixed(2)}× DPR · ${Math.floor(width * dpr)}×${Math.floor(height * dpr)} · CPU ${(frameBudget?.cpuMs ?? 0).toFixed(1)}ms · GPU ${stats?.gpuMs == null ? 'n/a' : stats.gpuMs.toFixed(1) + 'ms'}`;
             world.dataset.targetFps = String(playFps);
             world.dataset.quality = String(frameBudget?.quality ?? 1);
             world.dataset.drawCalls = String(stats?.calls ?? 0);
@@ -2538,11 +2632,22 @@
             world.dataset.textures = String(stats?.textures ?? 0);
           }
         }
-        if (mode === 'play' || mode === 'closing') rafId = requestAnimationFrame(frame);
+        if (mode === 'play' || mode === 'closing' || liveSky?.needsFrame(now)) rafId = requestAnimationFrame(frame);
         else if (mode === 'intro' && !reducedMotion) idleTimer = setTimeout(() => { rafId = requestAnimationFrame(frame); }, 1000 / 12);
       }
 
       function movePoint(e) {
+        if (liveSky?.open) {
+          if (paused) return;
+          if (e.pointerType === 'touch' && skyDrag?.id !== e.pointerId) return;
+          if (skyDrag && skyDrag.id !== e.pointerId) return;
+          if (liveSky.mode === 'orbit') {
+            if (!skyDrag) return;
+            liveSky.turn(e.clientX - skyDrag.x, e.clientY - skyDrag.y, width, height);
+            skyDrag.x = e.clientX; skyDrag.y = e.clientY;
+          } else liveSky.move(e.clientX, e.clientY, performance.now());
+          requestSkyFrame(); return;
+        }
         if (mode !== 'play') return;
         if (e.pointerType === 'touch' && e.pointerId !== activeTouchPointer) return;
         player.tx = e.clientX;
@@ -2550,6 +2655,15 @@
       }
 
       function beginPoint(e) {
+        if (liveSky?.open) {
+          if (paused) return;
+          if (skyDrag || (e.pointerType === 'mouse' && e.button !== 0)) return;
+          skyDrag = { id: e.pointerId, x: e.clientX, y: e.clientY };
+          canvas.setPointerCapture?.(e.pointerId);
+          world.classList.add('sky-dragging');
+          e.preventDefault();
+          movePoint(e); return;
+        }
         if (mode !== 'play') return;
         if (e.pointerType === 'touch') {
           activeTouchPointer = e.pointerId;
@@ -2561,6 +2675,14 @@
       }
 
       function endPoint(e) {
+        if (liveSky?.open) {
+          if (skyDrag?.id !== e.pointerId) return;
+          canvas.releasePointerCapture?.(e.pointerId);
+          skyDrag = null;
+          liveSky.pointerUntil = 0;
+          world.classList.remove('sky-dragging');
+          requestSkyFrame(); return;
+        }
         if (e.pointerType !== 'touch' || e.pointerId !== activeTouchPointer) return;
         canvas.releasePointerCapture?.(e.pointerId);
         activeTouchPointer = null;
@@ -2571,7 +2693,23 @@
       canvas.addEventListener('pointerdown', beginPoint);
       canvas.addEventListener('pointerup', endPoint);
       canvas.addEventListener('pointercancel', endPoint);
+      canvas.addEventListener('pointerleave', () => {
+        if (liveSky?.open && !skyDrag) { liveSky.pointerUntil = 0; requestSkyFrame(); }
+      });
       addEventListener('keydown', e => {
+        if (!paused && liveSky?.open && e.target === canvas) {
+          const direction = { ArrowLeft: [-24, 0], ArrowRight: [24, 0], ArrowUp: [0, -24], ArrowDown: [0, 24] }[e.key];
+          if (direction) {
+            e.preventDefault();
+            if (liveSky.mode === 'orbit') liveSky.turn(...direction, width, height);
+            else {
+              const pointer = liveSky.pointer;
+              liveSky.move(Math.max(20, Math.min(width - 20, (pointer.x || width / 2) + direction[0])), Math.max(80, Math.min(height - 110, (pointer.y || height / 2) + direction[1])), performance.now());
+            }
+            requestSkyFrame(); return;
+          }
+          if (e.key.toLowerCase() === 'r') { e.preventDefault(); liveSky.reset(); requestSkyFrame(); return; }
+        }
         if (mode === 'closing' && e.key === 'Escape') {
           e.preventDefault(); showResult(); return;
         }
@@ -2592,7 +2730,7 @@
       startBtn.addEventListener('click', begin);
       againBtn.addEventListener('click', begin);
       soundToggle.addEventListener('click', () => {
-        setSound(!soundEnabled);
+        setSound(!soundEnabled, true);
         if (soundEnabled) unlockSound();
       });
       pauseButton.addEventListener('click', pauseGame);
@@ -2601,6 +2739,10 @@
       pauseDialog.addEventListener('cancel', event => { event.preventDefault(); resumeGame(); });
       viewSky.addEventListener('click', () => inspectSky(true));
       skyReturn.addEventListener('click', () => inspectSky(false));
+      skyTouch.addEventListener('click', () => setSkyMode('touch'));
+      skyOrbit.addEventListener('click', () => setSkyMode('orbit'));
+      document.querySelector('#skyReset').addEventListener('click', () => { liveSky?.reset(); requestSkyFrame(); });
+      if (!liveSky) [skyTouch, skyOrbit, document.querySelector('#skyReset')].forEach(button => { button.disabled = true; });
       studyTurn.addEventListener('pointerdown', event => {
         studyDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, distance: 0 };
         studyTurn.setPointerCapture(event.pointerId);
@@ -2671,7 +2813,8 @@
         paused = document.hidden;
         if (paused) {
           if (!suspendedAt) suspendedAt = performance.now();
-          cancelAnimationFrame(rafId);
+          liveSky?.suspend(); skyDrag = null; world.classList.remove('sky-dragging');
+          cancelAnimationFrame(rafId); rafId = 0;
           clearTimeout(idleTimer);
           clearTimeout(resizeTimer);
           keys.clear();
@@ -2694,6 +2837,7 @@
 
       addEventListener('pagehide', () => {
         paused = true;
+        liveSky?.suspend(); skyDrag = null;
         if (!suspendedAt) suspendedAt = performance.now();
         cancelAnimationFrame(rafId);
         clearTimeout(idleTimer);
@@ -2727,7 +2871,7 @@
 
       let savedField = '';
       try { savedField = localStorage.getItem('afterglow-field') || ''; } catch (_) {}
-      try { setSound(localStorage.getItem('afterglow-sound') === 'on'); } catch (_) {}
+      try { setSound(localStorage.getItem('afterglow-sound-preference') !== 'off'); } catch (_) { setSound(true); }
       setLightField(savedField === 'light', false);
       resize(true);
       world.dataset.renderer = 'canvas2d';

@@ -127,6 +127,8 @@ window.createAfterglowRenderer = ({ host, anchor, mobile, reducedMotion, onFailu
   }
   // No fullscreen passes, render targets, textures, shadows or second RAF loop.
   const scene = new THREE.Scene();
+  const gardenGroup = new THREE.Group();
+  scene.add(gardenGroup);
   const studyScene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, .1, 3000);
   camera.position.z = 1000;
@@ -142,7 +144,7 @@ window.createAfterglowRenderer = ({ host, anchor, mobile, reducedMotion, onFailu
   const linkMaterial = own(new THREE.LineBasicMaterial({ color: '#f4f4ef', transparent: true, opacity: .2, depthTest: false }));
   const links = new THREE.LineSegments(linkGeometry, linkMaterial);
   links.frustumCulled = false;
-  scene.add(links);
+  gardenGroup.add(links);
   const starCloud = pointCloud(400);
   const thoughtCloud = pointCloud(MAX_THOUGHTS);
   const moteCloud = pointCloud(MAX_MOTES);
@@ -249,7 +251,7 @@ window.createAfterglowRenderer = ({ host, anchor, mobile, reducedMotion, onFailu
     const current = new Set(state.blooms.map(bloom => bloom.source ?? bloom));
     for (const [bloom, object] of blooms) {
       if (current.has(bloom)) continue;
-      scene.remove(object);
+      gardenGroup.remove(object);
       object.children.forEach(child => { child.material.dispose(); resources.delete(child.material); });
       blooms.delete(bloom);
     }
@@ -264,14 +266,14 @@ window.createAfterglowRenderer = ({ host, anchor, mobile, reducedMotion, onFailu
         const ripple = new THREE.LineLoop(ring, own(material.clone()));
         const center = new THREE.Mesh(seed, own(new THREE.MeshBasicMaterial({ color: bloom.color, transparent: true, depthTest: false })));
         object.add(flower, ripple, center);
-        scene.add(object);
+        gardenGroup.add(object);
         blooms.set(key, object);
       }
       const age = reducedMotion || state.mode === 'result' ? 1 : Math.min(1, Math.max(0, (state.now - bloom.born) / 1000));
       const open = 1 - (1 - age) ** 3;
       const size = bloom.size * 1.35;
       const point = bloomPosition(bloom, state);
-      place(object, point.x, point.y);
+      place(object, point.x, point.y, state.view ? bloom.depth ?? 0 : 0);
       const [flower, ripple, center] = object.children;
       const pose = bloomPose(bloom, index, state.now, reducedMotion, state.mode === 'result');
       flower.scale.set(pose.sx, pose.sy, pose.sz);
@@ -290,6 +292,9 @@ window.createAfterglowRenderer = ({ host, anchor, mobile, reducedMotion, onFailu
     if (disposed || failed) return false;
     const gpuQuery = beginGpuSample();
     setTheme(state.light);
+    gardenGroup.rotation.set(state.view?.pitch ?? 0, state.view?.yaw ?? 0, 0, 'YXZ');
+    gardenGroup.scale.setScalar(state.view?.scale ?? 1);
+    gardenGroup.position.y = state.view ? height / 2 - state.view.centerY : 0;
     if (state.mode !== 'result') resultTime = null;
     else if (resultTime === null) resultTime = state.now;
     const time = reducedMotion ? 0 : (resultTime ?? state.now) * .001;
@@ -305,8 +310,8 @@ window.createAfterglowRenderer = ({ host, anchor, mobile, reducedMotion, onFailu
       const from = bloomPosition(connection.from, state);
       const to = bloomPosition(connection.to, state);
       const age = reducedMotion || state.mode === 'result' ? 1 : Math.min(1, Math.max(0, (state.now - connection.to.born - 220) / 900));
-      linkPositions.setXYZ(index * 2, from.x - width / 2, height / 2 - from.y, -2);
-      linkPositions.setXYZ(index * 2 + 1, from.x + (to.x - from.x) * age - width / 2, height / 2 - from.y - (to.y - from.y) * age, -2);
+      linkPositions.setXYZ(index * 2, from.x - width / 2, height / 2 - from.y, state.view ? (connection.from.depth ?? 0) - 2 : -2);
+      linkPositions.setXYZ(index * 2 + 1, from.x + (to.x - from.x) * age - width / 2, height / 2 - from.y - (to.y - from.y) * age, state.view ? (connection.to.depth ?? 0) - 2 : -2);
     });
     linkPositions.needsUpdate = true;
     linkGeometry.setDrawRange(0, connections.length * 2);

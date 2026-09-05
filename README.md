@@ -29,9 +29,9 @@ The four-milestone, same-viewport comparison is preserved in **[the July 13 visu
 | July 11 | The repository was reopened with GPT-5.6 Sol. The live experience was tested again, missed accessibility states were fixed, reduced-motion support was added, and the moment was recorded instead of being allowed to disappear into commit history. |
 | July 13 | A Galaxy S24 report turned the revisit into a rendering-safety and mobile-UX pass: pixel and frame budgets were bounded, desktop-site mode gained a safety path, `Night Sky / Paper Sky` became explicit play scenes, sharing moved into the first result viewport, and the first build was visually audited against the current experience. |
 | September 5 | Three.js adds a slowly turning line sculpture, dimensional blooms and collection ripples. Measured CPU/GPU work and display cadence replace fixed mobile frame limits; a Canvas fallback keeps the current sky after GPU failure. |
-| September 6 | Gestures shape each flower, nearby blooms respond to touch, and the completed sky lingers briefly before the result. Editorial typography connects the opening, pause, results and image handoffs. Published to Cloudflare Pages and verified on the public domain. |
+| September 6 | Gestures shape each flower, nearby blooms respond to touch, and the completed sky lingers briefly before the result. Editorial typography connects the opening, pause, results and image handoffs. The finished sky gains touch response and 3D rotation; default-on chimes remember an explicit mute. [Read the September story](./docs/journal/2026-09-06.md). |
 
-Read the full entry: **[2026-07-11 — revisiting Afterglow](./docs/journal/2026-07-11.md)**.
+Read the latest entry: **[2026-09-06 — a sky that still moves](./docs/journal/2026-09-06.md)**. The earlier revisit is preserved in the [July 11 journal](./docs/journal/2026-07-11.md).
 
 The follow-through is recorded in the **[Galaxy S24 incident report](./docs/incidents/2026-07-13-galaxy-s24-rendering.md)** and **[mobile rendering decision](./docs/decisions/0002-mobile-rendering-safety-and-gpu-strategy.md)**.
 
@@ -54,15 +54,15 @@ Then visit `http://localhost:8000`.
 - Collected blooms find room near your cursor and join nearby blooms into constellations.
 - Direction, speed, curves and pauses leave different flower forms. Nearby blooms lean toward the focus and return gently; moving faster earns no advantage.
 - Pause with the visible control, Space, or Escape; resume without losing time.
-- Optional sound adds a short note to each collection. It starts off, requires a user gesture, and uses no audio downloads.
+- Sound adds a short note to each collection. It defaults on after a user gesture, remembers an explicit mute, and uses no audio downloads.
 - At 30 seconds, collection ends and the sky remains unobscured for 1.6 seconds. **Keep this sky** or Escape skips to the result. Reduced motion skips this interval automatically.
-- Inspect the actual export in the result preview or choose **View your sky** for the full scene.
+- Choose **Explore sky** in the result for a living view. **Touch the sky** brushes nearby flowers; **Turn in 3D** rotates them by dragging or arrow keys. **Reset** (or R) returns to the front; Escape returns to the result. The original PNG stays unchanged. This view lasts within the current page; reload restoration and live sharing links are not implemented.
 - Play in `🌙 Night Sky` or `☀️ Paper Sky`; the current scene is always visible, persists locally, and is preserved in the exported image.
 - Export the played scene as a PNG: 1200 × 630 on desktop, or the played viewport's aspect ratio on mobile, bounded to 1.5 million pixels. Hand it to LinkedIn, X, Telegram, KakaoTalk, or the native share sheet. Mobile keeps every destination available and places sharing before replay. External handoffs explain when the PNG must be attached separately.
 
 No login, API key, external CDN, or external service is required. The checked-in bundle runs without a build step, including when the folder is opened locally.
 
-Three.js renders the sky with shared line geometry and instanced thought crystals. Play starts at 60fps; sustained measurements can promote to the display's 90/120Hz cadence. Under pressure, internal resolution drops before frame rate. Touch devices retain a 1.5-million-pixel ceiling even in desktop-site mode; desktop devices use 3.2 million pixels. Ambient intro motion stays below 12fps. Paused and result screens stop drawing until something changes, and hidden pages stop rendering. There are no fullscreen postprocessing passes, texture effects, shadows, or MSAA buffers. Portrait exports preserve bloom proportions by briefly reusing the same drawing surface at the export aspect ratio. See the [Three.js performance decision](./docs/decisions/0003-threejs-adaptive-rendering.md).
+Three.js renders the sky with shared line geometry and instanced thought crystals. Play starts at 60fps; sustained measurements can promote to the display's 90/120Hz cadence. Under pressure, internal resolution drops before frame rate. Touch devices retain a 1.5-million-pixel ceiling even in desktop-site mode; desktop devices use 3.2 million pixels. Ambient intro motion stays below 12fps. Paused and result screens stop drawing until something changes; the live result view draws up to 60fps during input and its brief settling motion, and hidden pages stop rendering. There are no fullscreen postprocessing passes, texture effects, shadows, or MSAA buffers. Portrait exports preserve bloom proportions by briefly reusing the same drawing surface at the export aspect ratio. See the [Three.js performance decision](./docs/decisions/0003-threejs-adaptive-rendering.md).
 
 Append `?debug=1` for renderer, measured and target FPS, estimated display cadence, DPR, CPU work and optional GPU timing. `?renderer=2d` selects the fallback for comparison. A missing bundle, unsupported WebGL2, or a lost context also uses Canvas 2D automatically.
 
@@ -111,7 +111,7 @@ The visual system is documented in [`DESIGN.md`](./DESIGN.md). It uses an origin
 - Source: GitHub (`johnjheejin/codex-day-off`)
 - Hosting: Cloudflare Pages
 - Custom domain: `dayoff.tmcowork.com`
-- Deployment mode: **Direct Upload**. This Pages project reports `Git Provider: No`; pushing to GitHub does not publish the site automatically.
+- Deployment mode: **GitHub Actions → Direct Upload**. The Pages project stays `Git Provider: No`; the repository workflow builds and verifies relevant `main` changes before uploading to the existing project. [Setup and actual run status](./docs/deployment.md).
 - Publish the prepared static files with `wrangler pages deploy` targeting project `codex-day-off` and branch `main`. Include `index.html`, both renderer/garden bundles, the Three.js license files, and `assets/fonts/`. Keep development dependencies, local credentials and the obsolete ZIP out of the upload directory.
 - September 6 production deployment: `26f3a895-319c-4c76-b8fb-14b0ae90e1b0`. [Release and public verification](./docs/verification/2026-09-06-deployment.md).
 

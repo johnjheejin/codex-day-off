@@ -1,0 +1,86 @@
+name: Verify and publish Afterglow
+on:
+  push:
+    branches: [main]
+    paths: ['index.html', 'src/**', 'assets/afterglow-*.js*', 'assets/THREE-LICENSE.txt', 'assets/fonts/**', 'package*.json', 'tests/**', 'scripts/**', 'playwright.config.js', '.github/workflows/publish.yml']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: afterglow-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Confirm committed bundles match the source
+        run: git diff --exit-code -- assets/afterglow-three.js assets/afterglow-garden.js assets/afterglow-three.js.LEGAL.txt
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+        env:
+          AFTERGLOW_EVIDENCE_DIR: test-results/local-evidence
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: verification
+          path: test-results/
+          retention-days: 14
+
+  publish:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://dayoff.tmcowork.com
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: node scripts/prepare-pages.mjs
+      - name: Deploy the verified static files
+        id: deploy
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: '4.92.0'
+          command: pages deploy dist --project-name=codex-day-off --branch=main --commit-hash=${{ github.sha }}
+      - name: Verify the immutable deployment
+        run: node scripts/check-deployment.mjs "$DEPLOYMENT_URL"
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
+      - name: Verify the public domain
+        run: node scripts/check-deployment.mjs https://dayoff.tmcowork.com
+      - run: npx playwright install --with-deps chromium
+      - name: Check the public experience
+        run: npx playwright test
+        env:
+          AFTERGLOW_BASE_URL: https://dayoff.tmcowork.com
+          AFTERGLOW_EVIDENCE_DIR: test-results/public-evidence
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: production-verification
+          path: test-results/
+          retention-days: 14

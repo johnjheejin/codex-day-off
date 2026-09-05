@@ -301,7 +301,7 @@ test('result shows the actual export, rests at zero frames, and can be viewed at
   await page.screenshot({ path: `${evidence}/desktop-result.png` });
   await page.locator('#viewSky').click();
   await expect(page.locator('#world')).toHaveClass(/viewing/);
-  await expect(page.locator('#skyReturn')).toBeFocused();
+  await expect(page.locator('#canvas')).toBeFocused();
   await expect(page.locator('#skyCanvas')).toHaveCSS('opacity', '1');
   await page.screenshot({ path: `${evidence}/full-sky.png` });
   await page.keyboard.press('Escape');
@@ -311,7 +311,7 @@ test('result shows the actual export, rests at zero frames, and can be viewed at
   await expect(page.locator('#viewSky')).toBeEnabled();
 });
 
-test('sound is opt-in, plays a collection note, and releases audio when turned off', async ({ page }) => {
+test('sound defaults on after starting, plays a note, and remembers an explicit mute', async ({ page }) => {
   await observeScene(page);
   await page.addInitScript(() => {
     const Original = window.AudioContext;
@@ -325,8 +325,6 @@ test('sound is opt-in, plays a collection note, and releases audio when turned o
   await page.goto('/');
   await expect(page.locator('#world')).toHaveAttribute('data-renderer', 'three');
   expect(await page.evaluate(() => window.audioEngines)).toBe(0);
-  await expect(page.locator('#soundToggle')).toHaveAttribute('aria-pressed', 'false');
-  await page.getByRole('button', { name: 'Turn sound on' }).click();
   await expect(page.locator('#soundToggle')).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Begin day off' }).click();
   await page.waitForTimeout(300);
@@ -336,6 +334,10 @@ test('sound is opt-in, plays a collection note, and releases audio when turned o
   await page.getByRole('button', { name: 'Turn sound off' }).click();
   await expect.poll(() => page.evaluate(() => window.lastAudioEngine.state)).toBe('closed');
   await expect(page.locator('#soundToggle')).toHaveAttribute('aria-pressed', 'false');
+  await page.reload();
+  await expect(page.locator('#soundToggle')).toHaveAttribute('aria-pressed', 'false');
+  await page.locator('#start').click();
+  expect(await page.evaluate(() => window.audioEngines)).toBe(0);
 });
 
 test('small phone and tablet layouts keep controls reachable without horizontal overflow', async ({ page }) => {

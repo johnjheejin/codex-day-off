@@ -10,7 +10,7 @@ export default defineConfig({
   use: {
     baseURL: process.env.AFTERGLOW_BASE_URL || 'http://127.0.0.1:8000',
     viewport: { width: 1440, height: 900 },
-    launchOptions: { executablePath: process.env.CHROME_PATH || (fs.existsSync(chromeBeta) ? chromeBeta : undefined) },
+    launchOptions: { args: process.env.CI ? ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] : [], executablePath: process.env.CHROME_PATH || (fs.existsSync(chromeBeta) ? chromeBeta : undefined) },
     screenshot: 'only-on-failure'
   },
   webServer: process.env.AFTERGLOW_BASE_URL ? undefined : {

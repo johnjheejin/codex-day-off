@@ -55,7 +55,7 @@ export class BloomResponse {
     this.active.clear();
     this.nearest.length = 0;
   }
-  update(blooms, player, dt, { enabled = true, reducedMotion = false, radius = 155 } = {}) {
+  update(blooms, player, dt, { enabled = true, reducedMotion = false, radius = 155, position = bloom => bloom } = {}) {
     if (reducedMotion) { this.reset(); return; }
     const nearest = this.nearest;
     nearest.length = 0;
@@ -63,7 +63,8 @@ export class BloomResponse {
       const radius2 = radius * radius;
       // Keep a bounded sorted list; do not sort or allocate a copy of the garden.
       for (const bloom of blooms) {
-        const d2 = (bloom.x - player.x) ** 2 + (bloom.y - player.y) ** 2;
+        const point = position(bloom);
+        const d2 = (point.x - player.x) ** 2 + (point.y - player.y) ** 2;
         if (d2 >= radius2) continue;
         let at = 0;
         while (at < nearest.length && nearest[at].distance <= d2) at++;
@@ -78,8 +79,9 @@ export class BloomResponse {
     for (const bloom of this.active) {
       const item = nearest.find(candidate => candidate.bloom === bloom);
       const proximity = item ? (1 - Math.sqrt(item.distance) / radius) ** 2 : 0;
-      const x = clamp((player.x - bloom.x) / radius, -1, 1) * proximity * 1.9;
-      const y = clamp((player.y - bloom.y) / radius, -1, 1) * proximity * 1.9;
+      const point = position(bloom);
+      const x = clamp((player.x - point.x) / radius, -1, 1) * proximity * 1.9;
+      const y = clamp((player.y - point.y) / radius, -1, 1) * proximity * 1.9;
       bloom.leanX = (bloom.leanX ?? 0) + (x - (bloom.leanX ?? 0)) * blend;
       bloom.leanY = (bloom.leanY ?? 0) + (y - (bloom.leanY ?? 0)) * blend;
       if (!item && Math.hypot(bloom.leanX, bloom.leanY) < .001) {
@@ -134,16 +136,27 @@ export function bloomPose(bloom, index, now, reducedMotion = false, finished = f
 
 // Canvas uses the same shared curves and XYZ pose as WebGL, including in PNGs.
 // Only the small matrix changes per frame; trigonometry is never done per vertex.
-export function paintBloom(ctx, bloom, index, now, { reducedMotion = false, finished = false, mobile = false, light = false } = {}) {
+export function paintBloom(ctx, bloom, index, now, { reducedMotion = false, finished = false, mobile = false, light = false, view = null } = {}) {
   const pose = bloomPose(bloom, index, now, reducedMotion, finished);
   const { sx, sy, sz, rx, ry, rz, open } = pose;
   const a = Math.cos(rx), b = Math.sin(rx), c = Math.cos(ry), d = Math.sin(ry), e = Math.cos(rz), f = Math.sin(rz);
-  const xx = c * e * sx, xy = -c * f * sy, xz = d * sz;
-  const yx = (a * f + b * e * d) * sx, yy = (a * e - b * f * d) * sy, yz = -b * c * sz;
+  let xx = c * e * sx, xy = -c * f * sy, xz = d * sz;
+  let yx = (a * f + b * e * d) * sx, yy = (a * e - b * f * d) * sy, yz = -b * c * sz;
+  if (view) {
+    const zx = (b * f - a * e * d) * sx, zy = (b * e + a * f * d) * sy, zz = a * c * sz;
+    const nextX = [(view.xx * xx + view.xy * yx + view.xz * zx) * view.scale,
+      (view.xx * xy + view.xy * yy + view.xz * zy) * view.scale,
+      (view.xx * xz + view.xy * yz + view.xz * zz) * view.scale];
+    yx = (view.yx * xx + view.yy * yx + view.yz * zx) * view.scale;
+    yy = (view.yx * xy + view.yy * yy + view.yz * zy) * view.scale;
+    yz = (view.yx * xz + view.yy * yz + view.yz * zz) * view.scale;
+    [xx, xy, xz] = nextX;
+  }
   const vertices = flowerVertices(bloom.petals, mobile ? 2 : 3);
   const travel = reducedMotion || finished ? 1 : 1 - (1 - clamp((now - bloom.born) / 900, 0, 1)) ** 3;
   ctx.save();
-  ctx.translate((bloom.fromX ?? bloom.x) + (bloom.x - (bloom.fromX ?? bloom.x)) * travel,
+  if (view) ctx.translate(bloom.screen.x, bloom.screen.y);
+  else ctx.translate((bloom.fromX ?? bloom.x) + (bloom.x - (bloom.fromX ?? bloom.x)) * travel,
     (bloom.fromY ?? bloom.y) + (bloom.y - (bloom.fromY ?? bloom.y)) * travel);
   ctx.globalAlpha = (light ? .65 : .72) * open;
   ctx.strokeStyle = bloom.color;
@@ -158,6 +171,6 @@ export function paintBloom(ctx, bloom, index, now, { reducedMotion = false, fini
   ctx.stroke();
   ctx.globalAlpha = .8;
   ctx.fillStyle = bloom.color;
-  ctx.beginPath(); ctx.arc(0, 0, 2.5 * open, 0, TAU); ctx.fill();
+  ctx.beginPath(); ctx.arc(0, 0, 2.5 * open * (view?.scale ?? 1), 0, TAU); ctx.fill();
   ctx.restore();
 }
