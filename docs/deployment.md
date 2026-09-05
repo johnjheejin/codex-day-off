@@ -8,6 +8,7 @@
 
 - 공개 deployment: `6e0df2f1-5d25-4ed2-b2db-4a6d7e21f168`, source `07de646`, [고정 배포 주소](https://6e0df2f1.codex-day-off.pages.dev).
 - [45개 검사의 GitHub 실행](https://github.com/johnjheejin/codex-day-off/actions/runs/33990186523): 빌드·번들 일치·단위 16개·브라우저 29개 성공. 게시 단계는 `CLOUDFLARE_API_TOKEN`이 없어 `Not logged in`으로 실패했다. 첫 [44개 실행](https://github.com/johnjheejin/codex-day-off/actions/runs/33989979717)도 같은 구분을 따른다.
+- 최종 [워크플로 실행](https://github.com/johnjheejin/codex-day-off/actions/runs/33990631243)도 Wrangler 4.129.0 잠금 의존성으로 빌드·45개 검사를 통과했다. 게시 작업은 새 `Check deployment credential` 단계에서 미연결 토큰을 정확히 보고하고 멈췄으며, 배포 시도는 하지 않았다.
 - 기존 인증으로 게시 후 고정 배포 URL과 공개 도메인의 8개 파일(704,457바이트)을 대조했다. 공개 사이트 브라우저 29개도 모두 통과했다(약 1.9분).
 - [공개 파일 대조](../assets/verification/2026-09-06-living-sky/production/integrity.json) · [공개 3D 화면](../assets/verification/2026-09-06-living-sky/production/night-live-turned.png) · [공개 모바일 Paper Sky](../assets/verification/2026-09-06-living-sky/production/mobile-paper-live.png).
 - 후속 배포 도구·기록 커밋은 사이트 8개 파일을 바꾸지 않는다. 런타임 source ref는 `07de646`을 유지한다. 이전 공개본은 [앞선 배포 기록](./verification/2026-09-06-deployment.md)에 있다.
