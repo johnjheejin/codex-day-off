@@ -10,7 +10,7 @@ https://dayoff.tmcowork.com
 
 ## Screenshots
 
-September 6 local build; these changes have not been deployed.
+September 6 release, now live at [dayoff.tmcowork.com](https://dayoff.tmcowork.com/).
 
 | State | Desktop | Mobile |
 | --- | --- | --- |
@@ -29,7 +29,7 @@ The four-milestone, same-viewport comparison is preserved in **[the July 13 visu
 | July 11 | The repository was reopened with GPT-5.6 Sol. The live experience was tested again, missed accessibility states were fixed, reduced-motion support was added, and the moment was recorded instead of being allowed to disappear into commit history. |
 | July 13 | A Galaxy S24 report turned the revisit into a rendering-safety and mobile-UX pass: pixel and frame budgets were bounded, desktop-site mode gained a safety path, `Night Sky / Paper Sky` became explicit play scenes, sharing moved into the first result viewport, and the first build was visually audited against the current experience. |
 | September 5 | Three.js adds a slowly turning line sculpture, dimensional blooms and collection ripples. Measured CPU/GPU work and display cadence replace fixed mobile frame limits; a Canvas fallback keeps the current sky after GPU failure. |
-| September 6 | The first pass from the Astra demo research makes gestures shape each flower, nearby blooms respond to touch, and the completed sky linger briefly before the result. This pass is local; it has not been deployed. |
+| September 6 | Gestures shape each flower, nearby blooms respond to touch, and the completed sky lingers briefly before the result. Editorial typography connects the opening, pause, results and image handoffs. Published to Cloudflare Pages and verified on the public domain. |
 
 Read the full entry: **[2026-07-11 — revisiting Afterglow](./docs/journal/2026-07-11.md)**.
 
@@ -111,3 +111,12 @@ The visual system is documented in [`DESIGN.md`](./DESIGN.md). It uses an origin
 - Source: GitHub (`johnjheejin/codex-day-off`)
 - Hosting: Cloudflare Pages
 - Custom domain: `dayoff.tmcowork.com`
+- Deployment mode: **Direct Upload**. This Pages project reports `Git Provider: No`; pushing to GitHub does not publish the site automatically.
+- Publish the prepared static files with `wrangler pages deploy` targeting project `codex-day-off` and branch `main`. Include `index.html`, both renderer/garden bundles, the Three.js license files, and `assets/fonts/`. Keep development dependencies, local credentials and the obsolete ZIP out of the upload directory.
+- September 6 production deployment: `26f3a895-319c-4c76-b8fb-14b0ae90e1b0`. [Release and public verification](./docs/verification/2026-09-06-deployment.md).
+
+Run the browser checks against the published site without starting a local server:
+
+```bash
+AFTERGLOW_BASE_URL=https://dayoff.tmcowork.com AFTERGLOW_EVIDENCE_DIR=test-results/public-evidence npx playwright test
+```

@@ -4,14 +4,15 @@
 
 마지막 확인: 2026-09-06
 
-## 2026-09-06 공개 반영 진행
+## 2026-09-06 공개 반영 완료
 
-- 사용자가 현재 로컬 개선을 공개본에도 반영하도록 요청했다. 로컬과 GitHub `main`의 출발점은 `8ab59f1`로 일치했다.
-- 개선 코드·번들·검증 기록 110개 파일을 `32633ae`로 커밋하고 GitHub `main`에 push했다. 공개 사이트의 HTML에는 아직 새 서체와 garden 번들이 없음을 별도로 확인했다.
-- 렌더 번들을 다시 만들고 런타임 guard, 단위 13개·브라우저 24개를 모두 통과했다. HTML·두 JS 번들·서체·라이선스를 포함한 배포 파일 8개(693,423바이트)를 별도 폴더에 준비했다.
-- 공개 주소에 같은 브라우저 검사를 실행할 수 있도록 `AFTERGLOW_BASE_URL`과 증거 저장 위치 `AFTERGLOW_EVIDENCE_DIR`를 지원한다. 외부 공유는 모의 대상으로 검사한다.
-- Cloudflare CLI 인증이 만료되어 Chrome Beta에서 다시 로그인하는 단계다. Chrome Beta도 `/login`으로 이동하며, 사용자에게 해당 탭에서 로그인하도록 요청했다. 로그인 완료 후 Wrangler OAuth를 새로 시작해야 한다(앞선 인증 대기는 시간 초과). 공개 배포 완료로 기록하지 않는다. 이 진행 기록 이후 실제 배포 ID와 공개 응답 검증을 추가한다.
-- 준비한 배포 폴더와 각 파일의 SHA-256은 로컬 `.wrangler/afterglow-release.json`에 있다. 이 파일과 기존 ZIP은 GitHub에 포함하지 않는다.
+- 사용자의 공개 반영 요청에 따라 Three.js·입력 반응·모바일 PNG·첫 화면과 나머지 장면·공유 개선을 게시했다. [공개 사이트](https://dayoff.tmcowork.com/)와 [배포·검증 기록](./verification/2026-09-06-deployment.md)을 참조한다.
+- 개선 코드 커밋은 `32633ae`이며 GitHub `main`에 반영했다. 배포의 source ref는 당시 HEAD `3d4d23b`다. 이후 기록 커밋은 런타임 파일을 바꾸지 않는다.
+- Cloudflare `codex-day-off`의 실제 설정은 `Git Provider: No`다. GitHub는 소스 저장소이며 Pages는 직접 업로드 방식이다. GitHub push만으로 자동 게시되지 않는다. Chrome Beta 로그인 후 기존 Wrangler 인증을 갱신해 배포했다.
+- Production 배포 ID: `26f3a895-319c-4c76-b8fb-14b0ae90e1b0`, branch `main`. 이전 배포는 `1fb844c2-ea46-4e64-bc6f-d091ae485d72`(source `8ab59f1`)로 보존돼 있다.
+- 재빌드 후 런타임 guard·단위 13개·로컬 브라우저 24개를 통과했다. 게시 후 실제 공개 도메인에서 브라우저 24개를 다시 통과했다. `AFTERGLOW_BASE_URL`과 `AFTERGLOW_EVIDENCE_DIR`로 공개 검증을 재현한다.
+- HTML·두 JS 번들·서체·라이선스 8개(693,423바이트)를 게시했다. 배포 URL은 모든 파일이 로컬과 일치한다. 공개 도메인도 Cloudflare가 덧붙인 보안 링크·스크립트 두 부분을 제외하면 HTML이 일치하고, 나머지 파일은 SHA-256이 일치한다.
+- `.wrangler/afterglow-release.json`에는 로컬 준비 폴더와 해시가 있다. 기존 ZIP은 갱신·게시하지 않았다. S24 실기기 열 검증과 작품별 복원 링크는 남아 있다. 아래의 “로컬/배포 전” 표기는 각 작업 당시 이력이다.
 
 ## 2026-09-06 결과·공유·일시정지 디자인 후속
 

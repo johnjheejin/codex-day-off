@@ -1,0 +1,111 @@
+[
+  {
+    "origin": "https://dayoff.tmcowork.com",
+    "files": [
+      {
+        "file": "index.html",
+        "status": 200,
+        "type": "text/html; charset=utf-8",
+        "matches": false,
+        "normalizedMatches": true,
+        "platformInjectedElements": 2,
+        "normalizedSha256": "5e747a27b496a329a0fe04c9d76428293c9f3eedc5970cd24d9f851eb4e3c50d"
+      },
+      {
+        "file": "assets/afterglow-three.js",
+        "status": 200,
+        "type": "application/javascript",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-garden.js",
+        "status": 200,
+        "type": "application/javascript",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js.LEGAL.txt",
+        "status": 200,
+        "type": "text/plain; charset=utf-8",
+        "matches": true
+      },
+      {
+        "file": "assets/THREE-LICENSE.txt",
+        "status": 200,
+        "type": "text/plain; charset=utf-8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/newsreader-display-latin.woff2",
+        "status": 200,
+        "type": "font/woff2",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/NEWSREADER-OFL.txt",
+        "status": 200,
+        "type": "text/plain; charset=utf-8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/README.md",
+        "status": 200,
+        "type": "text/markdown; charset=utf-8",
+        "matches": true
+      }
+    ]
+  },
+  {
+    "origin": "https://26f3a895.codex-day-off.pages.dev",
+    "files": [
+      {
+        "file": "index.html",
+        "status": 200,
+        "type": "text/html; charset=utf-8",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js",
+        "status": 200,
+        "type": "application/javascript",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-garden.js",
+        "status": 200,
+        "type": "application/javascript",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js.LEGAL.txt",
+        "status": 200,
+        "type": "text/plain; charset=utf-8",
+        "matches": true
+      },
+      {
+        "file": "assets/THREE-LICENSE.txt",
+        "status": 200,
+        "type": "text/plain; charset=utf-8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/newsreader-display-latin.woff2",
+        "status": 200,
+        "type": "font/woff2",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/NEWSREADER-OFL.txt",
+        "status": 200,
+        "type": "text/plain; charset=utf-8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/README.md",
+        "status": 200,
+        "type": "text/markdown; charset=utf-8",
+        "matches": true
+      }
+    ]
+  }
+]
