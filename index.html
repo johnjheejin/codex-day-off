@@ -6,7 +6,15 @@
   <meta name="color-scheme" content="light">
   <title>Afterglow — Codex’s Day Off</title>
   <meta name="description" content="A 30-second interactive constellation garden for Codex.">
+  <link rel="preload" href="./assets/fonts/newsreader-display-latin.woff2" as="font" type="font/woff2" crossorigin>
   <style>
+    @font-face {
+      font-family: "Afterglow Newsreader";
+      src: url("./assets/fonts/newsreader-display-latin.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
     :root {
       color-scheme: only light;
       --canvas: #f3f3ee;
@@ -65,8 +73,20 @@
       transition: opacity .32s cubic-bezier(.16, 1, .3, 1);
     }
 
-    .ended canvas { opacity: .52; }
-    .light-field.ended canvas { opacity: .72; }
+    .ended canvas { opacity: 0; }
+    .light-field.ended canvas { opacity: 0; }
+    #skyCanvas { pointer-events: none; }
+    .three-ready #canvas { opacity: 0; }
+    .three-ready .sky-sketch { visibility: hidden; }
+
+    .sky-study {
+      position: relative;
+      height: clamp(220px, 27vh, 320px);
+      margin: 0 0 24px;
+    }
+
+    .sky-sketch { width: 100%; height: 100%; color: inherit; opacity: .3; }
+    #intro { touch-action: pan-y; }
 
     .topbar {
       position: absolute;
@@ -168,7 +188,7 @@
       display: grid;
       place-items: center;
       padding: clamp(22px, 5vw, 72px);
-      transition: opacity .7s ease, transform .7s ease;
+      transition: opacity 320ms cubic-bezier(.16, 1, .3, 1), transform 320ms cubic-bezier(.16, 1, .3, 1);
       z-index: 5;
     }
 
@@ -204,13 +224,6 @@
       text-wrap: balance;
     }
 
-    h1 em {
-      display: block;
-      font-style: normal;
-      font-weight: 400;
-      color: var(--muted);
-    }
-
     .intro-side {
       padding-bottom: .7vw;
     }
@@ -221,27 +234,6 @@
       font-size: clamp(16px, 1.6vw, 20px);
       line-height: 1.55;
       letter-spacing: -.015em;
-      text-wrap: pretty;
-    }
-
-    .prompt {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 14px;
-      align-items: center;
-      width: 100%;
-      min-height: 76px;
-      padding: 10px 10px 10px 20px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: var(--surface);
-      box-shadow: 0 2px 10px rgba(0,0,0,.04);
-    }
-
-    .prompt-copy {
-      color: var(--body-ink);
-      font-size: 14px;
-      line-height: 1.4;
       text-wrap: pretty;
     }
 
@@ -280,7 +272,6 @@
     }
 
     #world:not(.light-field) .intro-card .eyebrow,
-    #world:not(.light-field) h1 em,
     #world:not(.light-field) .session-spec li,
     #world:not(.light-field) .hint { color: var(--night-muted); }
 
@@ -291,11 +282,6 @@
     }
 
     #world:not(.light-field) .session-spec b { color: var(--night-ink); }
-
-    #world:not(.light-field) .prompt {
-      border-color: rgba(244,244,239,.22);
-      background: var(--night-ink);
-    }
 
     .session-spec {
       display: grid;
@@ -481,8 +467,7 @@
     }
 
     #resultTitle:focus-visible {
-      outline: 2px solid var(--night-ink);
-      outline-offset: 8px;
+      outline: none;
     }
 
     .result-detail {
@@ -733,8 +718,9 @@
     .afterglow-handoff-preview img {
       display: block;
       width: 120px;
-      aspect-ratio: 1200 / 630;
-      object-fit: cover;
+      height: auto;
+      max-height: 220px;
+      object-fit: contain;
       border-radius: 8px;
       background: var(--night);
     }
@@ -878,6 +864,11 @@
       .afterglow-handoff-preview img { width: 96px; }
       .dialog-actions { grid-template-columns: 1fr; }
       .dialog-action.primary { grid-row: 1; }
+      #intro .intro-card { gap: 20px; }
+      #intro h1 { font-size: clamp(46px, 13.3vw, 76px); }
+      .sky-study { height: 160px; margin-bottom: 16px; }
+      #intro .session-spec { display: none; }
+      #intro .lede { margin-bottom: 20px; }
     }
 
     @media (max-width: 560px) {
@@ -896,6 +887,248 @@
       .afterglow-handoff-button.afterglow-handoff-primary { grid-column: auto; }
     }
 
+    /* A single editorial composition: invitation, living object, then action. */
+    #intro { padding: clamp(32px, 5vw, 72px) clamp(20px, 5vw, 72px); }
+    .intro-card {
+      width: min(1240px, 100%);
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 24px 48px;
+      align-items: center;
+    }
+    .intro-copy { grid-column: 1; grid-row: 1; align-self: end; }
+    .intro-side { grid-column: 1; grid-row: 2; max-width: 420px; align-self: start; padding: 0; }
+    .intro-card h1 { max-width: none; font-size: clamp(76px, 8.8vw, 130px); line-height: .91; letter-spacing: -.052em; font-weight: 400; text-wrap: initial; }
+    .intro-prelude { display: block; margin: 0 0 28px 4px; font: 400 clamp(18px, 1.5vw, 22px)/1.3 Arial, "Helvetica Neue", sans-serif; letter-spacing: -.025em; color: var(--night-muted); }
+    .light-field .intro-prelude { color: var(--muted); }
+    .intro-open { display: block; font-family: "Afterglow Newsreader", Georgia, "Times New Roman", serif; }
+    .intro-open > span { display: block; white-space: nowrap; }
+    .intro-open .intro-sky { margin-left: .68em; }
+    .intro-card .lede { max-width: 36ch; margin: 8px 0 26px; font-size: 16px; line-height: 1.55; }
+    #intro .prompt { display: flex; flex-wrap: wrap; gap: 12px 20px; min-height: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+    #intro #start { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; min-height: 52px; padding: 0 20px; border-radius: 12px; font-size: 14px; font-weight: 400; color: var(--night); background: var(--night-ink); }
+    #intro #start:hover { background: #fff; }
+    .light-field #intro #start { color: var(--surface); background: var(--ink); }
+    .light-field #intro #start:hover { background: var(--hover-ink); }
+    #intro #start:focus-visible { outline-color: var(--night-ink); }
+    .light-field #intro #start:focus-visible { outline-color: var(--ink); }
+    .start-arrow { font-size: 20px; font-weight: 400; }
+    .intro-duration { color: var(--night-muted); font: 10px/1.5 "SFMono-Regular", Consolas, monospace; }
+    .light-field .intro-duration { color: var(--muted); }
+    .intro-side .hint { margin-top: 16px; font: 12px/1.5 Arial, "Helvetica Neue", sans-serif; letter-spacing: 0; }
+    .intro-art { grid-column: 2; grid-row: 1 / 3; min-width: 0; margin: 0; }
+    .sky-study { height: clamp(330px, 48vw, 560px); margin: 0; }
+    .study-turn { position: absolute; inset: 0; display: none; width: 100%; border: 0; border-radius: 18px; background: transparent; color: inherit; cursor: grab; touch-action: none; }
+    .three-ready .study-turn { display: block; }
+    .study-turn:active { cursor: grabbing; }
+    .study-turn:focus-visible { outline: 2px solid currentColor; outline-offset: -8px; }
+    .art-caption { display: flex; justify-content: space-between; gap: 16px; margin: 4px 24px 0; padding-top: 16px; border-top: 1px solid rgba(244,244,239,.14); color: var(--night-muted); font: 10px/1.5 "SFMono-Regular", Consolas, monospace; }
+    .light-field .art-caption { border-color: var(--line); color: var(--muted); }
+    .art-caption span:last-child { color: var(--accent); }
+    #studyHint { white-space: nowrap; }
+    .intro-footer { position: absolute; left: clamp(20px, 5vw, 72px); right: clamp(20px, 5vw, 72px); bottom: 24px; display: flex; justify-content: space-between; color: var(--night-faint); font: 10px/1.5 "SFMono-Regular", Consolas, monospace; letter-spacing: .025em; }
+    .light-field .intro-footer { color: var(--muted); }
+    .utility-button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-width: 44px; min-height: 44px; padding: 0 12px; border: 1px solid rgba(244,244,239,.22); border-radius: 12px; background: transparent; color: inherit; cursor: pointer; font: 11px/1.2 "SFMono-Regular", Consolas, monospace; transition: background 180ms, border-color 180ms; }
+    .utility-button svg { width: 16px; height: 16px; }
+    .utility-button:hover { background: rgba(244,244,239,.08); border-color: currentColor; }
+    .utility-button:active { transform: scale(.97); }
+    .utility-button:focus-visible, .result-artwork:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+    .utility-button:disabled { opacity: .45; cursor: not-allowed; }
+    .light-field .utility-button { border-color: var(--line); }
+    .light-field .utility-button:hover { background: var(--accent-soft); }
+    #soundToggle[aria-pressed="false"] .sound-wave { display: none; }
+    #soundToggle[aria-pressed="true"] .sound-mute { display: none; }
+    .topbar-actions { gap: 8px; }
+    .theme-line { margin-right: 16px; }
+    #pauseButton { position: absolute; z-index: 4; bottom: 44px; left: calc(50% - 48px); display: none; }
+    .playing #pauseButton { display: inline-flex; }
+    #keepSky { position: absolute; z-index: 4; bottom: max(36px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); white-space: nowrap; }
+    #keepSky[hidden] { display: none; }
+    #keepSky, #skyReturn { font: 13px/1.3 Arial, sans-serif; }
+    #hud .brand { font: 400 23px/1.2 "Afterglow Newsreader", Georgia, serif; letter-spacing: -.025em; text-transform: none; }
+    #hud .brand span { margin-left: 12px; font: 12px/1.4 Arial, sans-serif; letter-spacing: 0; }
+    #time { font-size: clamp(34px, 4.4vw, 52px); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+    #count { font: 400 15px/1.3 Arial, sans-serif; }
+    .counter small { font: 11px/1.3 Arial, sans-serif; text-transform: none; letter-spacing: 0; }
+    #whisper { font: 400 18px/1.35 "Afterglow Newsreader", Georgia, serif; }
+    #pauseDialog { max-width: 400px; text-align: center; }
+    #pauseDialog h2 { margin: 0 0 16px; font-size: 40px; font-weight: 500; letter-spacing: -.055em; }
+    #pauseDialog p { margin: 0 0 28px; color: var(--muted); font-size: 15px; line-height: 1.6; }
+    #resumeButton { width: 100%; }
+    #skyReturn { display: none; position: absolute; z-index: 9; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--night); }
+    .light-field #skyReturn { background: var(--canvas); }
+    .viewing #skyReturn { display: inline-flex; }
+    .viewing.ended #skyCanvas, .viewing.ended:not(.three-ready) #canvas { opacity: 1; }
+    .viewing .cursor-note { opacity: 0; }
+    /* Result: the artwork, its short colophon, then clear ways to keep it. */
+    #result { padding: clamp(28px, 4vw, 56px); }
+    #result .result-card { margin: auto 0; width: min(1160px, 100%); grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 24px 64px; }
+    .result-heading { grid-column: 1; grid-row: 1; min-width: 0; }
+    .result-prelude { margin: 0 0 16px; color: var(--night-muted); font-size: 14px; }
+    .light-field .result-prelude { color: var(--muted); }
+    #resultTitle { font: 400 clamp(56px, 5.6vw, 76px)/.96 "Afterglow Newsreader", Georgia, serif; letter-spacing: -.045em; text-wrap: initial; }
+    #resultText { max-width: 34ch; margin: 20px 0 0; color: var(--night-muted); font-size: 15px; line-height: 1.55; }
+    .result-card > .afterglow-handoff { grid-column: 2; grid-row: 1 / 3; align-self: center; padding: 0; border: 0; margin: 0; min-width: 0; }
+    .result-detail { grid-column: 1 / -1; grid-row: 3; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; padding-top: 24px; border-top: 1px solid rgba(244,244,239,.14); }
+    .result-meta { flex: 1; display: grid; gap: 6px; margin: 0; font: 12px/1.45 Arial, sans-serif; text-transform: none; letter-spacing: 0; }
+    .result-meta b { font-weight: 400; color: inherit; }
+    .result-meta span:last-child { font-size: 11px; }
+    .result-card #again { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; width: auto; min-height: 48px; padding: 0 16px; color: inherit; background: transparent; border: 1px solid rgba(244,244,239,.22); font-size: 13px; font-weight: 400; }
+    .light-field .result-card #again { border-color: var(--line); }
+    .result-card #again:hover { border-color: currentColor; }
+    .project-note { flex-basis: 100%; margin: 0; min-height: 44px; font-size: 10px; letter-spacing: 0; }
+    .result-artwork { grid-column: 1; grid-row: 2; align-self: start; width: 100%; padding: 0; overflow: hidden; border: 1px solid rgba(244,244,239,.14); border-radius: 12px; color: inherit; background: transparent; text-align: left; cursor: pointer; transition: border-color 180ms; }
+    .result-artwork img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: var(--night); }
+    .light-field .result-artwork img { background: var(--canvas); }
+    .result-artwork:disabled { cursor: wait; opacity: .45; }
+    .result-artwork:hover { border-color: currentColor; }
+    .result-artwork:active { opacity: .85; }
+    .result-artwork-caption { display: flex; justify-content: space-between; gap: 8px; padding: 14px 16px; border-top: 1px solid rgba(244,244,239,.14); font: 11px/1.5 Arial, sans-serif; }
+    .result-artwork-caption > span:last-child { color: var(--accent); white-space: nowrap; }
+    .light-field .result-artwork, .light-field .result-artwork-caption { border-color: var(--line); }
+    .afterglow-handoff-heading { display: block; margin-bottom: 20px; }
+    .afterglow-handoff-title { font: 400 26px/1.15 Arial, sans-serif; letter-spacing: -.035em; margin: 0 0 10px; }
+    .afterglow-handoff-heading > span { font: 12px/1.5 Arial, sans-serif; }
+    .afterglow-handoff-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; }
+    .afterglow-handoff-button { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 52px; padding: 0 14px; font-size: 13px; font-weight: 400; }
+    .afterglow-handoff-button.afterglow-handoff-primary { grid-column: auto; text-align: left; }
+    .afterglow-handoff-button > span { font-size: 17px; }
+    .afterglow-app-label { grid-column: 1 / -1; margin: 20px 0 0; color: var(--night-muted); font-size: 12px; }
+    .light-field .afterglow-app-label { color: var(--muted); }
+    .afterglow-handoff-button.afterglow-app { min-height: 44px; padding: 0 2px; border: 0; border-bottom: 1px solid rgba(244,244,239,.18); border-radius: 0; }
+    .light-field .afterglow-handoff-button.afterglow-app { border-bottom-color: var(--line); }
+    .afterglow-handoff-button.afterglow-app:hover { color: var(--accent); background: transparent; border-bottom-color: currentColor; }
+    .afterglow-handoff-note { margin: 16px 0 0; font: 12px/1.5 Arial, sans-serif; }
+    .afterglow-caption { --caption-line: rgba(244,244,239,.18); margin-top: 20px; border-top: 1px solid var(--caption-line); }
+    .light-field .afterglow-caption { --caption-line: var(--line); }
+    .afterglow-caption summary { min-height: 44px; padding: 14px 0; cursor: pointer; font-size: 12px; }
+    .afterglow-caption textarea { display: block; width: 100%; min-height: 130px; padding: 12px; border: 1px solid var(--caption-line); border-radius: 8px; background: transparent; color: inherit; font: 12px/1.6 Arial, sans-serif; resize: vertical; user-select: text; }
+    .caption-copy { min-height: 44px; margin-top: 8px; padding: 0 12px; border: 1px solid var(--caption-line); border-radius: 8px; color: inherit; background: transparent; cursor: pointer; font-size: 12px; }
+    .caption-copy:hover { border-color: currentColor; }
+    .caption-copy:active { opacity: .75; }
+    .afterglow-caption summary:focus-visible, .caption-copy:focus-visible, .afterglow-caption textarea:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+    .caption-status { margin: 8px 0 0; font-size: 12px; line-height: 1.5; }
+    .caption-status:empty { display: none; }
+
+    /* Dialogs continue the same paper/night surface and restrained display type. */
+    .afterglow-handoff-dialog { --dialog-ink: var(--ink); --dialog-muted: var(--body-ink); --dialog-line: var(--line); --dialog-paper: var(--canvas); background: var(--dialog-paper); color: var(--dialog-ink); border-color: var(--dialog-line); }
+    #world:not(.light-field) .afterglow-handoff-dialog { --dialog-ink: var(--night-ink); --dialog-muted: var(--night-muted); --dialog-line: rgba(244,244,239,.18); --dialog-paper: var(--night); }
+    .afterglow-handoff-dialog .afterglow-caption { --caption-line: var(--dialog-line); margin: 0 0 24px; }
+    .afterglow-handoff-dialog-title, #pauseDialog h2 { font: 400 clamp(36px, 5vw, 48px)/1.03 "Afterglow Newsreader", Georgia, serif; letter-spacing: -.035em; }
+    .afterglow-handoff-dialog-label, .dialog-prelude { margin: 0 0 12px; color: var(--dialog-muted); font: 13px/1.4 Arial, sans-serif; text-transform: none; letter-spacing: 0; }
+    #pauseDialog p { color: var(--dialog-muted); }
+    #pauseDialog .dialog-prelude { margin-bottom: 20px; font-size: 13px; }
+    .dialog-close { border-color: var(--dialog-line); color: var(--dialog-ink); }
+    .dialog-close:hover { background: transparent; border-color: currentColor; }
+    .afterglow-handoff-dialog-copy { color: var(--dialog-muted); font-size: 14px; margin-bottom: 24px; }
+    .afterglow-handoff-preview { grid-template-columns: 88px minmax(0, 1fr); padding: 0; border: 0; border-radius: 0; background: transparent; }
+    .afterglow-handoff-preview img { width: 88px; max-height: 150px; border-radius: 4px; }
+    .afterglow-handoff-preview p { color: var(--dialog-muted); font: 12px/1.6 Arial, sans-serif; }
+    #afterglowHandoffPreviewNote { white-space: pre-line; }
+    .handoff-steps, .handoff-steps li { border-color: var(--dialog-line); }
+    .handoff-steps li { color: var(--dialog-muted); font-size: 13px; padding: 12px 0; }
+    .handoff-steps b { color: var(--dialog-ink); font-weight: 400; }
+    .dialog-actions { grid-template-columns: minmax(0, 1fr); }
+    .dialog-action { border-color: var(--dialog-line); color: var(--dialog-ink); font-size: 13px; font-weight: 400; }
+    .dialog-action:hover { background: transparent; border-color: currentColor; }
+    .dialog-action.primary { grid-row: 1; background: var(--dialog-ink); border-color: var(--dialog-ink); color: var(--dialog-paper); }
+    .dialog-action.primary:hover { opacity: .85; background: var(--dialog-ink); }
+    .dialog-action:not(.primary) { border-color: transparent; }
+    .toast { max-width: calc(100% - 40px); width: max-content; border-radius: 12px; line-height: 1.5; text-align: center; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+    @media (min-width: 761px) and (max-height: 740px) {
+      #intro { overflow-y: auto; place-items: start center; }
+      .sky-study { height: 400px; }
+      .intro-footer { position: static; grid-column: 1 / -1; width: min(1240px, 100%); margin-top: 28px; }
+    }
+    @media (min-width: 761px) and (max-width: 1000px) and (orientation: portrait) {
+      #intro { padding: 40px; overflow-y: auto; place-items: start center; }
+      #intro .intro-card { max-width: 560px; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+      .intro-copy { grid-column: 1; grid-row: 1; }
+      .intro-art { grid-column: 1; grid-row: 2; }
+      .intro-side { grid-column: 1; grid-row: 3; max-width: none; }
+      #intro h1 { font-size: 104px; line-height: .94; }
+      .intro-prelude { margin-bottom: 20px; }
+      .sky-study { height: 240px; }
+      .art-caption { margin: 0; }
+      .intro-footer { position: static; width: min(560px, 100%); margin-top: 28px; }
+      .intro-footer span:last-child { display: none; }
+      #result .result-card { grid-template-columns: minmax(0, 1fr) 168px; gap: 32px; }
+      .result-heading { grid-column: 1; grid-row: 1; }
+      .result-artwork { grid-column: 2; grid-row: 1; }
+      .result-artwork img { height: 252px; }
+      .result-artwork-caption { justify-content: center; }
+      .result-artwork-caption > span:first-child { display: none; }
+      .result-card > .afterglow-handoff { grid-column: 1 / -1; grid-row: 2; }
+    }
+    @media (max-width: 1100px) { .theme-line { display: none; } }
+    @media (max-width: 760px) {
+      #intro { padding: 32px 24px 28px; }
+      #intro .intro-card { display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
+      .intro-copy { order: 0; align-self: stretch; }
+      .intro-art { order: 1; }
+      .intro-side { order: 2; max-width: none; align-self: stretch; }
+      #intro h1 { font-size: clamp(68px, 20vw, 116px); line-height: .94; letter-spacing: -.055em; }
+      .intro-prelude { margin: 0 0 20px 2px; font-size: 17px; }
+      .intro-open .intro-sky { margin-left: .82em; }
+      .sky-study { height: clamp(180px, 25vh, 240px); }
+      .art-caption { margin: 0; padding: 0; border-top: 0; font-size: 9px; }
+      #intro .lede { font-size: 15px; line-height: 1.5; max-width: 38ch; margin: 8px 0 20px; }
+      .intro-footer { position: static; width: 100%; margin-top: 28px; padding-top: 16px; border-top: 1px solid rgba(244,244,239,.14); font-size: 9px; }
+      .light-field .intro-footer { border-color: var(--line); }
+      .intro-footer span:last-child { display: none; }
+      #soundLabel { display: none; }
+      #soundToggle { width: 44px; padding: 0; }
+      .brand-desc { font-size: 9px; letter-spacing: .03em; }
+      .brand-name { font-size: 16px; }
+      .brand-symbol { width: 24px; height: 24px; }
+      .brand-lockup { gap: 8px; }
+      .appearance-toggle { font-size: 10px; min-width: 100px; padding: 0 8px; }
+      #pauseButton { left: auto; right: 20px; bottom: 40px; }
+      #hud .brand { font-size: 20px; }
+      .brand span { display: none; }
+      #whisper { top: 110px; max-width: calc(100% - 40px); font-size: 16px; white-space: normal; text-align: center; line-height: 1.5; }
+      #result { padding: 28px 24px; }
+      #result .result-card { display: grid; grid-template-columns: minmax(0, 1fr) 96px; gap: 24px 20px; padding: 0; }
+      .result-heading { grid-column: 1; grid-row: 1; }
+      .result-prelude { margin-bottom: 12px; font-size: 12px; }
+      #resultTitle { font-size: clamp(38px, 10.8vw, 54px); line-height: .98; }
+      #resultText { margin-top: 16px; font-size: 13px; line-height: 1.5; }
+      .result-artwork { grid-column: 2; grid-row: 1; width: 100%; align-self: start; }
+      .result-artwork img { height: 168px; object-fit: contain; }
+      .result-artwork-caption { justify-content: center; padding: 10px 4px; font-size: 10px; }
+      .result-artwork-caption > span:first-child { display: none; }
+      .result-card > .afterglow-handoff { grid-column: 1 / -1; grid-row: 2; margin: 0; padding: 0; }
+      .afterglow-handoff-heading { margin-bottom: 16px; }
+      .afterglow-handoff-title { font-size: 21px; margin-bottom: 8px; }
+      .afterglow-handoff-button { min-height: 50px; font-size: 12px; padding: 0 12px; }
+      .afterglow-handoff-actions { gap: 8px 12px; }
+      .afterglow-app-label { margin-top: 12px; }
+      .result-detail { grid-column: 1 / -1; grid-row: 3; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; padding-top: 20px; }
+      .result-meta { display: flex; flex-wrap: wrap; justify-content: space-between; flex-basis: 100%; font-size: 12px; }
+      .result-card #again { width: 100%; }
+      .project-note { margin-top: -12px; }
+      .afterglow-handoff-preview { grid-template-columns: 72px minmax(0, 1fr); }
+      .afterglow-handoff-preview img { width: 72px; max-height: 128px; }
+
+    }
+    @media (max-width: 380px) {
+      .brand-desc { display: none; }
+      .topbar { padding: 0 20px; }
+      #result .result-card { grid-template-columns: minmax(0, 1fr) 76px; gap: 24px 16px; }
+      .result-artwork img { height: 146px; }
+      #intro .prompt { gap: 12px; }
+      #intro #start { gap: 24px; padding-inline: 16px; }
+    }
+    @media (max-width: 760px) and (max-height: 740px) {
+      #intro { padding-top: 24px; }
+      #intro h1 { font-size: clamp(62px, 18vw, 98px); }
+      .intro-prelude { margin-bottom: 16px; }
+      .sky-study { height: 144px; }
+      #intro .intro-card { gap: 12px; }
+      .intro-footer { margin-top: 20px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         scroll-behavior: auto !important;
@@ -909,7 +1142,7 @@
 </head>
 <body>
   <main id="world">
-    <canvas id="canvas" tabindex="0" aria-label="Interactive constellation garden. Use the cursor, touch, or arrow keys to gather loose thoughts."></canvas>
+    <canvas id="canvas" tabindex="-1" aria-label="Interactive constellation garden. Use the cursor, touch, or arrow keys to gather loose thoughts."></canvas>
     <header class="topbar">
       <div class="brand-lockup">
         <svg class="brand-symbol" viewBox="0 0 32 32" aria-hidden="true">
@@ -924,91 +1157,128 @@
       </div>
       <div class="topbar-actions">
         <div class="theme-line">Thirty seconds. Nothing to ship.</div>
+        <button id="soundToggle" class="utility-button" type="button" aria-label="Turn sound on" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path class="sound-wave" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/><path class="sound-mute" d="m16 9 6 6m0-6-6 6"/></svg>
+          <span id="soundLabel">Sound off</span>
+        </button>
         <button id="appearanceToggle" class="appearance-toggle" type="button" aria-pressed="false">🌙 Night Sky</button>
       </div>
     </header>
 
     <section id="intro" class="screen">
       <div class="intro-card">
-        <div>
-          <p class="eyebrow">Codex’s Day Off · 30-second study</p>
-          <h1>Close the tabs.<em>Open the sky.</em></h1>
+        <div class="intro-copy">
+          <h1><span class="intro-prelude">Close the tabs.</span> <span class="intro-open"><span>Open the </span><span class="intro-sky">sky.</span></span></h1>
         </div>
-        <div class="intro-side">
-          <p class="lede">Leave unfinished thoughts where they are. Move through the afterglow and watch them become a small sky.</p>
-          <ul class="session-spec" aria-label="Session details">
-            <li><b>30 sec</b>Duration</li>
-            <li><b>No score</b>Measure</li>
-            <li><b>Local</b>Data</li>
-          </ul>
-          <div class="prompt">
-            <span class="prompt-copy">Give Codex thirty seconds off.</span>
-            <button id="start" class="start" aria-label="Begin day off">↑</button>
+        <figure class="intro-art">
+          <div id="skyStudy" class="sky-study">
+            <svg class="sky-sketch" viewBox="0 0 400 240" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true">
+              <ellipse cx="200" cy="120" rx="110" ry="42" transform="rotate(-25 200 120)"/>
+              <ellipse cx="200" cy="120" rx="110" ry="42" transform="rotate(35 200 120)"/>
+              <ellipse cx="200" cy="120" rx="110" ry="42" transform="rotate(95 200 120)"/>
+              <circle cx="200" cy="120" r="5" fill="currentColor"/>
+            </svg>
+            <button id="studyTurn" class="study-turn" type="button" aria-label="Turn the bloom. Drag, or press Enter to rotate."></button>
           </div>
-          <p class="hint">Cursor, touch, or arrow keys · gather loose thoughts</p>
+          <figcaption class="art-caption"><span>A thought, unfolding.</span><span id="studyHint">Drag to turn ↔</span></figcaption>
+        </figure>
+        <div class="intro-side">
+          <p class="lede">Gather loose thoughts.<br>Let your hands decide how they bloom.</p>
+          <div class="prompt">
+            <button id="start" class="start" aria-label="Begin day off">Begin day off <span class="start-arrow" aria-hidden="true">→</span></button>
+            <span class="intro-duration">30 seconds.<br>Nothing to ship.</span>
+          </div>
+          <p class="hint">Move your cursor, touch, or use arrow keys.</p>
         </div>
       </div>
+      <div class="intro-footer"><span>A small pause. No account. Just this moment.</span><span>Afterglow / Codex’s Day Off</span></div>
     </section>
 
-    <div id="hud" aria-live="polite" aria-hidden="true">
+    <div id="hud" aria-hidden="true">
       <div class="brand">Nothing due <span>/ take your time</span></div>
       <div class="timer"><span id="time">30</span><small>seconds remaining</small></div>
-      <div class="counter"><span id="count">00 thoughts</span><small>turned into afterglow</small></div>
+      <div class="counter"><span id="count">00 thoughts</span><small>found room to bloom</small></div>
       <div id="whisper">nothing needs your answer right now</div>
       <div class="progress-track" aria-hidden="true"><span id="progress"></span></div>
     </div>
 
+    <button id="pauseButton" class="utility-button" type="button" aria-label="Pause your day off"><span aria-hidden="true">Ⅱ</span> Pause</button>
+    <button id="keepSky" class="utility-button" type="button" hidden>Keep this sky →</button>
+    <button id="skyReturn" class="utility-button" type="button">← Back to your afterglow</button>
+    <div id="gardenAnnouncement" class="sr-only" role="status" aria-live="polite"></div>
     <div class="cursor-note" aria-hidden="true">Move slowly · loose thoughts drift closer</div>
 
     <section id="result" class="screen hidden" aria-hidden="true" inert>
       <div class="result-card">
-        <div>
-          <p class="eyebrow">Nothing was shipped · that was the point</p>
-          <h2 id="resultTitle" tabindex="-1">You made<br>room to wonder.</h2>
+        <div class="result-heading">
+          <p id="sceneName" class="result-prelude">Your Night Sky</p>
+          <h2 id="resultTitle" tabindex="-1">The sky<br>is yours.</h2>
+          <p id="resultText"></p>
         </div>
-        <div class="result-detail">
+        <button id="viewSky" class="result-artwork" type="button" aria-label="View your sky at full size" disabled>
+          <img id="resultPreview" alt="The sky you made, with your blooms and constellations">
+          <span class="result-artwork-caption"><span>Your moment, kept.</span><span>View sky <span aria-hidden="true">↗</span></span></span>
+        </button>
           <section class="afterglow-handoff" aria-labelledby="afterglowHandoffTitle">
             <div class="afterglow-handoff-heading">
-              <h2 id="afterglowHandoffTitle" class="afterglow-handoff-title">Share your afterglow</h2>
-              <span>#CodexDayOff #Afterglow</span>
+              <h3 id="afterglowHandoffTitle" class="afterglow-handoff-title">Keep this moment.</h3>
+              <span id="afterglowImageMeta">Your image is being prepared.</span>
             </div>
             <div class="afterglow-handoff-actions">
-              <button class="afterglow-handoff-button afterglow-handoff-primary" data-afterglow-destination="native" disabled>Share from this device</button>
-              <button class="afterglow-handoff-button" data-afterglow-destination="linkedin" disabled>Post to LinkedIn</button>
-              <button class="afterglow-handoff-button" data-afterglow-destination="x" disabled>Post to X</button>
-              <button class="afterglow-handoff-button" data-afterglow-destination="telegram" disabled>Send with Telegram</button>
-              <button class="afterglow-handoff-button" data-afterglow-destination="kakao" disabled>Send with KakaoTalk</button>
-              <button class="afterglow-handoff-button" data-afterglow-destination="download" disabled>Download PNG</button>
+              <button class="afterglow-handoff-button afterglow-handoff-primary" data-afterglow-destination="native" disabled>Share image <span aria-hidden="true">↑</span></button>
+              <button class="afterglow-handoff-button" data-afterglow-destination="download" disabled>Download PNG <span aria-hidden="true">↓</span></button>
+              <p class="afterglow-app-label">Or send with</p>
+              <button class="afterglow-handoff-button afterglow-app" data-afterglow-destination="linkedin" aria-label="Post to LinkedIn" disabled>LinkedIn <span aria-hidden="true">↗</span></button>
+              <button class="afterglow-handoff-button afterglow-app" data-afterglow-destination="x" aria-label="Post to X" disabled>X <span aria-hidden="true">↗</span></button>
+              <button class="afterglow-handoff-button afterglow-app" data-afterglow-destination="telegram" aria-label="Send with Telegram" disabled>Telegram <span aria-hidden="true">↗</span></button>
+              <button class="afterglow-handoff-button afterglow-app" data-afterglow-destination="kakao" aria-label="Send with KakaoTalk" disabled>KakaoTalk <span aria-hidden="true">↗</span></button>
             </div>
             <p id="afterglowHandoffNote" class="afterglow-handoff-note">Your image and caption will be prepared together.</p>
+            <details class="afterglow-caption">
+              <summary>Caption &amp; link</summary>
+              <label class="sr-only" for="afterglowCaption">Caption and link</label>
+              <textarea id="afterglowCaption" rows="5" readonly></textarea>
+              <button class="caption-copy" data-afterglow-copy type="button">Copy caption &amp; link</button>
+              <p class="caption-status" role="status"></p>
+            </details>
           </section>
-          <div class="result-meta"><span id="sceneName">Your Night Sky</span><span>Made in 30 seconds</span></div>
-          <p id="resultText"></p>
-          <div class="stats">
-            <div class="stat"><b id="finalCount">0</b><span>thoughts</span></div>
-            <div class="stat"><b id="finalBloom">0</b><span>constellations</span></div>
-            <div class="stat"><b id="finalMood">soft</b><span>pace</span></div>
-          </div>
-          <button id="again" class="start">Take another thirty seconds</button>
+        <div class="result-detail">
+          <p class="result-meta"><span><b id="finalCount">0</b> loose thoughts · <b id="finalBloom">0</b> colors</span><span>Made in 30 seconds</span></p>
+          <button id="again" class="start">Take another thirty seconds <span aria-hidden="true">→</span></button>
           <a class="project-note" href="https://github.com/johnjheejin/codex-day-off#the-story-so-far" target="_blank" rel="noopener">The story behind this small sky ↗</a>
         </div>
       </div>
     </section>
+    <dialog id="pauseDialog" class="afterglow-handoff-dialog" aria-labelledby="pauseTitle">
+      <div class="afterglow-handoff-dialog-inner">
+        <p class="dialog-prelude">A pause within a pause.</p>
+        <h2 id="pauseTitle">Take your<br>time.</h2>
+        <p>Your sky will wait.<br>Pick up right where you left off.</p>
+        <button id="resumeButton" class="dialog-action primary" type="button">Return to the sky</button>
+      </div>
+    </dialog>
     <dialog id="afterglowHandoffDialog" class="afterglow-handoff-dialog" aria-labelledby="afterglowHandoffDialogTitle">
       <div class="afterglow-handoff-dialog-inner">
         <div class="afterglow-handoff-dialog-head">
           <div>
-            <p id="afterglowHandoffDialogLabel" class="afterglow-handoff-dialog-label">Share handoff</p>
-            <h2 id="afterglowHandoffDialogTitle" class="afterglow-handoff-dialog-title">Before you continue</h2>
+            <p id="afterglowHandoffDialogLabel" class="afterglow-handoff-dialog-label">Keep your sky</p>
+            <h2 id="afterglowHandoffDialogTitle" class="afterglow-handoff-dialog-title" tabindex="-1">Take it with you.</h2>
           </div>
           <button id="afterglowHandoffDialogClose" class="dialog-close" type="button" aria-label="Close share instructions">×</button>
         </div>
         <p id="afterglowHandoffDialogCopy" class="afterglow-handoff-dialog-copy"></p>
         <div class="afterglow-handoff-preview">
           <img id="afterglowHandoffPreview" alt="Preview of your Afterglow share image">
-          <p id="afterglowHandoffPreviewNote">1200 × 630 PNG<br>Caption and hashtags included</p>
+          <p id="afterglowHandoffPreviewNote"></p>
         </div>
         <ol id="handoffSteps" class="handoff-steps"></ol>
+        <details class="afterglow-caption">
+          <summary>Caption &amp; link</summary>
+          <label class="sr-only" for="afterglowDialogCaption">Caption and link</label>
+          <textarea id="afterglowDialogCaption" rows="5" readonly></textarea>
+          <button class="caption-copy" data-afterglow-copy type="button">Copy caption &amp; link</button>
+          <p class="caption-status" role="status"></p>
+        </details>
         <div class="dialog-actions">
           <button id="afterglowHandoffDialogCancel" class="dialog-action" type="button">Not now</button>
           <button id="afterglowHandoffDialogContinue" class="dialog-action primary" type="button">Continue</button>
@@ -1019,6 +1289,7 @@
     <div id="debugPanel" class="debug-panel" aria-hidden="true"></div>
   </main>
 
+  <script src="./assets/afterglow-garden.js"></script>
   <script>
     (() => {
       const canvas = document.querySelector('#canvas');
@@ -1049,6 +1320,17 @@
       const againBtn = document.querySelector('#again');
       const appearanceToggle = document.querySelector('#appearanceToggle');
       const sceneName = document.querySelector('#sceneName');
+      const soundToggle = document.querySelector('#soundToggle');
+      const soundLabel = document.querySelector('#soundLabel');
+      const pauseDialog = document.querySelector('#pauseDialog');
+      const pauseButton = document.querySelector('#pauseButton');
+      const keepSky = document.querySelector('#keepSky');
+      const resumeButton = document.querySelector('#resumeButton');
+      const viewSky = document.querySelector('#viewSky');
+      const skyReturn = document.querySelector('#skyReturn');
+      const resultPreview = document.querySelector('#resultPreview');
+      const studyTurn = document.querySelector('#studyTurn');
+      const announcement = document.querySelector('#gardenAnnouncement');
       const shareButtons = [...document.querySelectorAll('[data-afterglow-destination]')];
 
       const colors = ['#ff6f61', '#f3a712', '#5b8def', '#3aa981', '#9b7ede'];
@@ -1072,8 +1354,11 @@
       let stars = [];
       let trails = [];
       let blooms = [];
+      let connections = [];
       let count = 0;
       let startedAt = 0;
+      let finishedAt = 0;
+      let closingAt = 0;
       let lastSpawn = 0;
       let lastFrame = performance.now();
       let lastRender = 0;
@@ -1093,6 +1378,20 @@
       let measuredFps = 0;
       let resizeTimer = 0;
       let sharePrepareTimer = 0;
+      let shareGeneration = 0;
+      let resultFrame = null;
+      let skyRenderer = null;
+      let frameBudget = null;
+      let idleTimer = 0;
+      let renderFailures = 0;
+      let suspendedAt = 0;
+      let playPaused = false;
+      let playPausedAt = 0;
+      let soundEnabled = false;
+      let audioContext = null;
+      let audioVoices = 0;
+      let studyDrag = null;
+      const studyRotation = { x: 0, y: 0 };
       const duration = 30;
       const query = new URLSearchParams(location.search);
       const debugMode = query.has('debug');
@@ -1103,6 +1402,9 @@
       const mobilePixelBudget = 1500000;
       const desktopPixelBudget = 3200000;
       const player = { x: 0, y: 0, tx: 0, ty: 0, r: 17, vx: 0, vy: 0 };
+      const garden = window.AfterglowGarden;
+      const gesture = garden ? new garden.GestureTrace() : null;
+      const bloomResponse = garden ? new garden.BloomResponse(mobilePerformance ? 4 : 6) : null;
       const keys = new Set();
 
       function makeCanvas(w, h) {
@@ -1124,8 +1426,8 @@
       function chooseDpr(nextWidth, nextHeight) {
         const pixelBudget = mobilePerformance ? mobilePixelBudget : desktopPixelBudget;
         const budgetDpr = Math.sqrt(pixelBudget / Math.max(1, nextWidth * nextHeight));
-        const deviceCap = mobilePerformance ? 1 : 1.5;
-        return Math.max(.75, Math.min(devicePixelRatio || 1, deviceCap, budgetDpr));
+        const deviceCap = mobilePerformance ? 2 : 1.5;
+        return Math.min(devicePixelRatio || 1, deviceCap, budgetDpr) * (frameBudget?.quality ?? 1);
       }
 
       function resize(force = false) {
@@ -1133,11 +1435,22 @@
         const nextHeight = Math.max(1, Math.round(innerHeight));
         const nextDpr = chooseDpr(nextWidth, nextHeight);
         if (!force && nextWidth === width && nextHeight === height && Math.abs(nextDpr - dpr) < .01) return;
+        if (width && height) {
+          [...blooms, ...particles, ...trails].forEach(point => {
+            point.x *= nextWidth / width;
+            point.y *= nextHeight / height;
+            if (point.fromX != null) point.fromX *= nextWidth / width;
+            if (point.fromY != null) point.fromY *= nextHeight / height;
+          });
+          player.x = player.tx = player.x * nextWidth / width;
+          player.y = player.ty = player.y * nextHeight / height;
+        }
+        if (nextWidth !== width || nextHeight !== height) gesture?.reset(player.x, player.y);
         width = nextWidth;
         height = nextHeight;
         dpr = nextDpr;
-        canvas.width = Math.round(width * dpr);
-        canvas.height = Math.round(height * dpr);
+        canvas.width = skyRenderer ? 1 : Math.floor(width * dpr);
+        canvas.height = skyRenderer ? 1 : Math.floor(height * dpr);
         canvas.style.width = width + 'px';
         canvas.style.height = height + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -1145,12 +1458,14 @@
         if (!player.y) player.y = player.ty = height / 2;
         makeStars();
         buildBackgroundLayer();
+        skyRenderer?.resize(width, height, dpr);
         if (!glowSprites.size) buildGlowSprites();
+        if (mode === 'result' || reducedMotion || playPaused) draw(performance.now());
       }
 
       function scheduleResize() {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => resize(), 180);
+        if (!paused) resizeTimer = setTimeout(() => resize(), 180);
       }
 
       function makeStars() {
@@ -1167,6 +1482,8 @@
 
       function buildBackgroundLayer() {
         releaseCanvas(backgroundLayer);
+        backgroundLayer = null;
+        if (skyRenderer) return;
         backgroundLayer = makeCanvas(Math.round(width * dpr), Math.round(height * dpr));
         const layerCtx = backgroundLayer.getContext('2d');
         layerCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -1197,12 +1514,164 @@
         });
       }
 
-      function resultHeading() {
-        return count > 16
-          ? 'A wild little sky.'
-          : count > 8
-          ? 'Room to wonder.'
-          : 'The quiet stayed.';
+      function sceneState(now = performance.now()) {
+        return { now: mode === 'result' ? finishedAt : playPaused ? playPausedAt : now, mode, stars, particles, trails, blooms, connections, player, studyRotation, startedAt, light: world.classList.contains('light-field') };
+      }
+
+      function setSound(enabled) {
+        soundEnabled = enabled;
+        soundToggle.setAttribute('aria-pressed', String(enabled));
+        soundToggle.setAttribute('aria-label', enabled ? 'Turn sound off' : 'Turn sound on');
+        soundLabel.textContent = enabled ? 'Sound on' : 'Sound off';
+        try { localStorage.setItem('afterglow-sound', enabled ? 'on' : 'off'); } catch (_) {}
+        if (!enabled && audioContext) {
+          const previous = audioContext;
+          audioContext = null;
+          audioVoices = 0;
+          previous.close().catch(() => {});
+        }
+      }
+
+      function unlockSound() {
+        if (!soundEnabled) return;
+        try {
+          const AudioEngine = window.AudioContext || window.webkitAudioContext;
+          if (!AudioEngine) throw new Error('Audio is unavailable.');
+          if (!audioContext) audioContext = new AudioEngine();
+          audioContext.resume().catch(() => {
+            setSound(false);
+            showToast('Sound is unavailable. Your sky still works.');
+          });
+        } catch (_) {
+          setSound(false);
+          showToast('Sound is unavailable. Your sky still works.');
+        }
+      }
+
+      function playChime(color) {
+        if (!soundEnabled || !audioContext || audioContext.state !== 'running' || audioVoices >= 6) return;
+        const engine = audioContext;
+        const oscillator = engine.createOscillator();
+        const gain = engine.createGain();
+        const now = engine.currentTime;
+        oscillator.type = 'sine';
+        oscillator.frequency.value = [523.25, 587.33, 659.25, 783.99, 880][colors.indexOf(color)] || 523.25;
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(.035, now + .012);
+        gain.gain.exponentialRampToValueAtTime(.0001, now + .7);
+        oscillator.connect(gain);
+        gain.connect(engine.destination);
+        audioVoices++;
+        oscillator.onended = () => {
+          oscillator.disconnect(); gain.disconnect();
+          if (engine === audioContext) audioVoices = Math.max(0, audioVoices - 1);
+        };
+        oscillator.start(now);
+        oscillator.stop(now + .72);
+      }
+
+      function wakeFrame() {
+        cancelAnimationFrame(rafId);
+        clearTimeout(idleTimer);
+        lastFrame = lastRender = performance.now();
+        frameBudget?.reset(lastFrame);
+        if (!paused && !playPaused) rafId = requestAnimationFrame(frame);
+      }
+
+      function pauseGame() {
+        if (mode !== 'play' || playPaused) return;
+        playPaused = true;
+        playPausedAt = performance.now();
+        cancelAnimationFrame(rafId);
+        clearTimeout(idleTimer);
+        keys.clear();
+        activeTouchPointer = null;
+        audioContext?.suspend().catch(() => {});
+        pauseDialog.showModal();
+        resumeButton.focus();
+      }
+
+      function resumeGame() {
+        if (!playPaused) return;
+        const waited = performance.now() - playPausedAt;
+        startedAt += waited;
+        lastSpawn += waited;
+        blooms.forEach(bloom => { bloom.born += waited; });
+        gesture?.reset(player.x, player.y);
+        player.tx = player.x; player.ty = player.y;
+        playPaused = false;
+        pauseDialog.close();
+        unlockSound();
+        canvas.focus({ preventScroll: true });
+        wakeFrame();
+      }
+
+      function inspectSky(enabled) {
+        if (mode !== 'result') return;
+        world.classList.toggle('viewing', enabled);
+        result.classList.toggle('hidden', enabled);
+        result.setAttribute('aria-hidden', String(enabled));
+        result.inert = enabled;
+        if (enabled) skyReturn.focus({ preventScroll: true });
+        else viewSky.focus({ preventScroll: true });
+        draw(performance.now());
+      }
+
+      function connectBloom(bloom) {
+        const nearest = blooms.slice(0, blooms.indexOf(bloom))
+          .map(other => ({ other, distance: Math.hypot(other.x - bloom.x, other.y - bloom.y) }))
+          .filter(({ distance }) => distance > 24 && distance < Math.min(300, width * .65))
+          .sort((a, b) => a.distance - b.distance)[0];
+        if (nearest) connections.push({ from: nearest.other, to: bloom });
+      }
+
+      function bloomSpace(x, y) {
+        const margin = Math.min(48, width * .14);
+        const top = Math.min(130, height * .23);
+        const bottom = Math.max(top + 1, height - 110);
+        const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+        let best = { x: clamp(x, margin, width - margin), y: clamp(y, top, bottom) };
+        let bestSpace = -Infinity;
+        for (let i = 0; i < 24; i++) {
+          const radius = i ? 22 + i * 5 : 0;
+          const candidate = { x: clamp(x + Math.cos(i * 2.4) * radius, margin, width - margin), y: clamp(y + Math.sin(i * 2.4) * radius, top, bottom) };
+          const space = blooms.length ? Math.min(...blooms.map(b => Math.hypot(b.x - candidate.x, b.y - candidate.y))) : Infinity;
+          if (space > bestSpace) { best = candidate; bestSpace = space; }
+          if (space > (width < 760 ? 62 : 82)) break;
+        }
+        return best;
+      }
+
+      function useCanvasFallback() {
+        const previous = skyRenderer;
+        skyRenderer = null;
+        previous?.dispose();
+        world.classList.remove('three-ready');
+        world.dataset.renderer = 'canvas2d';
+        document.querySelector('#studyHint').textContent = 'Your sky begins with a pause.';
+        renderFailures++;
+        resize(true);
+        // Present the preserved sky in the same task as removing the lost canvas.
+        draw(performance.now());
+      }
+
+      function enableThree() {
+        if (skyRenderer || renderFailures || query.get('renderer') === '2d') return;
+        try {
+          skyRenderer = window.createAfterglowRenderer({
+            host: world, anchor: document.querySelector('#skyStudy'),
+            mobile: mobilePerformance, reducedMotion, onFailure: useCanvasFallback
+          });
+          resize(true);
+          skyRenderer.render(sceneState());
+          world.classList.add('three-ready');
+          world.dataset.renderer = 'three';
+          document.querySelector('#studyHint').textContent = 'Drag to turn ↔';
+          if (mode === 'result') prepareShareImage();
+        } catch (error) {
+          if (debugMode) console.warn('Afterglow: using Canvas 2D.', error);
+          useCanvasFallback();
+        }
       }
 
       function showToast(message) {
@@ -1234,6 +1703,7 @@
             clearTimeout(sharePrepareTimer);
             shareNote.textContent = 'Updating your image…';
             shareButtons.forEach(button => { button.disabled = true; });
+            viewSky.disabled = true;
             sharePrepareTimer = setTimeout(prepareShareImage, 180);
           }
         }
@@ -1241,39 +1711,40 @@
 
       const shareGuides = {
         linkedin: {
-          label: 'LinkedIn handoff',
-          title: 'Bring the image with you.',
-          copy: 'LinkedIn’s web share opens a link composer. It cannot receive this local PNG automatically.',
-          steps: [
-            'We download your Afterglow image.',
-            'We copy the caption and hashtags.',
-            'In LinkedIn, attach the PNG and paste the caption.'
-          ],
-          action: 'Download, copy, open LinkedIn'
+          label: 'Share your sky', title: 'Take it to LinkedIn.',
+          copy: 'Add the PNG to your post yourself. The image is not attached automatically.',
+          steps: ['We download your PNG and copy the caption.', 'LinkedIn opens in a new tab.', 'Attach the image and paste your caption.'],
+          action: 'Prepare image & open LinkedIn'
         },
         x: {
-          label: 'X handoff',
-          title: 'One quick handoff.',
-          copy: 'X can prefill the post text and link, but the local PNG still needs to be attached by you.',
-          steps: [
-            'We download your Afterglow image.',
-            'We open X with the text and link filled in.',
-            'Attach the PNG, check the post, then publish.'
-          ],
-          action: 'Download and open X'
+          label: 'Share your sky', title: 'Take it to X.',
+          copy: 'Your post text will be ready. Attach the PNG before posting.',
+          steps: ['We download your PNG.', 'X opens with the text and link prepared.', 'Attach the image and check your post.'],
+          action: 'Download PNG & open X'
         },
         telegram: {
-          label: 'Telegram handoff',
-          title: 'Send the image and link.',
-          copy: 'Telegram’s web share prepares a link and message. Add the downloaded PNG in the chat if you want the full result card.',
-          steps: [
-            'We download your Afterglow image.',
-            'We open Telegram with the message prepared.',
-            'Choose a chat and attach the PNG before sending.'
-          ],
-          action: 'Download and open Telegram'
+          label: 'Share your sky', title: 'Take it to Telegram.',
+          copy: 'Your message will be ready. Add the PNG to the chat yourself.',
+          steps: ['We download your PNG.', 'Telegram opens with the message prepared.', 'Choose a chat and attach the image.'],
+          action: 'Download PNG & open Telegram'
+        },
+        native: {
+          label: 'Keep your sky', title: 'Save it first.',
+          copy: 'This browser cannot send your image directly. You can take it to the app you choose.',
+          steps: ['Download your PNG.', 'Copy the caption and link.', 'Attach the PNG in your preferred app.'],
+          action: 'Download PNG & copy caption'
+        },
+        kakao: {
+          label: 'Share with KakaoTalk', title: 'Take your sky along.',
+          copy: 'This browser cannot send the PNG to KakaoTalk directly. Save it and attach it in your chat.',
+          steps: ['Download your PNG.', 'Copy the caption and link.', 'Open KakaoTalk and attach the image.'],
+          action: 'Download PNG & copy caption'
         }
       };
+
+      function preparedCaption() {
+        return `I gave Codex thirty seconds with nothing to ship — and made a small sky instead. ${shareHashtags}\n${shareUrl}`;
+      }
 
       function wrapText(target, text, x, y, maxWidth, lineHeight) {
         const words = text.split(' ');
@@ -1293,12 +1764,22 @@
         return y + offset;
       }
 
-      function prepareShareImage() {
+      async function prepareShareImage() {
+        const generation = ++shareGeneration;
         shareNote.textContent = 'Preparing your image and caption…';
         shareButtons.forEach(button => { button.disabled = true; });
+        viewSky.disabled = true;
+        // A local display face should not hold up saving if it fails to load.
+        let fontTimer;
+        await Promise.race([
+          document.fonts.load('23px "Afterglow Newsreader"').catch(() => {}),
+          new Promise(resolve => { fontTimer = setTimeout(resolve, 400); })
+        ]);
+        clearTimeout(fontTimer);
+        if (generation !== shareGeneration || mode !== 'result') return;
         const card = document.createElement('canvas');
-        card.width = 1200;
-        card.height = 630;
+        card.width = resultFrame.width;
+        card.height = resultFrame.height;
         const cardCtx = card.getContext('2d');
 
         const lightExport = world.classList.contains('light-field');
@@ -1309,15 +1790,21 @@
         const exportStrongLine = lightExport ? 'rgba(13,13,13,.34)' : 'rgba(244,244,239,.34)';
 
         cardCtx.fillStyle = exportBackground;
-        cardCtx.fillRect(0, 0, 1200, 630);
+        cardCtx.fillRect(0, 0, card.width, card.height);
 
-        const scaleX = 1200 / Math.max(width, 1);
-        const scaleY = 630 / Math.max(height, 1);
+        const scaleX = card.width / Math.max(width, 1);
+        const scaleY = card.height / Math.max(height, 1);
         const scale = Math.min(scaleX, scaleY);
 
+        let captured = false;
+        if (skyRenderer) {
+          try { captured = skyRenderer.capture(cardCtx, sceneState()); }
+          catch (_) { useCanvasFallback(); }
+        }
+        if (!captured) {
         stars.slice(0, 120).forEach((star, index) => {
-          const x = (star.x / Math.max(width, 1)) * 1200;
-          const y = (star.y / Math.max(height, 1)) * 630;
+          const x = star.x * scaleX;
+          const y = star.y * scaleY;
           cardCtx.globalAlpha = Math.min(.42, star.a * (.55 + (index % 3) * .08));
           cardCtx.fillStyle = exportInk;
           cardCtx.beginPath();
@@ -1325,17 +1812,24 @@
           cardCtx.fill();
         });
 
-        const usedBlooms = blooms.length ? blooms : [{
-          x: width / 2,
-          y: height / 2,
-          color: '#10a37f',
-          petals: 6,
-          size: 24,
-          rotation: 0
-        }];
-        usedBlooms.slice(0, 36).forEach((b, index) => {
-          const x = (b.x / Math.max(width, 1)) * 1200;
-          const y = (b.y / Math.max(height, 1)) * 630;
+        cardCtx.globalAlpha = .22;
+        cardCtx.strokeStyle = exportInk;
+        cardCtx.lineWidth = .7;
+        connections.forEach(link => {
+          cardCtx.beginPath();
+          cardCtx.moveTo(link.from.x * scaleX, link.from.y * scaleY);
+          cardCtx.lineTo(link.to.x * scaleX, link.to.y * scaleY);
+          cardCtx.stroke();
+        });
+        blooms.forEach((b, index) => {
+          if (garden) {
+            garden.paintBloom(cardCtx, {
+              ...b, x: b.x * scaleX, y: b.y * scaleY, size: b.size * scale
+            }, index, finishedAt, { reducedMotion, finished: true, mobile: mobilePerformance, light: lightExport });
+            return;
+          }
+          const x = b.x * scaleX;
+          const y = b.y * scaleY;
           const size = Math.max(10, b.size * scale);
           cardCtx.save();
           cardCtx.translate(x, y);
@@ -1359,70 +1853,85 @@
         });
         cardCtx.globalAlpha = 1;
 
+        }
+
+        // The mobile image keeps both the played aspect ratio and a compact perimeter HUD.
+        const portrait = resultFrame.portable && card.height > card.width;
+        const layoutWidth = portrait ? 390 : 1200;
+        const uiScale = card.width / layoutWidth;
+        const layoutHeight = card.height / uiScale;
+        const inset = portrait ? 24 : 44;
+        const right = layoutWidth - inset;
+        const countY = layoutHeight - (portrait ? 112 : 90);
+        const progressY = layoutHeight - (portrait ? 64 : 36);
+        cardCtx.save();
+        cardCtx.scale(uiScale, uiScale);
         cardCtx.strokeStyle = exportLine;
         cardCtx.beginPath();
         cardCtx.moveTo(0, 66);
-        cardCtx.lineTo(1200, 66);
+        cardCtx.lineTo(layoutWidth, 66);
         cardCtx.stroke();
 
         cardCtx.fillStyle = exportInk;
         cardCtx.font = '600 20px Arial, sans-serif';
-        cardCtx.fillText('Afterglow', 44, 34);
+        cardCtx.fillText('Afterglow', inset, 34);
         cardCtx.fillStyle = exportFaint;
         cardCtx.font = '12px Arial, sans-serif';
-        cardCtx.fillText('CODEX’S DAY OFF', 44, 52);
+        cardCtx.fillText('CODEX’S DAY OFF', inset, 52);
 
         cardCtx.textAlign = 'right';
         cardCtx.fillStyle = exportFaint;
         cardCtx.font = '12px Consolas, monospace';
-        cardCtx.fillText('THIRTY SECONDS. NOTHING TO SHIP.', 1156, 40);
+        cardCtx.fillText(portrait ? (lightExport ? 'PAPER SKY' : 'NIGHT SKY') : 'THIRTY SECONDS. NOTHING TO SHIP.', right, 40);
 
         cardCtx.textAlign = 'left';
         cardCtx.fillStyle = exportInk;
-        cardCtx.font = '500 16px Consolas, monospace';
-        cardCtx.fillText('NOTHING DUE', 44, 108);
+        cardCtx.font = '400 23px "Afterglow Newsreader", Georgia, serif';
+        cardCtx.fillText('Nothing due', inset, 108);
         cardCtx.fillStyle = exportFaint;
-        cardCtx.font = '12px Consolas, monospace';
-        cardCtx.fillText('/ TAKE YOUR TIME', 174, 108);
+        cardCtx.font = '12px Arial, sans-serif';
+        cardCtx.fillText('Take your time', portrait ? inset : 188, portrait ? 130 : 108);
 
         cardCtx.textAlign = 'right';
         cardCtx.fillStyle = exportInk;
-        cardCtx.font = '400 58px Consolas, monospace';
-        cardCtx.fillText('00', 1156, 126);
+        cardCtx.font = `400 ${portrait ? 36 : 48}px Consolas, monospace`;
+        cardCtx.fillText('00', right, 126);
         cardCtx.fillStyle = exportFaint;
         cardCtx.font = '12px Consolas, monospace';
-        cardCtx.fillText('SECONDS REMAINING', 1156, 148);
+        cardCtx.fillText(portrait ? 'SECONDS' : 'SECONDS REMAINING', right, 148);
 
         cardCtx.textAlign = 'left';
         cardCtx.strokeStyle = exportStrongLine;
         cardCtx.beginPath();
-        cardCtx.moveTo(44, 516);
-        cardCtx.lineTo(44, 570);
+        cardCtx.moveTo(inset, countY - 24);
+        cardCtx.lineTo(inset, countY + 30);
         cardCtx.stroke();
         cardCtx.fillStyle = exportInk;
-        cardCtx.font = '500 22px Consolas, monospace';
-        cardCtx.fillText(`${String(count).padStart(2, '0')} THOUGHTS`, 60, 540);
+        cardCtx.font = '400 18px Arial, sans-serif';
+        cardCtx.fillText(`${String(count).padStart(2, '0')} thoughts`, inset + 16, countY);
         cardCtx.fillStyle = exportFaint;
-        cardCtx.font = '12px Consolas, monospace';
-        cardCtx.fillText('TURNED INTO AFTERGLOW', 60, 562);
+        cardCtx.font = '12px Arial, sans-serif';
+        cardCtx.fillText('found room to bloom', inset + 16, countY + 22);
 
         cardCtx.textAlign = 'right';
         cardCtx.fillStyle = exportFaint;
-        cardCtx.fillText('MOVE SLOWLY · LOOSE THOUGHTS DRIFT CLOSER', 1156, 556);
+        if (!portrait) cardCtx.fillText('MOVE SLOWLY · LOOSE THOUGHTS DRIFT CLOSER', right, countY + 16);
 
         cardCtx.fillStyle = exportLine;
-        cardCtx.fillRect(44, 594, 1112, 1);
+        cardCtx.fillRect(inset, progressY, right - inset, 1);
         cardCtx.fillStyle = '#10a37f';
-        cardCtx.fillRect(44, 594, 1112, 2);
+        cardCtx.fillRect(inset, progressY, right - inset, 2);
         cardCtx.fillStyle = exportFaint;
-        cardCtx.font = '12px Consolas, monospace';
+        cardCtx.font = '400 18px "Afterglow Newsreader", Georgia, serif';
         cardCtx.textAlign = 'left';
-        cardCtx.fillText(shareHashtags, 44, 618);
+        cardCtx.fillText('A moment, kept.', inset, progressY + 26);
+        cardCtx.font = '11px Arial, sans-serif';
         cardCtx.textAlign = 'right';
-        cardCtx.fillText('dayoff.tmcowork.com', 1156, 618);
-        cardCtx.textAlign = 'left';
+        cardCtx.fillText('dayoff.tmcowork.com', right, progressY + 26);
+        cardCtx.restore();
 
         card.toBlob(blob => {
+          if (generation !== shareGeneration || mode !== 'result') return;
           if (!blob) {
             shareNote.textContent = 'Image export is unavailable in this browser.';
             return;
@@ -1432,7 +1941,15 @@
           if (sharePreviewUrl) URL.revokeObjectURL(sharePreviewUrl);
           sharePreviewUrl = URL.createObjectURL(blob);
           sharePreview.src = sharePreviewUrl;
-          shareNote.textContent = 'Image ready. Each app explains the next step before opening.';
+          resultPreview.src = sharePreviewUrl;
+          for (const image of [sharePreview, resultPreview]) {
+            image.width = card.width;
+            image.height = card.height;
+          }
+          viewSky.disabled = false;
+          shareNote.textContent = 'Social apps may ask you to attach the PNG yourself.';
+          document.querySelector('#afterglowImageMeta').textContent = `${card.width} × ${card.height} · PNG`;
+          document.querySelector('#afterglowHandoffPreviewNote').textContent = `${lightExport ? 'Paper Sky' : 'Night Sky'}\n${card.width} × ${card.height} PNG\nYour original composition.`;
           shareButtons.forEach(button => { button.disabled = false; });
         }, 'image/png');
       }
@@ -1454,22 +1971,35 @@
       }
 
       async function copyShareText() {
-        const text = `I gave Codex thirty seconds with nothing to ship — and made a small sky instead. ${shareHashtags}`;
+        const text = preparedCaption();
         try {
-          await navigator.clipboard.writeText(`${text}\n${shareUrl}`);
+          await navigator.clipboard.writeText(text);
           return true;
         } catch {
+          const focused = document.activeElement;
           const field = document.createElement('textarea');
-          field.value = `${text}\n${shareUrl}`;
+          field.value = text;
           field.setAttribute('readonly', '');
           field.style.position = 'fixed';
           field.style.opacity = '0';
-          document.body.appendChild(field);
+          // A modal dialog makes the rest of the document inert.
+          (shareDialog.open ? shareDialog : document.body).appendChild(field);
           field.select();
-          const copied = document.execCommand('copy');
+          let copied = false;
+          try { copied = document.execCommand('copy'); } catch (_) {}
           field.remove();
+          focused?.focus({ preventScroll: true });
           return copied;
         }
+      }
+
+      function revealCaption(container) {
+        const details = container.querySelector('.afterglow-caption');
+        details.open = true;
+        const field = details.querySelector('textarea');
+        field.focus();
+        field.select();
+        details.querySelector('.caption-status').textContent = 'Copy did not work here. Select and copy this text manually.';
       }
 
       function openShareGuide(network) {
@@ -1490,6 +2020,8 @@
         }));
         shareDialogContinue.textContent = guide.action;
         shareDialog.showModal();
+        shareDialog.scrollTop = 0;
+        shareDialogTitle.focus({ preventScroll: true });
       }
 
       function closeShareGuide() {
@@ -1498,64 +2030,52 @@
       }
 
       async function nativeShare(preferKakao = false) {
-        if (!shareFile) {
-          showToast('The image is still being prepared.');
-          return;
-        }
-        if (!navigator.share) {
-          downloadShareImage();
-          await copyShareText();
-          showToast('Image downloaded and caption copied.');
-          return;
-        }
-        const data = {
-          title: 'Afterglow — Codex’s Day Off',
-          text: `Thirty seconds. Nothing to ship. ${shareHashtags}`,
-          url: shareUrl
-        };
-        if (!navigator.canShare || navigator.canShare({ files: [shareFile] })) {
-          data.files = [shareFile];
-        }
+        if (!shareFile) { showToast('The image is still being prepared.'); return; }
+        const fallback = preferKakao ? 'kakao' : 'native';
+        let acceptsImage = Boolean(navigator.share);
+        try { if (navigator.canShare) acceptsImage = acceptsImage && navigator.canShare({ files: [shareFile] }); }
+        catch (_) { acceptsImage = false; }
+        if (!acceptsImage) { openShareGuide(fallback); return; }
         try {
           if (preferKakao) showToast('Choose KakaoTalk in the share sheet.');
-          await navigator.share(data);
+          await navigator.share({ title: 'Afterglow — Codex’s Day Off', text: preparedCaption(), files: [shareFile] });
           if (!preferKakao) showToast('Shared.');
         } catch (error) {
-          if (error.name !== 'AbortError') {
-            downloadShareImage();
-            showToast('Image downloaded instead.');
-          }
+          if (error.name !== 'AbortError') openShareGuide(fallback);
         }
       }
 
-      async function completeExternalShare(network) {
-        const popup = window.open('', '_blank');
-        const downloaded = downloadShareImage();
-        const copied = await copyShareText();
-        const encodedUrl = encodeURIComponent(shareUrl);
-        const text = encodeURIComponent('I gave Codex thirty seconds with nothing to ship — and made a small sky instead.');
-        let target = '';
-        if (network === 'linkedin') {
-          target = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
-        } else if (network === 'x') {
-          target = `https://twitter.com/intent/tweet?text=${text}&url=${encodedUrl}&hashtags=CodexDayOff,Afterglow,BuildWithOpenAI`;
-        } else if (network === 'telegram') {
-          target = `https://t.me/share/url?url=${encodedUrl}&text=${text}%20${encodeURIComponent(shareHashtags)}`;
-        }
-        closeShareGuide();
-        if (target && popup) {
-          popup.opener = null;
-          popup.location.href = target;
-        } else if (target) {
-          showToast('The new window was blocked. Allow popups, then try again.');
+      let handoffBusy = false;
+      async function completeShareGuide(network) {
+        if (handoffBusy || !shareGuides[network] || !shareBlob) return;
+        const external = ['linkedin', 'x', 'telegram'].includes(network);
+        const popup = external ? window.open('', '_blank') : null;
+        if (external && !popup) {
+          showToast('The new tab was blocked. Allow popups and try again.');
           return;
         }
-        if (downloaded && copied) {
-          showToast(network === 'linkedin'
-            ? 'PNG downloaded. Caption copied—attach and paste in LinkedIn.'
-            : 'PNG downloaded. Caption copied.');
-        } else if (downloaded) {
-          showToast('PNG downloaded. Copy the caption from this page if needed.');
+        handoffBusy = true;
+        shareDialogContinue.disabled = true;
+        try {
+          const downloaded = downloadShareImage();
+          const copied = await copyShareText();
+          const encodedUrl = encodeURIComponent(shareUrl);
+          const text = encodeURIComponent('I gave Codex thirty seconds with nothing to ship — and made a small sky instead.');
+          const destinations = {
+            linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+            x: `https://twitter.com/intent/tweet?text=${text}&url=${encodedUrl}&hashtags=CodexDayOff,Afterglow,BuildWithOpenAI`,
+            telegram: `https://t.me/share/url?url=${encodedUrl}&text=${text}%20${encodeURIComponent(shareHashtags)}`
+          };
+          if (external) {
+            popup.opener = null;
+            popup.location.href = destinations[network];
+            closeShareGuide();
+          } else if (copied) closeShareGuide();
+          if (!copied) revealCaption(external ? afterglowHandoff : shareDialog);
+          if (downloaded) showToast(copied ? 'PNG downloaded. Caption and link copied.' : 'PNG downloaded. Copy the caption manually below.');
+        } finally {
+          handoffBusy = false;
+          shareDialogContinue.disabled = false;
         }
       }
 
@@ -1600,15 +2120,30 @@
       }
 
       function begin() {
+        playPaused = false;
+        if (pauseDialog.open) pauseDialog.close();
+        world.classList.remove('viewing', 'closing');
+        keepSky.hidden = true;
+        unlockSound();
+        shareGeneration++;
+        clearTimeout(sharePrepareTimer);
+        clearTimeout(whisperTimer);
+        keys.clear();
+        activeTouchPointer = null;
+        frameBudget?.reset(performance.now());
         mode = 'play';
         world.classList.remove('ended');
         world.classList.add('playing');
         count = 0;
         blooms = [];
+        connections = [];
         trails = [];
         particles = [];
         player.x = player.tx = width / 2;
         player.y = player.ty = height / 2;
+        gesture?.reset(player.x, player.y);
+        bloomResponse?.reset();
+        closingAt = 0;
         const initialThoughts = mobilePerformance || matchMedia('(max-width: 760px)').matches ? 4 : 12;
         for (let i = 0; i < initialThoughts; i++) spawnThought(true);
         startedAt = performance.now();
@@ -1622,6 +2157,7 @@
           URL.revokeObjectURL(sharePreviewUrl);
           sharePreviewUrl = '';
           sharePreview.removeAttribute('src');
+          resultPreview.removeAttribute('src');
         }
         shareButtons.forEach(button => { button.disabled = true; });
         intro.classList.add('hidden');
@@ -1632,7 +2168,10 @@
         result.inert = true;
         hud.classList.add('visible');
         hud.setAttribute('aria-hidden', 'false');
+        canvas.tabIndex = 0;
         canvas.focus({ preventScroll: true });
+        announcement.textContent = 'Your thirty seconds begin. Gather loose thoughts. Your gestures shape each bloom. Press Space or Escape to pause.';
+        wakeFrame();
       }
 
       function ensureAfterglowHandoffVisible(recheck = false) {
@@ -1653,10 +2192,18 @@
       }
 
       function showResult() {
+        finishedAt = performance.now();
+        const portable = mobilePerformance || matchMedia('(max-width: 760px)').matches;
+        const imageScale = Math.min(devicePixelRatio || 1, 2, 1920 / Math.max(width, height), Math.sqrt(mobilePixelBudget / (width * height)));
+        // Keep the completed session's framing even if the result page is rotated later.
+        resultFrame = portable
+          ? { width: Math.floor(width * imageScale), height: Math.floor(height * imageScale), portable: true }
+          : { width: 1200, height: 630, portable: false };
         mode = 'result';
         particles = [];
         trails = [];
-        world.classList.remove('playing');
+        world.classList.remove('playing', 'closing');
+        keepSky.hidden = true;
         world.classList.add('ended');
         intro.classList.add('hidden');
         intro.setAttribute('aria-hidden', 'true');
@@ -1669,26 +2216,42 @@
         result.scrollTop = 0;
         requestAnimationFrame(() => ensureAfterglowHandoffVisible());
         document.querySelector('#finalCount').textContent = count;
-        document.querySelector('#finalBloom').textContent = blooms.length;
-        const mood = count > 16 ? 'electric' : count > 8 ? 'gentle' : 'quiet';
-        document.querySelector('#finalMood').textContent = mood;
-        document.querySelector('#resultTitle').innerHTML =
-          count > 16 ? 'A wild<br>little sky.' :
-          count > 8 ? 'Room to<br>wonder.' :
-          'The quiet<br>stayed.';
-        document.querySelector('#resultText').textContent =
-          count > 16
-            ? `${count} loose thoughts stopped being tasks and became weather. Nothing needed an outcome.`
-            : count > 8
-            ? `${count} loose thoughts drifted into the dark. None needed a reason. They simply found each other and glowed.`
-            : `${count} loose thoughts were enough. There was no score—only a little more room to look up.`;
+        document.querySelector('#finalBloom').textContent = new Set(blooms.map(bloom => bloom.color)).size;
+        document.querySelector('#resultTitle').innerHTML = count ? 'The sky<br>is yours.' : 'Room to<br>breathe.';
+        document.querySelector('#resultText').textContent = count > 1
+          ? 'Loose thoughts, shaped by your hands. Nothing else was needed.'
+          : count === 1 ? 'One loose thought found room to bloom.'
+          : 'An open sky was enough. Nothing needed to happen.';
+        for (const field of document.querySelectorAll('.afterglow-caption textarea')) field.value = preparedCaption();
+        for (const details of document.querySelectorAll('.afterglow-caption')) {
+          details.open = false;
+          details.querySelector('.caption-status').textContent = '';
+        }
         prepareShareImage();
+        canvas.tabIndex = -1;
+        announcement.textContent = `Your sky is yours to keep. ${count} loose thoughts became blooms.`;
+        audioContext?.suspend().catch(() => {});
         document.querySelector('#resultTitle').focus({ preventScroll: true });
       }
 
       function finish() {
         if (mode !== 'play') return;
-        showResult();
+        if (reducedMotion) { showResult(); return; }
+        mode = 'closing';
+        closingAt = performance.now();
+        particles = [];
+        keys.clear();
+        activeTouchPointer = null;
+        clearTimeout(whisperTimer);
+        whisper.classList.remove('show');
+        world.classList.remove('playing');
+        world.classList.add('closing');
+        hud.classList.remove('visible');
+        hud.setAttribute('aria-hidden', 'true');
+        keepSky.hidden = false;
+        keepSky.focus({ preventScroll: true });
+        canvas.tabIndex = -1;
+        announcement.textContent = 'Take a moment to see the sky you made.';
       }
 
       function previewResult() {
@@ -1703,17 +2266,22 @@
           size: 15 + (index % 3) * 4,
           rotation: index * .47
         }));
+        blooms.forEach(connectBloom);
         showResult();
       }
 
       function collect(p) {
         count++;
         countEl.textContent = String(count).padStart(2, '0') + ' thoughts';
-        const petals = 5 + Math.floor(Math.random() * 4);
-        blooms.push({
-          x: p.x, y: p.y, color: p.color, born: performance.now(),
-          petals, size: 13 + Math.random() * 15, rotation: Math.random() * 6.28
-        });
+        const form = gesture?.flower() ?? { petals: 6, size: 22, rotation: 0 };
+        const spot = bloomSpace(p.x, p.y);
+        const bloom = {
+          x: spot.x, y: spot.y, fromX: p.x, fromY: p.y, color: p.color, born: performance.now(),
+          ...form
+        };
+        blooms.push(bloom);
+        connectBloom(bloom);
+        playChime(p.color);
         for (let i = 0; i < 8; i++) {
           const a = Math.random() * Math.PI * 2;
           const s = .6 + Math.random() * 2.4;
@@ -1732,6 +2300,11 @@
       }
 
       function update(now, dt) {
+        if (playPaused) return;
+        if (mode === 'closing') {
+          bloomResponse?.update(blooms, player, dt, { enabled: false, reducedMotion });
+          if (now - closingAt >= 1600) { showResult(); return; }
+        }
         const keySpeed = .38 * dt;
         if (keys.has('ArrowLeft') || keys.has('a')) player.tx -= keySpeed;
         if (keys.has('ArrowRight') || keys.has('d')) player.tx += keySpeed;
@@ -1739,17 +2312,22 @@
         if (keys.has('ArrowDown') || keys.has('s')) player.ty += keySpeed;
         player.tx = Math.max(20, Math.min(width - 20, player.tx));
         player.ty = Math.max(20, Math.min(height - 20, player.ty));
-        player.vx = (player.tx - player.x) * .075;
-        player.vy = (player.ty - player.y) * .075;
-        player.x += player.vx;
-        player.y += player.vy;
+        const follow = 1 - Math.exp(-dt / 213);
+        player.vx = (player.tx - player.x) * follow;
+        player.vy = (player.ty - player.y) * follow;
+        if (mode === 'play') {
+          player.x += player.vx;
+          player.y += player.vy;
+          gesture?.sample(player.x, player.y, dt, width, height);
+          bloomResponse?.update(blooms, player, dt, { reducedMotion, radius: Math.min(170, width * .36) });
+        }
 
         if (mode === 'play') {
           const elapsed = (now - startedAt) / 1000;
           const remaining = Math.max(0, duration - elapsed);
           timeEl.textContent = String(Math.ceil(remaining)).padStart(2, '0');
           progressEl.style.transform = `scaleX(${remaining / duration})`;
-          if (!remaining) finish();
+          if (!remaining) { finish(); return; }
           const mobileSpawnDelay = mobilePerformance || matchMedia('(max-width: 760px)').matches ? 1050 : 760;
           if (now - lastSpawn > Math.max(420, mobileSpawnDelay - elapsed * 8)) {
             spawnThought();
@@ -1791,6 +2369,12 @@
       }
 
       function draw(now) {
+        if (playPaused) now = playPausedAt;
+        if (mode === 'result') now = finishedAt;
+        if (skyRenderer) {
+          try { if (skyRenderer.render(sceneState(now))) return; }
+          catch (_) { useCanvasFallback(); }
+        }
         ctx.clearRect(0, 0, width, height);
 
         if (mode === 'intro') {
@@ -1807,8 +2391,18 @@
           ctx.drawImage(backgroundLayer, 0, 0, width, height);
         }
 
+        ctx.globalAlpha = .2;
+        ctx.strokeStyle = world.classList.contains('light-field') ? '#0d0d0d' : '#f4f4ef';
+        ctx.lineWidth = .7;
+        connections.forEach(link => {
+          ctx.beginPath(); ctx.moveTo(link.from.x, link.from.y); ctx.lineTo(link.to.x, link.to.y); ctx.stroke();
+        });
         blooms.forEach((b, index) => {
-          const age = Math.min(1, (now - b.born) / 700);
+          if (garden) {
+            garden.paintBloom(ctx, b, index, now, { reducedMotion, finished: mode === 'result', mobile: mobilePerformance, light: world.classList.contains('light-field') });
+            return;
+          }
+          const age = mode === 'result' || reducedMotion ? 1 : Math.min(1, (now - b.born) / 700);
           const pulse = reducedMotion ? 1 : 1 + Math.sin(now * .0015 + index) * .08;
           ctx.save();
           ctx.translate(b.x, b.y);
@@ -1831,16 +2425,33 @@
           ctx.restore();
         });
 
+        const paperScene = world.classList.contains('light-field');
         particles.forEach(p => {
-          const pulse = 1 + Math.sin(p.phase) * .25;
+          const pulse = reducedMotion ? 1 : 1 + Math.sin(p.phase) * .25;
           const sprite = glowSprites.get(p.color);
-          const size = p.r * 9 * pulse;
-          ctx.globalAlpha = .85;
+          const size = p.r * (paperScene ? 5 : 9) * pulse;
+          ctx.globalAlpha = paperScene ? .25 : .85;
           if (sprite) ctx.drawImage(sprite, p.x - size / 2, p.y - size / 2, size, size);
-          ctx.globalAlpha = 1;
-          ctx.fillStyle = world.classList.contains('light-field') ? '#0d0d0d' : '#fff';
+          if (paperScene) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(reducedMotion ? 0 : now * .00035 + p.phase);
+            ctx.globalAlpha = .55;
+            ctx.strokeStyle = p.color;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(0, -p.r * pulse);
+            ctx.lineTo(p.r * pulse, 0);
+            ctx.lineTo(0, p.r * pulse);
+            ctx.lineTo(-p.r * pulse, 0);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.restore();
+          }
+          ctx.globalAlpha = paperScene ? .65 : 1;
+          ctx.fillStyle = paperScene ? p.color : '#fff';
           ctx.beginPath();
-          ctx.arc(p.x, p.y, Math.max(1.5, p.r * .24), 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, Math.max(1.2, p.r * .2), 0, Math.PI * 2);
           ctx.fill();
         });
 
@@ -1857,21 +2468,38 @@
         if (mode === 'play') {
           const lightScene = world.classList.contains('light-field');
           const aura = ctx.createRadialGradient(player.x, player.y, 0, player.x, player.y, 72);
-          aura.addColorStop(0, lightScene ? 'rgba(13,13,13,.14)' : 'rgba(255,255,255,.18)');
-          aura.addColorStop(.18, lightScene ? 'rgba(13,13,13,.05)' : 'rgba(255,255,255,.07)');
-          aura.addColorStop(1, lightScene ? 'rgba(13,13,13,0)' : 'rgba(255,255,255,0)');
+          aura.addColorStop(0, lightScene ? 'rgba(16,163,127,.12)' : 'rgba(255,255,255,.18)');
+          aura.addColorStop(.18, lightScene ? 'rgba(16,163,127,.04)' : 'rgba(255,255,255,.07)');
+          aura.addColorStop(1, lightScene ? 'rgba(16,163,127,0)' : 'rgba(255,255,255,0)');
           ctx.globalAlpha = 1;
           ctx.fillStyle = aura;
           ctx.beginPath();
           ctx.arc(player.x, player.y, 72, 0, Math.PI * 2);
           ctx.fill();
 
-          ctx.strokeStyle = lightScene ? 'rgba(13,13,13,.8)' : 'rgba(255,255,255,.8)';
-          ctx.lineWidth = 1.4;
-          ctx.beginPath();
-          ctx.arc(player.x, player.y, player.r + Math.sin(now * .004) * 2, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.fillStyle = lightScene ? '#0d0d0d' : '#f4f4ef';
+          const time = reducedMotion ? 0 : now * .001;
+          const leanX = reducedMotion ? 0 : Math.max(-.45, Math.min(.45, (player.ty - player.y) / 180));
+          const leanY = reducedMotion ? 0 : Math.max(-.45, Math.min(.45, (player.tx - player.x) / 180));
+          ctx.strokeStyle = lightScene ? 'rgba(111,111,105,.65)' : 'rgba(244,244,239,.65)';
+          ctx.fillStyle = lightScene ? '#10a37f' : '#f4f4ef';
+          ctx.lineWidth = 1;
+          for (let index = 0; index < 2; index++) {
+            const radius = index ? 26 + Math.sin(time * 1.1) * 1.4 + Math.hypot(leanX, leanY) * 3 : 17 + Math.sin(time * 1.4) * 1.1;
+            const tilt = index ? .95 + Math.sin(time * .5) * .25 - leanX : .32 + leanX;
+            const flattening = Math.max(.1, Math.abs(Math.cos(tilt)));
+            const rotation = index ? time * .32 + leanY : -time * .4 - leanY;
+            const angle = time * (index ? .85 : -1.1) + index * Math.PI;
+            ctx.save();
+            ctx.translate(player.x, player.y);
+            ctx.rotate(rotation);
+            ctx.beginPath();
+            ctx.ellipse(0, 0, radius, radius * flattening, 0, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(Math.cos(angle) * radius, Math.sin(angle) * radius * flattening, 1.8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
           ctx.beginPath();
           ctx.arc(player.x, player.y, 3, 0, Math.PI * 2);
           ctx.fill();
@@ -1880,29 +2508,38 @@
       }
 
       function frame(now) {
-        if (paused) return;
-        const playFps = mobilePerformance ? (width > 760 ? 30 : 45) : 60;
-        const frameInterval = mode === 'play'
-          ? 1000 / playFps
-          : (mobilePerformance ? 1000 / 12 : 1000 / 30);
-        if (now - lastRender >= frameInterval) {
+        if (paused || playPaused) return;
+        const playFps = frameBudget?.targetFps ?? 60;
+        const frameInterval = mode === 'play' || mode === 'closing' ? 1000 / playFps : 1000 / 12;
+        if (mode === 'play') frameBudget?.tick(now);
+        if (now - lastRender >= frameInterval - .75) {
+          const workStartedAt = performance.now();
           const dt = Math.min(50, now - lastFrame);
+          const renderInterval = now - lastFrame;
           lastFrame = now;
           update(now, dt);
           draw(now);
-          lastRender = now;
+          if (mode === 'play' && frameBudget?.record(now, performance.now() - workStartedAt, skyRenderer?.diagnostics.gpuMs ?? null, renderInterval)) resize();
+          lastRender = now - Math.max(0, (now - lastRender) % frameInterval);
           fpsFrames++;
         }
         if (debugMode) {
           const fpsElapsed = now - fpsStartedAt;
-          if (fpsElapsed >= 500) {
-            measuredFps = Math.round(fpsFrames * 1000 / fpsElapsed);
+          if (fpsElapsed >= 500 || mode === 'result') {
+            measuredFps = mode === 'result' ? 0 : Math.round(fpsFrames * 1000 / fpsElapsed);
             fpsFrames = 0;
             fpsStartedAt = now;
-            debugPanel.textContent = `Canvas 2D · ${measuredFps} FPS · target ${mode === 'play' ? playFps : (mobilePerformance ? 12 : 30)} · ${dpr.toFixed(2)}× DPR · ${canvas.width}×${canvas.height}`;
+            const stats = skyRenderer?.diagnostics;
+            debugPanel.textContent = `${skyRenderer ? 'Three.js' : 'Canvas 2D'} · ${measuredFps} FPS / ${mode === 'play' || mode === 'closing' ? playFps : mode === 'intro' && !reducedMotion ? 12 : 0} · ${frameBudget?.refreshHz ?? 60} Hz · ${dpr.toFixed(2)}× DPR · ${Math.floor(width * dpr)}×${Math.floor(height * dpr)} · CPU ${(frameBudget?.cpuMs ?? 0).toFixed(1)}ms · GPU ${stats?.gpuMs == null ? 'n/a' : stats.gpuMs.toFixed(1) + 'ms'}`;
+            world.dataset.targetFps = String(playFps);
+            world.dataset.quality = String(frameBudget?.quality ?? 1);
+            world.dataset.drawCalls = String(stats?.calls ?? 0);
+            world.dataset.geometries = String(stats?.geometries ?? 0);
+            world.dataset.textures = String(stats?.textures ?? 0);
           }
         }
-        rafId = requestAnimationFrame(frame);
+        if (mode === 'play' || mode === 'closing') rafId = requestAnimationFrame(frame);
+        else if (mode === 'intro' && !reducedMotion) idleTimer = setTimeout(() => { rafId = requestAnimationFrame(frame); }, 1000 / 12);
       }
 
       function movePoint(e) {
@@ -1935,20 +2572,75 @@
       canvas.addEventListener('pointerup', endPoint);
       canvas.addEventListener('pointercancel', endPoint);
       addEventListener('keydown', e => {
-        keys.add(e.key);
-        if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
-        if (mode === 'intro' && (e.key === 'Enter' || e.key === ' ')) begin();
+        if (mode === 'closing' && e.key === 'Escape') {
+          e.preventDefault(); showResult(); return;
+        }
+        if (e.key === 'Escape' && world.classList.contains('viewing')) {
+          e.preventDefault(); inspectSky(false); return;
+        }
+        if (mode === 'play' && !playPaused && !e.target.closest('button, a, dialog') && (e.key === 'Escape' || e.key === ' ')) {
+          e.preventDefault(); pauseGame(); return;
+        }
+        if (playPaused) return;
+        if (mode === 'play' && !e.target.closest('button, a, dialog')) {
+          keys.add(e.key);
+          if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
+        }
+        if (mode === 'intro' && e.target === document.body && (e.key === 'Enter' || e.key === ' ')) begin();
       });
       addEventListener('keyup', e => keys.delete(e.key));
       startBtn.addEventListener('click', begin);
       againBtn.addEventListener('click', begin);
+      soundToggle.addEventListener('click', () => {
+        setSound(!soundEnabled);
+        if (soundEnabled) unlockSound();
+      });
+      pauseButton.addEventListener('click', pauseGame);
+      keepSky.addEventListener('click', () => { if (mode === 'closing') showResult(); });
+      resumeButton.addEventListener('click', resumeGame);
+      pauseDialog.addEventListener('cancel', event => { event.preventDefault(); resumeGame(); });
+      viewSky.addEventListener('click', () => inspectSky(true));
+      skyReturn.addEventListener('click', () => inspectSky(false));
+      studyTurn.addEventListener('pointerdown', event => {
+        studyDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, distance: 0 };
+        studyTurn.setPointerCapture(event.pointerId);
+      });
+      studyTurn.addEventListener('pointermove', event => {
+        if (!studyDrag || studyDrag.id !== event.pointerId) return;
+        const dx = event.clientX - studyDrag.x;
+        const dy = event.clientY - studyDrag.y;
+        studyRotation.y += dx * .009;
+        studyRotation.x = Math.max(-.7, Math.min(.7, studyRotation.x + dy * .006));
+        studyDrag.distance += Math.abs(dx) + Math.abs(dy);
+        studyDrag.x = event.clientX; studyDrag.y = event.clientY;
+        // Direct manipulation gets up to 60fps; raw pointer events never draw unboundedly.
+        const now = performance.now();
+        if (now - lastRender >= 1000 / 60) { draw(now); lastRender = now; }
+      });
+      const endStudyDrag = event => {
+        if (!studyDrag || studyDrag.id !== event.pointerId) return;
+        if (event.type === 'pointerup' && studyDrag.distance < 4) studyRotation.y += .35;
+        studyTurn.releasePointerCapture?.(event.pointerId);
+        studyDrag = null;
+        draw(performance.now());
+      };
+      studyTurn.addEventListener('pointerup', endStudyDrag);
+      studyTurn.addEventListener('pointercancel', endStudyDrag);
+      studyTurn.addEventListener('click', event => {
+        if (event.detail === 0) { studyRotation.y += .5; draw(performance.now()); }
+      });
+      intro.addEventListener('scroll', () => {
+        if (mode !== 'intro') return;
+        const now = performance.now();
+        if (now - lastRender >= 1000 / 60) { draw(now); lastRender = now; }
+      }, { passive: true });
       appearanceToggle.addEventListener('click', () => {
         setLightField(!world.classList.contains('light-field'));
       });
       shareDialogClose.addEventListener('click', closeShareGuide);
       shareDialogCancel.addEventListener('click', closeShareGuide);
       shareDialogContinue.addEventListener('click', () => {
-        if (pendingShareNetwork) completeExternalShare(pendingShareNetwork);
+        if (pendingShareNetwork) completeShareGuide(pendingShareNetwork);
       });
       shareDialog.addEventListener('click', event => {
         if (event.target === shareDialog) closeShareGuide();
@@ -1956,29 +2648,98 @@
       shareButtons.forEach(button => {
         button.addEventListener('click', () => shareTo(button.dataset.afterglowDestination));
       });
+      document.querySelectorAll('[data-afterglow-copy]').forEach(button => {
+        button.addEventListener('click', async () => {
+          const details = button.closest('.afterglow-caption');
+          if (await copyShareText()) details.querySelector('.caption-status').textContent = 'Caption and link copied.';
+          else revealCaption(details.parentElement);
+        });
+      });
+      function restoreVisibleTime(now) {
+        if (suspendedAt && (mode === 'play' || mode === 'closing') && !playPaused) {
+          const hiddenFor = now - suspendedAt;
+          startedAt += hiddenFor;
+          lastSpawn += hiddenFor;
+          closingAt += hiddenFor;
+          blooms.forEach(bloom => { bloom.born += hiddenFor; });
+          gesture?.reset(player.x, player.y);
+          player.tx = player.x; player.ty = player.y;
+        }
+        suspendedAt = 0;
+      }
       document.addEventListener('visibilitychange', () => {
         paused = document.hidden;
         if (paused) {
+          if (!suspendedAt) suspendedAt = performance.now();
           cancelAnimationFrame(rafId);
+          clearTimeout(idleTimer);
+          clearTimeout(resizeTimer);
+          keys.clear();
+          audioContext?.suspend().catch(() => {});
         } else {
+          cancelAnimationFrame(rafId);
+          clearTimeout(idleTimer);
           lastFrame = performance.now();
-          rafId = requestAnimationFrame(frame);
+          restoreVisibleTime(lastFrame);
+          resize();
+          if (!skyRenderer && window.createAfterglowRenderer) enableThree();
+          lastRender = lastFrame;
+          frameBudget?.reset(lastFrame);
+          if (!playPaused) {
+            if (mode === 'play' && soundEnabled) audioContext?.resume().catch(() => {});
+            rafId = requestAnimationFrame(frame);
+          }
         }
       });
 
       addEventListener('pagehide', () => {
         paused = true;
+        if (!suspendedAt) suspendedAt = performance.now();
         cancelAnimationFrame(rafId);
+        clearTimeout(idleTimer);
         clearTimeout(resizeTimer);
         clearTimeout(sharePrepareTimer);
         releaseCanvas(backgroundLayer);
         backgroundLayer = null;
-      }, { once: true });
+        skyRenderer?.dispose();
+        skyRenderer = null;
+        releaseCanvas(canvas);
+        world.classList.remove('three-ready');
+        if (audioContext) {
+          audioContext.close().catch(() => {});
+          audioContext = null;
+          audioVoices = 0;
+        }
+      });
+
+      addEventListener('pageshow', event => {
+        if (!event.persisted) return;
+        cancelAnimationFrame(rafId);
+        clearTimeout(idleTimer);
+        paused = document.hidden;
+        if (!paused) restoreVisibleTime(performance.now());
+        resize(true);
+        if (window.createAfterglowRenderer) enableThree();
+        lastFrame = lastRender = performance.now();
+        frameBudget?.reset(lastFrame);
+        if (!paused && !playPaused) rafId = requestAnimationFrame(frame);
+      });
 
       let savedField = '';
       try { savedField = localStorage.getItem('afterglow-field') || ''; } catch (_) {}
+      try { setSound(localStorage.getItem('afterglow-sound') === 'on'); } catch (_) {}
       setLightField(savedField === 'light', false);
       resize(true);
+      world.dataset.renderer = 'canvas2d';
+      const threeScript = document.createElement('script');
+      threeScript.src = './assets/afterglow-three.js';
+      threeScript.onload = () => {
+        frameBudget = new window.AfterglowFrameBudget();
+        frameBudget.reset(performance.now());
+        if (!paused) enableThree();
+      };
+      threeScript.onerror = () => { document.querySelector('#studyHint').textContent = 'Your sky begins with a pause.'; };
+      document.head.append(threeScript);
       if (previewMode === 'result') previewResult();
       if (debugMode) debugPanel.classList.add('visible');
       rafId = requestAnimationFrame(frame);

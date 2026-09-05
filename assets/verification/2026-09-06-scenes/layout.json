@@ -1,0 +1,106 @@
+[
+  {
+    "name": "desktop",
+    "scene": "night",
+    "resultOverflows": false,
+    "primaryBottom": 392.640625,
+    "height": 900
+  },
+  {
+    "name": "desktop",
+    "dialogOverflows": false,
+    "dialogHeight": 663,
+    "contentHeight": 663
+  },
+  {
+    "name": "desktop",
+    "scene": "paper",
+    "resultOverflows": false,
+    "primaryBottom": 392.640625,
+    "height": 900
+  },
+  {
+    "name": "desktop",
+    "dialogOverflows": false,
+    "dialogHeight": 663,
+    "contentHeight": 663
+  },
+  {
+    "name": "tablet",
+    "scene": "night",
+    "resultOverflows": false,
+    "primaryBottom": 571.1875,
+    "height": 1024
+  },
+  {
+    "name": "tablet",
+    "dialogOverflows": false,
+    "dialogHeight": 710,
+    "contentHeight": 710
+  },
+  {
+    "name": "tablet",
+    "scene": "paper",
+    "resultOverflows": false,
+    "primaryBottom": 571.1875,
+    "height": 1024
+  },
+  {
+    "name": "tablet",
+    "dialogOverflows": false,
+    "dialogHeight": 710,
+    "contentHeight": 710
+  },
+  {
+    "name": "mobile",
+    "scene": "night",
+    "resultOverflows": false,
+    "primaryBottom": 441.140625,
+    "height": 844
+  },
+  {
+    "name": "mobile",
+    "dialogOverflows": false,
+    "dialogHeight": 726,
+    "contentHeight": 726
+  },
+  {
+    "name": "mobile",
+    "scene": "paper",
+    "resultOverflows": false,
+    "primaryBottom": 441.140625,
+    "height": 844
+  },
+  {
+    "name": "mobile",
+    "dialogOverflows": false,
+    "dialogHeight": 726,
+    "contentHeight": 726
+  },
+  {
+    "name": "small",
+    "scene": "night",
+    "resultOverflows": false,
+    "primaryBottom": 419.140625,
+    "height": 568
+  },
+  {
+    "name": "small",
+    "dialogOverflows": false,
+    "dialogHeight": 534,
+    "contentHeight": 785
+  },
+  {
+    "name": "small",
+    "scene": "paper",
+    "resultOverflows": false,
+    "primaryBottom": 419.140625,
+    "height": 568
+  },
+  {
+    "name": "small",
+    "dialogOverflows": false,
+    "dialogHeight": 534,
+    "contentHeight": 785
+  }
+]

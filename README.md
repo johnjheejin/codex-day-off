@@ -1,6 +1,6 @@
 # Afterglow — Codex's Day Off
 
-A self-contained, 30-second interactive web experience.
+A local-first, 30-second interactive web experience with a bundled Three.js sky.
 
 Built for a Codex meetup, then revisited as the models around it changed. In July 2026, the project returned to the workbench with GPT-5.6 Sol—two days after its general release and one day before Claude Fable 5's included subscription access was scheduled to change. The result is both a small interactive artwork and a record of what it means to keep caring for an AI-made project after the event is over.
 
@@ -10,11 +10,13 @@ https://dayoff.tmcowork.com
 
 ## Screenshots
 
+September 6 local build; these changes have not been deployed.
+
 | State | Desktop | Mobile |
 | --- | --- | --- |
-| Initial | ![Desktop initial screen](./assets/screenshots/desktop-01-initial.png) | ![Mobile initial screen](./assets/screenshots/mobile-01-initial.png) |
-| Playing | ![Desktop playing screen](./assets/screenshots/desktop-02-playing.png) | ![Mobile playing screen](./assets/screenshots/mobile-02-playing.png) |
-| Result | ![Desktop result screen](./assets/screenshots/desktop-03-result.png) | ![Mobile result screen](./assets/screenshots/mobile-03-result.png) |
+| Initial | ![Desktop initial screen](./assets/verification/2026-09-06-intro/desktop-paper.png) | ![Mobile initial screen](./assets/verification/2026-09-06-intro/mobile-paper.png) |
+| Playing | ![Desktop playing screen](./assets/verification/2026-09-06-scenes/desktop-paper-play.png) | ![Mobile playing screen](./assets/verification/2026-09-06-scenes/mobile-paper-play.png) |
+| Result | ![Desktop result screen](./assets/verification/2026-09-06-scenes/desktop-paper-result.png) | ![Mobile result screen](./assets/verification/2026-09-06-scenes/mobile-paper-result.png) |
 
 The four-milestone, same-viewport comparison is preserved in **[the July 13 visual history audit](./docs/audits/2026-07-13-visual-history-audit.md)**.
 
@@ -26,6 +28,8 @@ The four-milestone, same-viewport comparison is preserved in **[the July 13 visu
 | June 20–25 | The visual language was rebuilt around an original Afterglow identity, documented in `DESIGN.md`, reviewed through a project-local OmD pilot, and deployed through GitHub and Cloudflare Pages. |
 | July 11 | The repository was reopened with GPT-5.6 Sol. The live experience was tested again, missed accessibility states were fixed, reduced-motion support was added, and the moment was recorded instead of being allowed to disappear into commit history. |
 | July 13 | A Galaxy S24 report turned the revisit into a rendering-safety and mobile-UX pass: pixel and frame budgets were bounded, desktop-site mode gained a safety path, `Night Sky / Paper Sky` became explicit play scenes, sharing moved into the first result viewport, and the first build was visually audited against the current experience. |
+| September 5 | Three.js adds a slowly turning line sculpture, dimensional blooms and collection ripples. Measured CPU/GPU work and display cadence replace fixed mobile frame limits; a Canvas fallback keeps the current sky after GPU failure. |
+| September 6 | The first pass from the Astra demo research makes gestures shape each flower, nearby blooms respond to touch, and the completed sky linger briefly before the result. This pass is local; it has not been deployed. |
 
 Read the full entry: **[2026-07-11 — revisiting Afterglow](./docs/journal/2026-07-11.md)**.
 
@@ -43,18 +47,44 @@ Then visit `http://localhost:8000`.
 
 ## Controls
 
+- Turn the introductory bloom by dragging it, or focus it and press Enter.
 - Move the mouse or use arrow/WASD keys.
 - On mobile, press and drag anywhere on the play surface to steer directly.
 - Collect the drifting lights.
-- At 30 seconds, the garden becomes a personalized final scene.
+- Collected blooms find room near your cursor and join nearby blooms into constellations.
+- Direction, speed, curves and pauses leave different flower forms. Nearby blooms lean toward the focus and return gently; moving faster earns no advantage.
+- Pause with the visible control, Space, or Escape; resume without losing time.
+- Optional sound adds a short note to each collection. It starts off, requires a user gesture, and uses no audio downloads.
+- At 30 seconds, collection ends and the sky remains unobscured for 1.6 seconds. **Keep this sky** or Escape skips to the result. Reduced motion skips this interval automatically.
+- Inspect the actual export in the result preview or choose **View your sky** for the full scene.
 - Play in `🌙 Night Sky` or `☀️ Paper Sky`; the current scene is always visible, persists locally, and is preserved in the exported image.
-- Export the played scene as a 1200 × 630 PNG or hand it to LinkedIn, X, Telegram, KakaoTalk, and the native share sheet. Mobile keeps every destination available and places sharing before replay. External handoffs explain when the PNG must be attached separately.
+- Export the played scene as a PNG: 1200 × 630 on desktop, or the played viewport's aspect ratio on mobile, bounded to 1.5 million pixels. Hand it to LinkedIn, X, Telegram, KakaoTalk, or the native share sheet. Mobile keeps every destination available and places sharing before replay. External handoffs explain when the PNG must be attached separately.
 
-No login, API key, build step, network request, or external service is required.
+No login, API key, external CDN, or external service is required. The checked-in bundle runs without a build step, including when the folder is opened locally.
 
-The animation uses an optimized Canvas 2D renderer with cached glow sprites, a bounded pixel budget, a static star layer, debounced resize allocation, and background-tab pausing. Touch hardware targets 45fps in the normal mobile layout and uses a 30fps safety path when desktop-site mode expands the viewport. WebGPU remains an evaluated experimental direction rather than the default renderer; see [`ADR-0002`](./docs/decisions/0002-mobile-rendering-safety-and-gpu-strategy.md).
+Three.js renders the sky with shared line geometry and instanced thought crystals. Play starts at 60fps; sustained measurements can promote to the display's 90/120Hz cadence. Under pressure, internal resolution drops before frame rate. Touch devices retain a 1.5-million-pixel ceiling even in desktop-site mode; desktop devices use 3.2 million pixels. Ambient intro motion stays below 12fps. Paused and result screens stop drawing until something changes, and hidden pages stop rendering. There are no fullscreen postprocessing passes, texture effects, shadows, or MSAA buffers. Portrait exports preserve bloom proportions by briefly reusing the same drawing surface at the export aspect ratio. See the [Three.js performance decision](./docs/decisions/0003-threejs-adaptive-rendering.md).
 
-Append `?debug=1` to the URL to display the active renderer, measured FPS, and device-pixel ratio.
+Append `?debug=1` for renderer, measured and target FPS, estimated display cadence, DPR, CPU work and optional GPU timing. `?renderer=2d` selects the fallback for comparison. A missing bundle, unsupported WebGL2, or a lost context also uses Canvas 2D automatically.
+
+### Develop the renderer
+
+```bash
+npm ci
+npm run build
+npm test
+```
+
+The renderer source lives in `src/afterglow-three.js`; its measured frame policy lives in `src/frame-budget.js`. Gesture sampling, bounded flower response, and shared WebGL/Canvas flower curves live in `src/garden-motion.js`. `npm run build` updates both `assets/afterglow-three.js` and `assets/afterglow-garden.js`; deploy both alongside `index.html`. Tests use Playwright Chromium (install with `npx playwright install chromium`), an available macOS Chrome Beta, or `CHROME_PATH`. Three.js 0.185.1 is pinned and its [MIT license](./assets/THREE-LICENSE.txt) is included.
+
+September verification and screenshots: [Three.js, adaptive frames and lifecycle](./docs/verification/2026-09-05-threejs.md).
+
+The subsequent experience pass covers the larger interactive intro, constellation formation, sound, pause, result preview, and undistorted mobile exports: [experience refinement and verification](./docs/verification/2026-09-05-refinement.md).
+
+The September 6 pass connects gesture-shaped flowers, nearby reactions, and a brief final sky: [implementation and verification](./docs/verification/2026-09-06-gestures.md).
+
+The opening typography now pairs a small sans introduction with a locally hosted Newsreader display title, and uses a labelled start button: [design review and responsive captures](./docs/verification/2026-09-06-intro-design.md). Distribute `assets/fonts/` and its included license alongside the app.
+
+The same typography continues through the result, pause, sharing guides, and exported artwork. Image sharing explains unsupported file handoffs, and failed clipboard access leaves a selectable caption: [scene and sharing review](./docs/verification/2026-09-06-scenes.md).
 
 ### Phone verification
 
