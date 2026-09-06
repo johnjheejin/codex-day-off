@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 
 async function ready(page) {
   await page.goto('/?preview=result');
+  await page.locator('#skyKeep').click();
   await expect(page.locator('[data-afterglow-destination="native"]')).toBeEnabled();
 }
 

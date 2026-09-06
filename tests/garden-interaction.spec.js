@@ -95,6 +95,7 @@ test('touch gestures retain a portrait Paper Sky and stay within the mobile draw
   const dimensions = await page.locator('#resultPreview').evaluate(async image => { await image.decode(); return [image.naturalWidth, image.naturalHeight]; });
   expect(dimensions[0] / dimensions[1]).toBeCloseTo(390 / 844, 3);
   expect(dimensions[0] * dimensions[1]).toBeLessThanOrEqual(1500000);
+  await page.locator('#skyKeep').click();
   const download = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Download PNG' }).click();
   await (await download).saveAs(`${evidence}/mobile-paper-gesture-sky.png`);
@@ -130,9 +131,9 @@ test('completion leaves a quiet sky, stops collecting, pauses when hidden and th
   await page.clock.runFor(350);
   await expect(page.locator('#keepSky')).toBeVisible();
   await page.screenshot({ path: `${evidence}/quiet-ending.png`, animations: 'disabled' });
-  await page.clock.runFor(1300);
-  await expect(page.locator('#result')).not.toHaveClass(/hidden/);
-  await expect(page.locator('#resultTitle')).toBeFocused();
+  await page.clock.runFor(2300);
+  await expect(page.locator('#skyTools')).toBeVisible();
+  await expect(page.locator('#canvas')).toBeFocused();
   await expect(page.locator('#viewSky')).toBeEnabled();
   const atRest = await page.evaluate(() => window.observedFrames);
   await page.clock.runFor(2000);
@@ -146,13 +147,13 @@ test('the ending can be skipped and reduced motion proceeds directly to the resu
   await page.clock.fastForward(30100);
   await expect(page.locator('#keepSky')).toBeVisible();
   await page.keyboard.press('Escape');
-  await expect(page.locator('#result')).not.toHaveClass(/hidden/);
+  await expect(page.locator('#skyTools')).toBeVisible();
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.reload();
   await page.getByRole('button', { name: 'Begin day off' }).click();
   await page.clock.fastForward(30100);
   await expect(page.locator('#keepSky')).toBeHidden();
-  await expect(page.locator('#result')).not.toHaveClass(/hidden/);
+  await expect(page.locator('#skyTools')).toBeVisible();
 });
 
 test('both script bundles can fail without preventing a complete Canvas experience', async ({ page }) => {
@@ -163,5 +164,5 @@ test('both script bundles can fail without preventing a complete Canvas experien
   await page.clock.fastForward(30100);
   await page.getByRole('button', { name: 'Keep this sky' }).click();
   await expect(page.locator('#world')).toHaveAttribute('data-renderer', 'canvas2d');
-  await expect(page.getByRole('button', { name: 'Download PNG' })).toBeEnabled();
+  await expect(page.locator('[data-afterglow-destination="download"]')).toBeEnabled();
 });

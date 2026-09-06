@@ -68,3 +68,20 @@ test('reduced motion allows deliberate rotation with no automatic sway; suspensi
   assert.equal(sky.response.active.size, 0);
   assert.equal(sky.needsFrame(148), false);
 });
+
+test('the closing reveal opens depth once, returns to the front and stops rendering', () => {
+  const source = flowers(), original = structuredClone(source);
+  const sky = new SkyView(); sky.enter(source, []); sky.reveal();
+  assert.equal(sky.layout(390, 844).scale, 1);
+  for (let now = 20; now <= 1400; now += 20) sky.update(now, 20, 390, 844);
+  assert.ok(sky.yaw > .6 && sky.pitch < -.19);
+  assert.ok(sky.needsFrame(1400));
+  sky.suspend();
+  assert.equal(sky.revealElapsed, 1400);
+  for (let now = 1420; now <= 2800; now += 20) sky.update(now, 20, 390, 844);
+  assert.equal(sky.yaw, 0); assert.equal(sky.pitch, 0);
+  assert.equal(sky.needsFrame(2800), false);
+  assert.deepEqual(source, original);
+  const quiet = new SkyView({ reducedMotion: true }); quiet.enter(source, []); quiet.reveal();
+  assert.equal(quiet.revealing, false);
+});

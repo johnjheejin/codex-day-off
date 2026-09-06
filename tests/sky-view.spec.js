@@ -20,7 +20,6 @@ async function enter(page) {
   await page.goto('/?preview=result');
   await expect(page.locator('#world')).toHaveAttribute('data-renderer', 'three');
   await expect(page.locator('#viewSky')).toBeEnabled();
-  await page.locator('#viewSky').click();
   await expect.poll(() => page.evaluate(() => !!window.observedSky.view)).toBe(true);
 }
 async function atRest(page, property = 'observedFrames') {
@@ -53,8 +52,9 @@ test('kept sky sways, rotates and resets without changing the saved image or sou
   await expect.poll(() => page.evaluate(() => window.observedSky.view.yaw)).toBeGreaterThan(0);
   await page.keyboard.press('r');
   await expect.poll(() => page.evaluate(() => window.observedSky.view.yaw)).toBe(0);
-  await page.keyboard.press('Escape'); await expect(page.locator('#viewSky')).toBeFocused();
-  await expect(page.locator('#skyTools')).toBeHidden();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#skyTouch')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#skyTools')).toBeVisible();
   await atRest(page);
   expect(errors).toEqual([]);
 });
@@ -72,7 +72,7 @@ test('small phone touch and 3D views stay reachable and keep a single bounded dr
   await canvas.dispatchEvent('pointermove', { pointerType: 'touch', pointerId: 2, clientX: 240, clientY: 280 });
   await canvas.dispatchEvent('pointerup', { pointerType: 'touch', pointerId: 2 });
   await expect.poll(() => page.evaluate(() => window.observedSky.view.yaw)).toBeGreaterThan(.5);
-  for (const id of ['skyTouch','skyOrbit','skyReset','skyReturn']) {
+  for (const id of ['skyTouch','skyOrbit','skyReset','skyKeep']) {
     const box = await page.locator(`#${id}`).boundingBox();
     expect(box.height).toBeGreaterThanOrEqual(44); expect(box.x).toBeGreaterThanOrEqual(0);
     expect(box.x + box.width).toBeLessThanOrEqual(320); expect(box.y + box.height).toBeLessThanOrEqual(568);
@@ -81,7 +81,7 @@ test('small phone touch and 3D views stay reachable and keep a single bounded dr
   expect(await canvas.evaluate(c => c.width * c.height)).toBe(1);
   await page.waitForTimeout(360);
   await page.screenshot({ path: `${evidence}/mobile-night-turned.png` });
-  await page.keyboard.press('Escape'); await page.locator('#appearanceToggle').click(); await page.locator('#viewSky').click();
+  await page.keyboard.press('Escape'); await page.locator('#appearanceToggle').click();
   await page.locator('#skyOrbit').click(); await canvas.focus(); await page.keyboard.press('ArrowRight');
   await page.waitForTimeout(360);
   await page.screenshot({ path: `${evidence}/mobile-paper-live.png` });

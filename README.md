@@ -16,7 +16,7 @@ September 6 release, now live at [dayoff.tmcowork.com](https://dayoff.tmcowork.c
 | --- | --- | --- |
 | Initial | ![Desktop initial screen](./assets/verification/2026-09-06-intro/desktop-paper.png) | ![Mobile initial screen](./assets/verification/2026-09-06-intro/mobile-paper.png) |
 | Playing | ![Desktop playing screen](./assets/verification/2026-09-06-scenes/desktop-paper-play.png) | ![Mobile playing screen](./assets/verification/2026-09-06-scenes/mobile-paper-play.png) |
-| Result | ![Desktop result screen](./assets/verification/2026-09-06-scenes/desktop-paper-result.png) | ![Mobile result screen](./assets/verification/2026-09-06-scenes/mobile-paper-result.png) |
+| Live result | ![Desktop sky turned](./assets/verification/2026-09-06-kept-sky/night-turned.png) | ![Mobile live Paper Sky](./assets/verification/2026-09-06-kept-sky/mobile-paper.png) |
 
 The four-milestone, same-viewport comparison is preserved in **[the July 13 visual history audit](./docs/audits/2026-07-13-visual-history-audit.md)**.
 
@@ -29,7 +29,7 @@ The four-milestone, same-viewport comparison is preserved in **[the July 13 visu
 | July 11 | The repository was reopened with GPT-5.6 Sol. The live experience was tested again, missed accessibility states were fixed, reduced-motion support was added, and the moment was recorded instead of being allowed to disappear into commit history. |
 | July 13 | A Galaxy S24 report turned the revisit into a rendering-safety and mobile-UX pass: pixel and frame budgets were bounded, desktop-site mode gained a safety path, `Night Sky / Paper Sky` became explicit play scenes, sharing moved into the first result viewport, and the first build was visually audited against the current experience. |
 | September 5 | Three.js adds a slowly turning line sculpture, dimensional blooms and collection ripples. Measured CPU/GPU work and display cadence replace fixed mobile frame limits; a Canvas fallback keeps the current sky after GPU failure. |
-| September 6 | Gestures shape each flower, nearby blooms respond to touch, and the completed sky lingers briefly before the result. Editorial typography connects the opening, pause, results and image handoffs. The finished sky gains touch response and 3D rotation; default-on chimes remember an explicit mute. [Read the September story](./docs/journal/2026-09-06.md). |
+| September 6 | Gestures shape each flower, nearby blooms respond to touch, and the completed sky reveals its depth and remains the live result. Editorial typography connects the opening, pause, results and image handoffs. The finished sky gains touch response and 3D rotation; default-on chimes remember an explicit mute. [Read the September story](./docs/journal/2026-09-06.md). |
 
 Read the latest entry: **[2026-09-06 — a sky that still moves](./docs/journal/2026-09-06.md)**. The earlier revisit is preserved in the [July 11 journal](./docs/journal/2026-07-11.md).
 
@@ -55,8 +55,9 @@ Then visit `http://localhost:8000`.
 - Direction, speed, curves and pauses leave different flower forms. Nearby blooms lean toward the focus and return gently; moving faster earns no advantage.
 - Pause with the visible control, Space, or Escape; resume without losing time.
 - Sound adds a short note to each collection. It defaults on after a user gesture, remembers an explicit mute, and uses no audio downloads.
-- At 30 seconds, collection ends and the sky remains unobscured for 1.6 seconds. **Keep this sky** or Escape skips to the result. Reduced motion skips this interval automatically.
-- Choose **Explore sky** in the result for a living view. **Touch the sky** brushes nearby flowers; **Turn in 3D** rotates them by dragging or arrow keys. **Reset** (or R) returns to the front; Escape returns to the result. The original PNG stays unchanged. This view lasts within the current page; reload restoration and live sharing links are not implemented.
+- At 30 seconds, the sky makes one gentle turn to reveal its depth, then returns to the front. **Keep this sky** or Escape skips this 2.8-second moment; reduced motion skips it automatically.
+- The result stays live and fills the screen. **Touch** brushes flowers from the front; **Turn** lets you look around by dragging or using arrow keys. **Reset** (or R) centers the view. **Share** opens the original PNG and six handoff options; closing it keeps your current angle.
+- The **Afterglow** logo returns to the landing. During play it pauses and asks first. **Return to your sky** restores the latest completed sky, even after abandoning a new pause. The original PNG is preserved in this page’s memory; reload restoration and personal live links are not implemented.
 - Play in `🌙 Night Sky` or `☀️ Paper Sky`; the current scene is always visible, persists locally, and is preserved in the exported image.
 - Export the played scene as a PNG: 1200 × 630 on desktop, or the played viewport's aspect ratio on mobile, bounded to 1.5 million pixels. Hand it to LinkedIn, X, Telegram, KakaoTalk, or the native share sheet. Mobile keeps every destination available and places sharing before replay. External handoffs explain when the PNG must be attached separately.
 
@@ -86,14 +87,16 @@ The opening typography now pairs a small sans introduction with a locally hosted
 
 The same typography continues through the result, pause, sharing guides, and exported artwork. Image sharing explains unsupported file handoffs, and failed clipboard access leaves a selectable caption: [scene and sharing review](./docs/verification/2026-09-06-scenes.md).
 
+The completed sky now stays live, sharing opens on request, and the logo returns to a landing that remembers the last sky: [flow and verification](./docs/verification/2026-09-06-kept-sky.md).
+
 ### Phone verification
 
 Use the direct result preview to inspect sharing without waiting for the 30-second play session:
 
-- Result and all six share destinations: <https://dayoff.tmcowork.com/?preview=result>
+- Live result (choose Share for all six destinations): <https://dayoff.tmcowork.com/?preview=result>
 - Result plus renderer/FPS diagnostics: <https://dayoff.tmcowork.com/?preview=result&debug=1>
 
-On Galaxy S24, open each link in Chrome Beta and Samsung Internet in the normal mobile layout. Confirm that `🌙 Night Sky` opens on a dark surface, `☀️ Paper Sky` switches immediately to warm white, the primary device share action appears in the first result viewport, and all six destinations remain reachable by vertical scrolling. The preview uses a fixed sample sky and does not change the normal entry flow. Full measurements and the distinction between automated approximation and physical-device testing are recorded in the **[S24 scenes and sharing verification](./docs/verification/2026-07-13-s24-scenes-and-sharing.md)**.
+On Galaxy S24, open each link in Chrome Beta and Samsung Internet in the normal mobile layout. Confirm that `🌙 Night Sky` opens on a dark surface, `☀️ Paper Sky` switches immediately to warm white, the live sky and Share action fill the result viewport, and Share opens all six destinations in a scrollable modal. The preview uses a fixed sample sky and does not change the normal entry flow. Full measurements and the distinction between automated approximation and physical-device testing are recorded in the **[S24 scenes and sharing verification](./docs/verification/2026-07-13-s24-scenes-and-sharing.md)**.
 
 | State | Screenshot | What it proves |
 | --- | --- | --- |

@@ -3,10 +3,11 @@ import { BloomResponse } from './garden-motion.js';
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 
 // One YXZ world rotation, shared with the Three.js group and Canvas projection.
-export function skyTransform(width, height, pitch = 0, yaw = 0) {
+export function skyTransform(width, height, pitch = 0, yaw = 0, framing = 1) {
   const a = Math.cos(pitch), b = Math.sin(pitch), c = Math.cos(yaw), d = Math.sin(yaw);
-  const scale = Math.max(.35, Math.min((width - 40) / width, (height - 250) / height, 1));
-  return { width, height, pitch, yaw, scale, centerY: (140 + height - 110) / 2,
+  const fitted = Math.max(.5, Math.min((width - 16) / width, (height - 96) / height, 1));
+  const scale = 1 + (fitted - 1) * framing;
+  return { width, height, pitch, yaw, scale, centerY: height / 2 - 16 * framing,
     xx: c, xy: d * b, xz: d * a, yx: 0, yy: a, yz: -b, zx: -d, zy: c * b, zz: c * a };
 }
 
@@ -47,10 +48,19 @@ export class SkyView {
     this.dirty = false;
   }
   reset() {
+    this.revealing = false;
+    this.framing = 1;
     this.pitch = this.yaw = 0;
     this.pointerUntil = 0;
     this.response.reset();
     this.dirty = true;
+  }
+  reveal() {
+    this.reset();
+    if (this.reducedMotion) return;
+    this.revealing = true;
+    this.revealElapsed = 0;
+    this.framing = 0;
   }
   move(x, y, now) {
     if (this.reducedMotion || this.mode !== 'touch') return;
@@ -66,7 +76,7 @@ export class SkyView {
     this.dirty = true;
   }
   layout(width, height) {
-    this.transform = skyTransform(width, height, this.pitch, this.yaw);
+    this.transform = skyTransform(width, height, this.pitch, this.yaw, this.framing);
     this.blooms.forEach((bloom, index) => {
       bloom.x = bloom.source.x; bloom.y = bloom.source.y;
       bloom.depth = Math.sin(index * 2.4) * Math.min(width, height) * .09;
@@ -75,6 +85,16 @@ export class SkyView {
     return this.transform;
   }
   update(now, dt, width, height) {
+    if (this.revealing) {
+      this.revealElapsed += dt;
+      const t = Math.min(1, this.revealElapsed / 2800);
+      const arc = Math.sin(Math.PI * t) ** 2;
+      this.yaw = .62 * arc;
+      this.pitch = -.2 * arc;
+      const fit = Math.min(1, t * 3);
+      this.framing = fit * fit * (3 - 2 * fit);
+      if (t === 1) this.reset();
+    }
     this.layout(width, height);
     this.response.update(this.blooms, this.pointer, dt, {
       enabled: now < this.pointerUntil && this.mode === 'touch', reducedMotion: this.reducedMotion,
@@ -82,6 +102,6 @@ export class SkyView {
     });
     this.dirty = false;
   }
-  needsFrame(now) { return this.open && (this.dirty || now < this.pointerUntil || this.response.active.size > 0); }
+  needsFrame(now) { return this.open && (this.revealing || this.dirty || now < this.pointerUntil || this.response.active.size > 0); }
   suspend() { this.pointerUntil = 0; this.response.reset(); this.dirty = true; }
 }

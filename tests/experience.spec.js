@@ -7,6 +7,14 @@ test.beforeAll(() => fs.mkdirSync(evidence, { recursive: true }));
 async function observeScene(page) {
   // Observe the renderer boundary without adding test controls to the product.
   await page.addInitScript(() => {
+    const request = window.requestAnimationFrame, cancel = window.cancelAnimationFrame;
+    const pending = new Set(); window.peakSkyFrames = 0;
+    window.requestAnimationFrame = callback => {
+      let id = request.call(window, now => { pending.delete(id); callback(now); });
+      if (callback.name === 'frame') { pending.add(id); window.peakSkyFrames = Math.max(window.peakSkyFrames, pending.size); }
+      return id;
+    };
+    window.cancelAnimationFrame = id => { pending.delete(id); cancel.call(window, id); };
     let create;
     Object.defineProperty(window, 'createAfterglowRenderer', {
       get: () => create,
@@ -56,8 +64,10 @@ test('complete 30 seconds, collect with the cursor, export the 3D sky, replay re
   await expect.poll(async () => parseInt(await page.locator('#count').textContent())).toBeGreaterThan(3);
   console.log('Measured desktop:', await page.locator('#debugPanel').textContent());
   await page.screenshot({ path: `${evidence}/desktop-playing.png` });
-  await expect(page.locator('#result')).not.toHaveClass(/hidden/, { timeout: 31000 });
-  await expect(page.getByRole('button', { name: 'Download PNG' })).toBeEnabled();
+  await expect(page.locator('#skyTools')).toBeVisible({ timeout: 31000 });
+  expect(await page.evaluate(() => window.peakSkyFrames)).toBe(1);
+  await page.locator('#skyKeep').click();
+  await expect(page.locator('[data-afterglow-destination="download"]')).toBeEnabled();
   const exported = await page.locator('#afterglowHandoffPreview').evaluate(async image => {
     await image.decode();
     const canvas = document.createElement('canvas');
@@ -109,6 +119,7 @@ for (const profile of [
     await page.locator('#canvas').dispatchEvent('pointerup', { pointerType: 'touch', pointerId: 1 });
     await expect(page.locator('#world')).toHaveAttribute('data-target-fps', '60');
     await page.goto('/?preview=result&debug=1');
+    await page.locator('#skyKeep').click();
     const buttons = page.locator('[data-afterglow-destination]');
     await expect(buttons).toHaveCount(6);
     await expect(buttons.first()).toBeEnabled();
@@ -160,7 +171,7 @@ test('lost WebGL context returns the existing 12-thought result to Canvas', asyn
   await expect(page.locator('#skyCanvas')).toHaveCount(0);
   await expect(page.locator('#finalCount')).toHaveText('12');
   await page.locator('#appearanceToggle').click();
-  await expect(page.getByRole('button', { name: 'Download PNG' })).toBeEnabled();
+  await expect(page.locator('[data-afterglow-destination="download"]')).toBeEnabled();
   expect(await page.locator('#canvas').evaluate(canvas => canvas.width * canvas.height)).toBeGreaterThan(1);
 });
 
@@ -177,7 +188,7 @@ test('mobile fallback PNG keeps the completed portrait framing after rotation an
   const page = await context.newPage();
   await page.route('**/assets/afterglow-three.js', route => route.abort());
   await page.goto('/?preview=result');
-  const download = page.getByRole('button', { name: 'Download PNG' });
+  const download = page.locator('[data-afterglow-destination="download"]');
   await expect(download).toBeEnabled();
   await page.setViewportSize({ width: 844, height: 390 });
   await expect.poll(() => page.locator('#canvas').evaluate(canvas => canvas.style.width)).toBe('844px');
@@ -192,6 +203,7 @@ test('mobile fallback PNG keeps the completed portrait framing after rotation an
   expect(exported.width / exported.height).toBeCloseTo(390 / 844, 3);
   expect(exported.width * exported.height).toBeLessThanOrEqual(1500000);
   expect(exported.corner).toEqual([243, 243, 238, 255]);
+  await page.locator('#skyKeep').click();
   const pending = page.waitForEvent('download');
   await download.click();
   await (await pending).saveAs(`${evidence}/mobile-paper-fallback-sky.png`);
@@ -299,13 +311,14 @@ test('result shows the actual export, rests at zero frames, and can be viewed at
   await page.waitForTimeout(400);
   expect(await page.evaluate(() => window.observedFrames)).toBe(frames);
   await page.screenshot({ path: `${evidence}/desktop-result.png` });
+  await page.locator('#skyKeep').click();
   await page.locator('#viewSky').click();
   await expect(page.locator('#world')).toHaveClass(/viewing/);
   await expect(page.locator('#canvas')).toBeFocused();
   await expect(page.locator('#skyCanvas')).toHaveCSS('opacity', '1');
   await page.screenshot({ path: `${evidence}/full-sky.png` });
   await page.keyboard.press('Escape');
-  await expect(page.locator('#viewSky')).toBeFocused();
+  await expect(page.locator('#canvas')).toBeFocused();
   await page.locator('#appearanceToggle').click();
   await expect.poll(() => page.locator('#resultPreview').getAttribute('src')).not.toBe(image.src);
   await expect(page.locator('#viewSky')).toBeEnabled();
@@ -349,6 +362,7 @@ test('small phone and tablet layouts keep controls reachable without horizontal 
     await page.locator('#start').scrollIntoViewIfNeeded();
     await expect(page.locator('#start')).toBeInViewport();
     await page.goto('/?preview=result');
+    await page.locator('#skyKeep').click();
     await expect(page.locator('[data-afterglow-destination="native"]')).toBeEnabled();
     const primary = await page.locator('[data-afterglow-destination="native"]').boundingBox();
     expect(primary.y + primary.height).toBeLessThan(viewport.height);

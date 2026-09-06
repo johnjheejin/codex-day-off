@@ -35,7 +35,7 @@ for (const [label, needle] of required) {
   if (!html.includes(needle)) throw new Error(`Missing runtime guard: ${label}`);
 }
 
-const resultMarkup = html.match(/<section id="result"[\s\S]*?(?=<dialog id="afterglowHandoffDialog")/)?.[0] || '';
+const resultMarkup = html.match(/<dialog id="result"[\s\S]*?(?=<dialog id="afterglowHandoffDialog")/)?.[0] || '';
 const css = html.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
 const genericShareHook = /(?:class|id|data-[\w-]+)=["'][^"']*share/i;
 const genericShareSelector = /[.#][\w-]*share[\w-]*/i;
