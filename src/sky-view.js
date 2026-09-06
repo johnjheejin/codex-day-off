@@ -45,6 +45,7 @@ export class SkyView {
     this.blooms = [];
     this.links = [];
     this.pointerUntil = 0;
+    this.pendingPointer = false;
     this.dirty = false;
   }
   reset() {
@@ -52,6 +53,7 @@ export class SkyView {
     this.framing = 1;
     this.pitch = this.yaw = 0;
     this.pointerUntil = 0;
+    this.pendingPointer = false;
     this.response.reset();
     this.dirty = true;
   }
@@ -67,12 +69,15 @@ export class SkyView {
     this.pointer.x = this.pointer.tx = x;
     this.pointer.y = this.pointer.ty = y;
     this.pointerUntil = now + 140;
+    // Keep a brief touch until it has reached one frame, even if rendering is late.
+    this.pendingPointer = true;
     this.dirty = true;
   }
   turn(dx, dy, width, height) {
     this.yaw = (this.yaw + dx / Math.max(240, width) * 3.8) % (Math.PI * 2);
     this.pitch = clamp(this.pitch + dy / Math.max(320, height) * 2.8, -1.1, 1.1);
     this.pointerUntil = 0;
+    this.pendingPointer = false;
     this.dirty = true;
   }
   layout(width, height) {
@@ -97,11 +102,12 @@ export class SkyView {
     }
     this.layout(width, height);
     this.response.update(this.blooms, this.pointer, dt, {
-      enabled: now < this.pointerUntil && this.mode === 'touch', reducedMotion: this.reducedMotion,
+      enabled: (this.pendingPointer || now < this.pointerUntil) && this.mode === 'touch', reducedMotion: this.reducedMotion,
       radius: Math.min(170, width * .36), position: bloom => bloom.screen
     });
+    this.pendingPointer = false;
     this.dirty = false;
   }
   needsFrame(now) { return this.open && (this.revealing || this.dirty || now < this.pointerUntil || this.response.active.size > 0); }
-  suspend() { this.pointerUntil = 0; this.response.reset(); this.dirty = true; }
+  suspend() { this.pointerUntil = 0; this.pendingPointer = false; this.response.reset(); this.dirty = true; }
 }

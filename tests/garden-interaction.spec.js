@@ -69,6 +69,8 @@ test('real pointer gestures shape flowers and nearby flowers lean without new ge
 test('touch gestures retain a portrait Paper Sky and stay within the mobile drawing budget', async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, hasTouch: true, isMobile: true });
   const page = await context.newPage();
+  const errors = []; page.on('pageerror', error => errors.push(error.message));
+  const touch = await context.newCDPSession(page);
   await observe(page);
   await page.clock.install();
   await page.goto('/');
@@ -79,9 +81,9 @@ test('touch gestures retain a portrait Paper Sky and stay within the mobile draw
   for (let i = 0; i < 5; i++) {
     const point = await page.evaluate(() => window.observedSky.particles.find(p => p.x > 20 && p.y > 100 && p.x < innerWidth - 20 && p.y < innerHeight - 80));
     if (point) {
-      await page.locator('#canvas').dispatchEvent('pointerdown', { pointerType: 'touch', pointerId: 1, clientX: point.x, clientY: point.y });
+      await touch.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: point.x, y: point.y }] });
       await page.clock.runFor(750);
-      await page.locator('#canvas').dispatchEvent('pointerup', { pointerType: 'touch', pointerId: 1 });
+      await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     } else await page.clock.runFor(750);
   }
   expect(await page.evaluate(() => window.observedSky.blooms.length)).toBeGreaterThan(1);
@@ -99,6 +101,7 @@ test('touch gestures retain a portrait Paper Sky and stay within the mobile draw
   const download = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Download PNG' }).click();
   await (await download).saveAs(`${evidence}/mobile-paper-gesture-sky.png`);
+  expect(errors).toEqual([]);
   await context.close();
 });
 

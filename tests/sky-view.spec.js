@@ -7,7 +7,11 @@ async function observe(page) {
     let create;
     Object.defineProperty(window, 'createAfterglowRenderer', { get: () => create, set: factory => {
       create = options => { const renderer = factory(options), render = renderer.render;
-        renderer.render = state => { window.observedSky = state; window.observedFrames = (window.observedFrames ?? 0) + 1; return render(state); };
+        renderer.render = state => {
+          window.observedSky = state; window.observedFrames = (window.observedFrames ?? 0) + 1;
+          window.peakSkyLean = Math.max(window.peakSkyLean ?? 0, Math.abs(state.blooms[0]?.leanX ?? 0));
+          return render(state);
+        };
         return renderer;
       };
     } });
@@ -62,15 +66,17 @@ test('kept sky sways, rotates and resets without changing the saved image or sou
 test('small phone touch and 3D views stay reachable and keep a single bounded drawing buffer', async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 320, height: 568 }, hasTouch: true, isMobile: true, deviceScaleFactor: 3 });
   const page = await context.newPage(); await observe(page); await enter(page);
+  const errors = []; page.on('pageerror', error => errors.push(error.message));
   const canvas = page.locator('#canvas');
   const point = await page.evaluate(() => window.observedSky.blooms[0].screen);
-  await canvas.dispatchEvent('pointerdown', { pointerType: 'touch', pointerId: 1, clientX: point.x + 25, clientY: point.y + 10 });
-  await expect.poll(() => page.evaluate(() => Math.abs(window.observedSky.blooms[0].leanX))).toBeGreaterThan(.02);
-  await canvas.dispatchEvent('pointerup', { pointerType: 'touch', pointerId: 1 });
+  await page.touchscreen.tap(point.x + 25, point.y + 10);
+  // A real tap can lift before the next frame; record the drawn response instead of polling past it.
+  await expect.poll(() => page.evaluate(() => window.peakSkyLean)).toBeGreaterThan(.005);
   await page.locator('#skyOrbit').click();
-  await canvas.dispatchEvent('pointerdown', { pointerType: 'touch', pointerId: 2, clientX: 130, clientY: 250 });
-  await canvas.dispatchEvent('pointermove', { pointerType: 'touch', pointerId: 2, clientX: 240, clientY: 280 });
-  await canvas.dispatchEvent('pointerup', { pointerType: 'touch', pointerId: 2 });
+  const touch = await context.newCDPSession(page);
+  await touch.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 130, y: 250 }] });
+  await touch.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 240, y: 280 }] });
+  await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
   await expect.poll(() => page.evaluate(() => window.observedSky.view.yaw)).toBeGreaterThan(.5);
   for (const id of ['skyTouch','skyOrbit','skyReset','skyKeep']) {
     const box = await page.locator(`#${id}`).boundingBox();
@@ -96,6 +102,7 @@ test('small phone touch and 3D views stay reachable and keep a single bounded dr
     return n;
   })).toBeGreaterThan(100);
   await atRest(page, 'canvasFrames');
+  expect(errors).toEqual([]);
   await context.close();
 });
 

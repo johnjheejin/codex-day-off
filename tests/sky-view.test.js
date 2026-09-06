@@ -85,3 +85,18 @@ test('the closing reveal opens depth once, returns to the front and stops render
   const quiet = new SkyView({ reducedMotion: true }); quiet.enter(source, []); quiet.reveal();
   assert.equal(quiet.revealing, false);
 });
+
+test('a short touch survives a late first frame, settles, and is discarded on suspension', () => {
+  const sky = new SkyView({ mobile: true }); sky.enter(flowers(), []); sky.layout(390, 844);
+  const point = sky.blooms[0].screen;
+  sky.move(point.x + 40, point.y + 20, 100);
+  sky.pointerUntil = 0; // A finger can lift before the next frame is available.
+  sky.update(500, 50, 390, 844);
+  assert.ok(sky.response.active.size > 0);
+  for (let now = 516; now < 2500; now += 16) sky.update(now, 16, 390, 844);
+  assert.equal(sky.needsFrame(2500), false);
+  sky.move(point.x + 40, point.y + 20, 2600); sky.suspend();
+  sky.update(2900, 50, 390, 844);
+  assert.equal(sky.needsFrame(2900), false);
+  assert.equal(sky.response.active.size, 0);
+});
