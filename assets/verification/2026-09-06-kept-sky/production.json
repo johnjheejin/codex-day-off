@@ -1,0 +1,369 @@
+{
+  "run": "https://github.com/johnjheejin/codex-day-off/actions/runs/34002305780",
+  "head": "f76230e72923f01fac65a13de12860424b5e5927",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "verify",
+      "conclusion": "success",
+      "url": "https://github.com/johnjheejin/codex-day-off/actions/runs/34002305780/job/101403231564"
+    },
+    {
+      "name": "publish",
+      "conclusion": "success",
+      "url": "https://github.com/johnjheejin/codex-day-off/actions/runs/34002305780/job/101403608913"
+    }
+  ],
+  "checksBeforeDeployment": {
+    "unit": 21,
+    "browser": 32
+  },
+  "deployedBrowserChecksFromGitHub": 32,
+  "productionBinding": {
+    "checkedAt": "2026-09-06T00:56:17.042Z",
+    "project": "codex-day-off",
+    "domain": "dayoff.tmcowork.com",
+    "domainStatus": "active",
+    "deploymentId": "31bc3596-3a51-4544-b8c7-3c92790d3413",
+    "deploymentURL": "https://31bc3596.codex-day-off.pages.dev",
+    "commit": "f76230e72923f01fac65a13de12860424b5e5927"
+  },
+  "manifest": [
+    {
+      "file": "index.html",
+      "bytes": 134055,
+      "sha256": "0ce4827a4f4fac8c02995b6473e8b335fe91bb5507b964ae33482f8ab1d8a877"
+    },
+    {
+      "file": "assets/afterglow-three.js",
+      "bytes": 544282,
+      "sha256": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc"
+    },
+    {
+      "file": "assets/afterglow-garden.js",
+      "bytes": 6424,
+      "sha256": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45"
+    },
+    {
+      "file": "assets/afterglow-three.js.LEGAL.txt",
+      "bytes": 188,
+      "sha256": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674"
+    },
+    {
+      "file": "assets/THREE-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    {
+      "file": "assets/fonts/newsreader-display-latin.woff2",
+      "bytes": 21704,
+      "sha256": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821"
+    },
+    {
+      "file": "assets/fonts/NEWSREADER-OFL.txt",
+      "bytes": 4394,
+      "sha256": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8"
+    },
+    {
+      "file": "assets/fonts/README.md",
+      "bytes": 1056,
+      "sha256": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41"
+    }
+  ],
+  "immutableFiles": {
+    "base": "https://31bc3596.codex-day-off.pages.dev",
+    "checkedAt": "2026-09-06T00:53:22.003Z",
+    "state": "verified",
+    "files": [
+      {
+        "file": "index.html",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697f0afecc99f0-ORD",
+        "expected": "0ce4827a4f4fac8c02995b6473e8b335fe91bb5507b964ae33482f8ab1d8a877",
+        "actual": "0ce4827a4f4fac8c02995b6473e8b335fe91bb5507b964ae33482f8ab1d8a877",
+        "normalized": "0ce4827a4f4fac8c02995b6473e8b335fe91bb5507b964ae33482f8ab1d8a877",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697f0aff431157-ORD",
+        "expected": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "actual": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "normalized": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-garden.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697f0aee8f83b9-ORD",
+        "expected": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "actual": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "normalized": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js.LEGAL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697f0ae90e2288-ORD",
+        "expected": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "actual": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "normalized": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "matches": true
+      },
+      {
+        "file": "assets/THREE-LICENSE.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697f0afbd1f4ae-ORD",
+        "expected": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "actual": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "normalized": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/newsreader-display-latin.woff2",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697f0ae976e0fa-ORD",
+        "expected": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "actual": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "normalized": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/NEWSREADER-OFL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697f0affbce938-ORD",
+        "expected": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "actual": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "normalized": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/README.md",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697f0ae9e5c8ee-ORD",
+        "expected": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "actual": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "normalized": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "matches": true
+      }
+    ]
+  },
+  "publicFilesFromGitHub": {
+    "base": "https://dayoff.tmcowork.com",
+    "checkedAt": "2026-09-06T00:56:17.374Z",
+    "state": "challenged",
+    "files": [
+      {
+        "file": "index.html",
+        "status": 403,
+        "mitigated": "challenge",
+        "ray": "a3698353b934eb65-ORD",
+        "expected": "0ce4827a4f4fac8c02995b6473e8b335fe91bb5507b964ae33482f8ab1d8a877",
+        "actual": "670b4f917cd0f26d9a55c2c65d680bababb34863fdb86e9f7fbb8408841b2e4f",
+        "normalized": "670b4f917cd0f26d9a55c2c65d680bababb34863fdb86e9f7fbb8408841b2e4f",
+        "matches": false
+      },
+      {
+        "file": "assets/afterglow-three.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3698353af2fca19-ORD",
+        "expected": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "actual": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "normalized": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-garden.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3698353bf6aaca8-ORD",
+        "expected": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "actual": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "normalized": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js.LEGAL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3698353ca9761a2-ORD",
+        "expected": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "actual": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "normalized": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "matches": true
+      },
+      {
+        "file": "assets/THREE-LICENSE.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3698353bec4dadb-ORD",
+        "expected": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "actual": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "normalized": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/newsreader-display-latin.woff2",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3698353ba3660a2-ORD",
+        "expected": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "actual": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "normalized": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/NEWSREADER-OFL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3698353cb7e356f-ORD",
+        "expected": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "actual": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "normalized": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/README.md",
+        "status": 403,
+        "mitigated": "challenge",
+        "ray": "a3698353cc9f4354-ORD",
+        "expected": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "actual": "a7a86d41dcc5ffb419c3927838c69146f2e422c406ceddfe733097a03bfde499",
+        "normalized": "a7a86d41dcc5ffb419c3927838c69146f2e422c406ceddfe733097a03bfde499",
+        "matches": false
+      }
+    ]
+  },
+  "publicFilesFromLocal": {
+    "base": "https://dayoff.tmcowork.com",
+    "checkedAt": "2026-09-06T00:53:59.539Z",
+    "state": "verified",
+    "files": [
+      {
+        "file": "index.html",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697ff24f8fa880-HKG",
+        "expected": "0ce4827a4f4fac8c02995b6473e8b335fe91bb5507b964ae33482f8ab1d8a877",
+        "actual": "6014faaa96c23edc7109f5b2dde87f4ef5e82069d943daf222a5ea84955d22de",
+        "normalized": "0ce4827a4f4fac8c02995b6473e8b335fe91bb5507b964ae33482f8ab1d8a877",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697ff27953383f-HKG",
+        "expected": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "actual": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "normalized": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-garden.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697ff24b7f035b-HKG",
+        "expected": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "actual": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "normalized": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js.LEGAL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697ff25a5b85f3-HKG",
+        "expected": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "actual": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "normalized": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "matches": true
+      },
+      {
+        "file": "assets/THREE-LICENSE.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697ff23ec3fca0-KIX",
+        "expected": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "actual": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "normalized": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/newsreader-display-latin.woff2",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697ff23e8e6468-NRT",
+        "expected": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "actual": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "normalized": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/NEWSREADER-OFL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697ff23f0619c3-NRT",
+        "expected": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "actual": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "normalized": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/README.md",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a3697ff25bad5e0a-HKG",
+        "expected": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "actual": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "normalized": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "matches": true
+      }
+    ]
+  },
+  "publicBrowserFromLocal": {
+    "base": "https://dayoff.tmcowork.com",
+    "stats": {
+      "startTime": "2026-09-06T00:54:00.412Z",
+      "duration": 125606.056,
+      "expected": 32,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "browser": "Chrome Beta"
+  },
+  "localSoftwareWebGL": {
+    "base": "http://127.0.0.1:8000",
+    "stats": {
+      "startTime": "2026-09-06T00:49:55.874Z",
+      "duration": 137976.976,
+      "expected": 32,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "browser": "Chrome Beta, ANGLE SwiftShader"
+  },
+  "earlierDeploymentDiagnostic": {
+    "run": "https://github.com/johnjheejin/codex-day-off/actions/runs/34001562773",
+    "head": "bd2335078c316cad9498e47b40bb0718e2bb49b9",
+    "failure": "Mobile portrait export readiness exceeded the 5-second assertion timeout after deployment; 31 of 32 browser checks passed. This run was not treated as successful.",
+    "followup": "The same mobile test passed twice on the same immutable deployment and the following full GitHub run 34001970345 succeeded. Additional software-WebGL testing found short touches could be lost before their first rendered response. A deterministic unit regression now protects that case; mobile browser scenarios use real touch input and record the rendered tap response.",
+    "exportFailureCause": "Not reproduced; no root cause claimed. The PNG readiness timeout and export assertions were retained."
+  },
+  "limits": [
+    "Recent sky is held in page memory only; reload restoration and live personal links are not implemented.",
+    "Physical-device thermals were not measured."
+  ]
+}
