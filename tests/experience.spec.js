@@ -359,6 +359,10 @@ test('small phone and tablet layouts keep controls reachable without horizontal 
     await page.goto('/');
     await expect(page.locator('#world')).toHaveAttribute('data-renderer', 'three');
     for (const selector of ['#intro', '.topbar']) expect(await page.locator(selector).evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
+    const brand = await page.locator('#homeButton').boundingBox();
+    const actions = await page.locator('.topbar-actions').boundingBox();
+    expect(brand.height).toBeGreaterThanOrEqual(44);
+    expect(brand.x + brand.width).toBeLessThanOrEqual(actions.x);
     await page.locator('#start').scrollIntoViewIfNeeded();
     await expect(page.locator('#start')).toBeInViewport();
     await page.goto('/?preview=result');

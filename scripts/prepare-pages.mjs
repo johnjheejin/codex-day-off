@@ -6,7 +6,9 @@ import { createHash } from 'node:crypto';
 export const files = [
   'index.html', 'assets/afterglow-three.js', 'assets/afterglow-garden.js',
   'assets/afterglow-three.js.LEGAL.txt', 'assets/THREE-LICENSE.txt',
-  'assets/fonts/newsreader-display-latin.woff2', 'assets/fonts/NEWSREADER-OFL.txt', 'assets/fonts/README.md'
+  'assets/fonts/newsreader-display-latin.woff2', 'assets/fonts/NEWSREADER-OFL.txt', 'assets/fonts/README.md',
+  'assets/brand/mark.svg', 'assets/brand/wordmark.svg', 'assets/brand/afterglow.svg', 'assets/brand/afterglow-night.svg',
+  'assets/brand/favicon.svg', 'assets/brand/apple-touch-icon.png', 'assets/brand/social-card.png'
 ];
 export const digest = data => createHash('sha256').update(data).digest('hex');
 

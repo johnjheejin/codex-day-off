@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "esbuild src/afterglow-three.js src/afterglow-garden.js --bundle --minify --format=iife --target=es2020 --legal-comments=linked --outdir=assets",
+    "build": "npm run build:brand && esbuild src/afterglow-three.js src/afterglow-garden.js --bundle --minify --format=iife --target=es2020 --legal-comments=linked --outdir=assets",
+    "build:brand": "node scripts/build-brand.mjs",
+    "brand:images": "node scripts/rasterize-brand.mjs",
     "dev": "python3 -m http.server 8000",
     "test": "node scripts/check-runtime-guards.mjs && node --test tests/*.test.js && playwright test"
   },

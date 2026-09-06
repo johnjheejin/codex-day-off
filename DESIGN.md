@@ -140,9 +140,12 @@ Do not copy OpenAI logos, proprietary typefaces, or exact website compositions. 
 
 ## Identity
 
-- Primary wordmark: “Afterglow”
+- Primary wordmark: lowercase “afterglow”, drawn from Newsreader Display with adjusted letter spacing. The product name in prose and accessible labels remains “Afterglow”. Use the checked-in outlines rather than retyping the wordmark in a fallback font.
 - Descriptor: “Codex’s Day Off”
-- Symbol: an original setting-sun/horizon mark. Do not imitate the OpenAI knot or use the official OpenAI/Codex logo.
+- Symbol: three asymmetric petals unfolding from one lower-left point, with a small detached dot carrying the afterglow. Keep it monochrome; the sky carries the event colors. It replaces the former sun/horizon mark. Do not imitate the OpenAI knot or use the official OpenAI/Codex logo.
+- The header and saved PNG use identical vector paths. The wordmark and symbol remain static; add no ambient brand animation or extra image/font request for the header. Use a minimum 44px home-button target. Narrow phones use a 26px symbol and an 86px wordmark, with no descriptor.
+- Canonical geometry and spacing live in `assets/brand/identity.json`. Build the inline header, standalone light/night SVGs, and icons from that source. The wordmark outlines retain the Newsreader license attribution. The favicon uses the symbol alone on the warm paper surface.
+- The repository cover and link preview pair the full mark with an actual procedural bloom from the same flower geometry as the product. Keep generous whitespace and a single quiet perimeter rule. Link previews describe the public experience; they do not imply a saved personal sky link.
 
 ## Components
 

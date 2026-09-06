@@ -1,0 +1,57 @@
+{
+  "base": "http://127.0.0.1:8000",
+  "checkedAt": "2026-09-06T01:19:39.595Z",
+  "records": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "brand": {
+        "x": 56,
+        "y": 10.5,
+        "width": 160,
+        "height": 44
+      },
+      "actions": {
+        "x": 905.96875,
+        "y": 10.5,
+        "width": 478.03125,
+        "height": 44
+      }
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "brand": {
+        "x": 20,
+        "y": 10.5,
+        "width": 125,
+        "height": 44
+      },
+      "actions": {
+        "x": 218,
+        "y": 10.5,
+        "width": 152,
+        "height": 44
+      }
+    },
+    {
+      "name": "small",
+      "width": 320,
+      "height": 568,
+      "brand": {
+        "x": 20,
+        "y": 10.5,
+        "width": 120,
+        "height": 44
+      },
+      "actions": {
+        "x": 148,
+        "y": 10.5,
+        "width": 152,
+        "height": 44
+      }
+    }
+  ]
+}

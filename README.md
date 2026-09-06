@@ -1,125 +1,129 @@
-# Afterglow — Codex's Day Off
+<picture>
+  <img src="./assets/brand/social-card.png" alt="afterglow — an unfolding petal and a colorful line bloom. Thirty seconds to make a sky. All the time to stay." width="1200">
+</picture>
 
-A local-first, 30-second interactive web experience with a bundled Three.js sky.
+# Afterglow — Codex’s Day Off
 
-Built for a Codex meetup, then revisited as the models around it changed. In July 2026, the project returned to the workbench with GPT-5.6 Sol—two days after its general release and one day before Claude Fable 5's included subscription access was scheduled to change. The result is both a small interactive artwork and a record of what it means to keep caring for an AI-made project after the event is over.
+A thirty-second pause that becomes a living sky. Gather loose thoughts with your hands, watch them unfold into flowers, then touch and turn the sky you made.
 
-## Live
+**[Open your sky ↗](https://dayoff.tmcowork.com/)** · [The latest story](./docs/journal/2026-09-06.md) · [Design and identity](./DESIGN.md)
 
-https://dayoff.tmcowork.com
+No account, backend, API key, or remote font service. The experience runs in your browser. Originally made for a Codex community meetup; the September 2026 chapter was developed with GPT-6 Astra.
 
-## Screenshots
+## The experience now
 
-September 6 release, now live at [dayoff.tmcowork.com](https://dayoff.tmcowork.com/).
+- **Your gestures leave a shape.** Direction, pace, curves and small pauses change each bloom. Nearby flowers lean toward your hand, then settle. Moving faster earns no advantage.
+- **The ending opens a little depth.** After thirty seconds, your sky makes one gentle 2.8-second turn and returns to the front. The completed sky stays as the main view, with a small count and room to explore.
+- **Touch, turn, stay.** Brush past the flowers or rotate the whole composition. A short touch still reaches its first response frame when drawing is delayed. Your original PNG stays unchanged as you look around.
+- **Share when you want to.** Share opens the image, download and social options. Closing it returns to the same camera angle. Mobile PNGs preserve the played viewport’s proportions.
+- **The landing is part of the pause.** The Afterglow logo returns to the beginning. During play it pauses and asks first. Return to your sky restores the latest completed sky, including after abandoning a new pause.
+- **A new signature.** Three unfolding petals and one lingering point replace the old sun symbol. A lowercase serif wordmark connects the header, exported artwork, icons and repository cover.
 
-| State | Desktop | Mobile |
+The most recent completed sky is kept **in the current page’s memory**. Reload restoration, a permanent collection and personal live-share links are not implemented. Shared links open the public experience; the PNG carries your own sky.
+
+## A look inside
+
+Current desktop and mobile captures. The live-result examples use the built-in sample sky; the app preserves the composition you actually make.
+
+| | Desktop · 1440 × 900 | Mobile · 390 × 844 |
 | --- | --- | --- |
-| Initial | ![Desktop initial screen](./assets/verification/2026-09-06-intro/desktop-paper.png) | ![Mobile initial screen](./assets/verification/2026-09-06-intro/mobile-paper.png) |
-| Playing | ![Desktop playing screen](./assets/verification/2026-09-06-scenes/desktop-paper-play.png) | ![Mobile playing screen](./assets/verification/2026-09-06-scenes/mobile-paper-play.png) |
-| Live result | ![Desktop sky turned](./assets/verification/2026-09-06-kept-sky/night-turned.png) | ![Mobile live Paper Sky](./assets/verification/2026-09-06-kept-sky/mobile-paper.png) |
+| Open the sky | <img src="./assets/verification/2026-09-06-identity/desktop-intro.png" alt="Paper Sky landing with the new Afterglow identity" width="720"> | <img src="./assets/verification/2026-09-06-identity/mobile-intro.png" alt="The mobile landing and new wordmark" width="208"> |
+| Stay with it | <img src="./assets/verification/2026-09-06-identity/desktop-live.png" alt="A completed sky turned slightly in depth" width="720"> | <img src="./assets/verification/2026-09-06-identity/mobile-live.png" alt="A portrait live sky with Touch, Turn and Share" width="208"> |
 
-The four-milestone, same-viewport comparison is preserved in **[the July 13 visual history audit](./docs/audits/2026-07-13-visual-history-audit.md)**.
+[Mobile sharing](./assets/verification/2026-09-06-identity/mobile-share.png) · [An actual exported PNG](./assets/verification/2026-09-06-identity/mobile-saved.png) · [Returning from the landing on a small phone](./assets/verification/2026-09-06-identity/small-return.png)
 
-## The story so far
+## Controls
 
-| Date | Episode |
+| Where | What to do |
 | --- | --- |
-| June 2026 | “What would a day off for Codex look like?” became a 30-second constellation garden for a Codex community meetup. |
-| June 20–25 | The visual language was rebuilt around an original Afterglow identity, documented in `DESIGN.md`, reviewed through a project-local OmD pilot, and deployed through GitHub and Cloudflare Pages. |
-| July 11 | The repository was reopened with GPT-5.6 Sol. The live experience was tested again, missed accessibility states were fixed, reduced-motion support was added, and the moment was recorded instead of being allowed to disappear into commit history. |
-| July 13 | A Galaxy S24 report turned the revisit into a rendering-safety and mobile-UX pass: pixel and frame budgets were bounded, desktop-site mode gained a safety path, `Night Sky / Paper Sky` became explicit play scenes, sharing moved into the first result viewport, and the first build was visually audited against the current experience. |
-| September 5 | Three.js adds a slowly turning line sculpture, dimensional blooms and collection ripples. Measured CPU/GPU work and display cadence replace fixed mobile frame limits; a Canvas fallback keeps the current sky after GPU failure. |
-| September 6 | Gestures shape each flower, nearby blooms respond to touch, and the completed sky reveals its depth and remains the live result. Editorial typography connects the opening, pause, results and image handoffs. The finished sky gains touch response and 3D rotation; default-on chimes remember an explicit mute. [Read the September story](./docs/journal/2026-09-06.md). |
+| Landing | Drag the line bloom, or focus it and press Enter. Begin day off starts the thirty seconds. |
+| Playing | Move the mouse, use arrows/WASD, or press and drag on a phone. Collect drifting thoughts and let the flowers find room. |
+| Pause | Use Pause, Space or Escape. Resume continues from the same time. |
+| Sound | Short synthesized collection notes start enabled after your first gesture. An explicit mute is remembered. |
+| Ending | Keep this sky or Escape skips the brief reveal. Reduced motion skips it automatically. |
+| Living sky | Touch brushes flowers from the front. Turn rotates with a drag or arrow keys. Reset or R centers the view. |
+| Sharing | Share opens six choices: native image sharing, PNG download, LinkedIn, X, Telegram and KakaoTalk. Escape closes the panel. |
+| Going home | Click the Afterglow logo. Return to your sky reopens the latest completed work while this page remains open. |
 
-Read the latest entry: **[2026-09-06 — a sky that still moves](./docs/journal/2026-09-06.md)**. The earlier revisit is preserved in the [July 11 journal](./docs/journal/2026-07-11.md).
+Choose **🌙 Night Sky** or **☀️ Paper Sky** at any time. The selected scene is visible immediately, remembered locally, and included in the exported image. Desktop PNGs are 1200 × 630; mobile PNGs keep the played aspect ratio, with a 1.5-million-pixel ceiling and a 1920px long edge.
 
-The follow-through is recorded in the **[Galaxy S24 incident report](./docs/incidents/2026-07-13-galaxy-s24-rendering.md)** and **[mobile rendering decision](./docs/decisions/0002-mobile-rendering-safety-and-gpu-strategy.md)**.
+Social handoffs explain when you need to attach the PNG yourself. Unsupported image sharing offers download and caption steps. If clipboard access fails, the caption stays selectable. Nothing is posted automatically.
 
-## Run
+## Rendering with room to rest
 
-Open `index.html` directly, or serve the folder:
+Three.js uses shared line geometry and instanced thought crystals. Gesture forms and flower curves are shared with the Canvas fallback and PNG export. A GPU failure preserves the current sky instead of discarding the experience.
+
+- Play starts at **60fps**. Measured display cadence and sustained CPU/GPU headroom can raise the target to 90 or 120fps.
+- Under sustained load, internal resolution drops before frame rate. Touch hardware keeps a **1.5-million-pixel** limit even in desktop-site mode; desktop uses 3.2 million pixels.
+- Ambient landing motion stays at or below 12fps. Live touch and the ending draw at up to 60fps. Settled results, paused play and hidden pages stop rendering until needed.
+- There are no fullscreen postprocessing passes, shadows, texture effects or MSAA buffers. The logo is static, and its inline vector outlines require no extra font or image download.
+- Reduced motion removes automatic sway and the ending rotation, while retaining deliberate view controls. Hidden and paused states suspend sound too.
+
+These limits are tested automatically. **Physical Galaxy S24 temperature and power measurements remain outstanding**; browser emulation does not establish thermal safety. [Performance decisions](./docs/decisions/0003-threejs-adaptive-rendering.md) · [The original S24 incident](./docs/incidents/2026-07-13-galaxy-s24-rendering.md)
+
+## Run locally
+
+The checked-in app needs no build step. Open `index.html` directly, or serve the folder:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then visit `http://localhost:8000`.
-
-## Controls
-
-- Turn the introductory bloom by dragging it, or focus it and press Enter.
-- Move the mouse or use arrow/WASD keys.
-- On mobile, press and drag anywhere on the play surface to steer directly.
-- Collect the drifting lights.
-- Collected blooms find room near your cursor and join nearby blooms into constellations.
-- Direction, speed, curves and pauses leave different flower forms. Nearby blooms lean toward the focus and return gently; moving faster earns no advantage.
-- Pause with the visible control, Space, or Escape; resume without losing time.
-- Sound adds a short note to each collection. It defaults on after a user gesture, remembers an explicit mute, and uses no audio downloads.
-- At 30 seconds, the sky makes one gentle turn to reveal its depth, then returns to the front. **Keep this sky** or Escape skips this 2.8-second moment; reduced motion skips it automatically.
-- The result stays live and fills the screen. **Touch** brushes flowers from the front; **Turn** lets you look around by dragging or using arrow keys. **Reset** (or R) centers the view. **Share** opens the original PNG and six handoff options; closing it keeps your current angle.
-- The **Afterglow** logo returns to the landing. During play it pauses and asks first. **Return to your sky** restores the latest completed sky, even after abandoning a new pause. The original PNG is preserved in this page’s memory; reload restoration and personal live links are not implemented.
-- Play in `🌙 Night Sky` or `☀️ Paper Sky`; the current scene is always visible, persists locally, and is preserved in the exported image.
-- Export the played scene as a PNG: 1200 × 630 on desktop, or the played viewport's aspect ratio on mobile, bounded to 1.5 million pixels. Hand it to LinkedIn, X, Telegram, KakaoTalk, or the native share sheet. Mobile keeps every destination available and places sharing before replay. External handoffs explain when the PNG must be attached separately.
-
-No login, API key, external CDN, or external service is required. The checked-in bundle runs without a build step, including when the folder is opened locally.
-
-Three.js renders the sky with shared line geometry and instanced thought crystals. Play starts at 60fps; sustained measurements can promote to the display's 90/120Hz cadence. Under pressure, internal resolution drops before frame rate. Touch devices retain a 1.5-million-pixel ceiling even in desktop-site mode; desktop devices use 3.2 million pixels. Ambient intro motion stays below 12fps. Paused and result screens stop drawing until something changes; the live result view draws up to 60fps during input and its brief settling motion, and hidden pages stop rendering. There are no fullscreen postprocessing passes, texture effects, shadows, or MSAA buffers. Portrait exports preserve bloom proportions by briefly reusing the same drawing surface at the export aspect ratio. See the [Three.js performance decision](./docs/decisions/0003-threejs-adaptive-rendering.md).
-
-Append `?debug=1` for renderer, measured and target FPS, estimated display cadence, DPR, CPU work and optional GPU timing. `?renderer=2d` selects the fallback for comparison. A missing bundle, unsupported WebGL2, or a lost context also uses Canvas 2D automatically.
-
-### Develop the renderer
+Visit [localhost:8000](http://localhost:8000/). For development:
 
 ```bash
 npm ci
+npx playwright install chromium
 npm run build
 npm test
 ```
 
-The renderer source lives in `src/afterglow-three.js`; its measured frame policy lives in `src/frame-budget.js`. Gesture sampling, bounded flower response, and shared WebGL/Canvas flower curves live in `src/garden-motion.js`. `npm run build` updates both `assets/afterglow-three.js` and `assets/afterglow-garden.js`; deploy both alongside `index.html`. Tests use Playwright Chromium (install with `npx playwright install chromium`), an available macOS Chrome Beta, or `CHROME_PATH`. Three.js 0.185.1 is pinned and its [MIT license](./assets/THREE-LICENSE.txt) is included.
+Tests also use an available macOS Chrome Beta or an explicit `CHROME_PATH`. The suite covers **21 unit checks and 32 browser scenarios**, including a real thirty-second session, actual touch input, GPU loss, bundle failure, reduced motion, mobile sharing and result restoration. [Latest deployment evidence and limits](./docs/deployment.md)
 
-September verification and screenshots: [Three.js, adaptive frames and lifecycle](./docs/verification/2026-09-05-threejs.md).
+Useful views:
 
-The subsequent experience pass covers the larger interactive intro, constellation formation, sound, pause, result preview, and undistorted mobile exports: [experience refinement and verification](./docs/verification/2026-09-05-refinement.md).
+| URL option | Purpose |
+| --- | --- |
+| `?preview=result` | Open a fixed sample live sky; choose Share to inspect the handoffs. |
+| `?debug=1` | Show measured/target FPS, display cadence, DPR, CPU time and optional GPU timing. |
+| `?renderer=2d` | Select Canvas fallback for comparison. |
 
-The September 6 pass connects gesture-shaped flowers, nearby reactions, and a brief final sky: [implementation and verification](./docs/verification/2026-09-06-gestures.md).
+## Source and identity
 
-The opening typography now pairs a small sans introduction with a locally hosted Newsreader display title, and uses a labelled start button: [design review and responsive captures](./docs/verification/2026-09-06-intro-design.md). Distribute `assets/fonts/` and its included license alongside the app.
+| File | Responsibility |
+| --- | --- |
+| [`index.html`](./index.html) | Experience flow, accessible controls, Canvas fallback, sound and PNG/social handoffs. |
+| [`src/afterglow-three.js`](./src/afterglow-three.js) | Three.js scene, shared geometry and GPU lifecycle. |
+| [`src/garden-motion.js`](./src/garden-motion.js) | Gesture sampling, flower forms and bounded touch response. |
+| [`src/sky-view.js`](./src/sky-view.js) | Live-view transforms, ending reveal and input settling. |
+| [`src/frame-budget.js`](./src/frame-budget.js) | Measured frame and pixel budgets. |
+| [`assets/brand/`](./assets/brand/README.md) | Original symbol, outlined wordmark, icons and link-preview artwork. |
+| [`DESIGN.md`](./DESIGN.md) | Visual language, identity, voice and interaction rules. |
 
-The same typography continues through the result, pause, sharing guides, and exported artwork. Image sharing explains unsupported file handoffs, and failed clipboard access leaves a selectable caption: [scene and sharing review](./docs/verification/2026-09-06-scenes.md).
+`npm run build` regenerates the brand SVGs and inline identity, then bundles both runtime scripts. `npm run brand:images` exports the brand PNGs using Playwright. The app header and saved PNG read the same vector paths. The logo source adds no runtime dependency.
 
-The completed sky now stays live, sharing opens on request, and the logo returns to a landing that remembers the last sky: [flow and verification](./docs/verification/2026-09-06-kept-sky.md).
+Three.js 0.185.1 is pinned and includes its [MIT license](./assets/THREE-LICENSE.txt). The locally hosted Newsreader face and its outlined wordmark retain the [SIL Open Font License](./assets/fonts/NEWSREADER-OFL.txt). Afterglow’s symbol is original; it is not the OpenAI or Codex logo.
 
-### Phone verification
+## From GitHub to the public sky
 
-Use the direct result preview to inspect sharing without waiting for the 30-second play session:
+Relevant `main` pushes run **GitHub Actions → build and checks → Cloudflare Pages Direct Upload → deployed checks**. The workflow verifies committed assets against their source, uploads an explicit public-file list, checks file hashes and the deployed browser experience, then verifies the active production/domain binding. Ordinary README, journal and screenshot changes do not redeploy the app.
 
-- Live result (choose Share for all six destinations): <https://dayoff.tmcowork.com/?preview=result>
-- Result plus renderer/FPS diagnostics: <https://dayoff.tmcowork.com/?preview=result&debug=1>
+The public address is **[dayoff.tmcowork.com](https://dayoff.tmcowork.com/)**. Authentication stays in GitHub secrets. No credentials, development dependencies or old ZIP are included in the published files. Current release IDs, environment-specific verification and recovery instructions live in the [deployment record](./docs/deployment.md).
 
-On Galaxy S24, open each link in Chrome Beta and Samsung Internet in the normal mobile layout. Confirm that `🌙 Night Sky` opens on a dark surface, `☀️ Paper Sky` switches immediately to warm white, the live sky and Share action fill the result viewport, and Share opens all six destinations in a scrollable modal. The preview uses a fixed sample sky and does not change the normal entry flow. Full measurements and the distinction between automated approximation and physical-device testing are recorded in the **[S24 scenes and sharing verification](./docs/verification/2026-07-13-s24-scenes-and-sharing.md)**.
-
-| State | Screenshot | What it proves |
-| --- | --- | --- |
-| Night Sky · before | ![Galaxy S24-sized Night Sky intro before the scene-surface correction](./assets/verification/2026-07-13/s24-night-intro-before.jpg) | The selected Night label previously remained on a warm-white intro, making the state ambiguous. |
-| Night Sky · after | ![Galaxy S24-sized Night Sky intro after the dark surface correction](./assets/verification/2026-07-13/s24-night-intro-after.jpg) | Night selection now changes the intro background, text, borders, and prompt contrast immediately. |
-| Paper Sky · after | ![Galaxy S24-sized Paper Sky intro on the warm-white surface](./assets/verification/2026-07-13/s24-paper-intro-after.jpg) | Paper selection remains visibly distinct and readable on the warm-white surface. |
-| Paper Sky · result | ![Galaxy S24-sized Paper Sky result with sharing visible](./assets/verification/2026-07-13/s24-paper-result-share.jpg) | The primary share action and the six-destination panel are exposed without playing for 30 seconds. |
-
-## Design
-
-The visual system is documented in [`DESIGN.md`](./DESIGN.md). It uses an original OpenAI-inspired product language while preserving the Afterglow concept and avoiding official logo or layout reproduction.
-
-## Deployment
-
-- Source: GitHub (`johnjheejin/codex-day-off`)
-- Hosting: Cloudflare Pages
-- Custom domain: `dayoff.tmcowork.com`
-- Deployment mode: **GitHub Actions → Direct Upload**. The Pages project stays `Git Provider: No`; the repository workflow builds and verifies relevant `main` changes before uploading to the existing project. [Setup and actual run status](./docs/deployment.md).
-- Publish the prepared static files with `wrangler pages deploy` targeting project `codex-day-off` and branch `main`. Include `index.html`, both renderer/garden bundles, the Three.js license files, and `assets/fonts/`. Keep development dependencies, local credentials and the obsolete ZIP out of the upload directory.
-- Current production: `31bc3596-3a51-4544-b8c7-3c92790d3413`, source `f76230e`. [GitHub push deployment succeeded](https://github.com/johnjheejin/codex-day-off/actions/runs/34002305780): 53 checks before publishing, immutable file checks and 32 deployed browser checks. The active custom-domain binding is verified. Cloudflare challenges GitHub requests to the custom domain; all 8 public files and 32 public browser checks passed from the local environment. [Deployment status and limits](./docs/deployment.md).
-
-Run the browser checks against the published site without starting a local server:
+To inspect the public site with the same browser suite:
 
 ```bash
-AFTERGLOW_BASE_URL=https://dayoff.tmcowork.com AFTERGLOW_EVIDENCE_DIR=test-results/public-evidence npx playwright test
+AFTERGLOW_BASE_URL=https://dayoff.tmcowork.com \
+AFTERGLOW_EVIDENCE_DIR=test-results/public-evidence npx playwright test
 ```
+
+## The story continues
+
+The June meetup question was simple: what would a day off for Codex look like? July brought accessibility work and a real mobile rendering incident. September added Three.js, gesture-shaped flowers, editorial typography, a live sky that survives a trip to the landing, and an identity drawn from the experience itself.
+
+The project keeps that history without making every visitor read a changelog first.
+
+- [September 6 — a sky that still moves](./docs/journal/2026-09-06.md)
+- [July 11 — returning to the project](./docs/journal/2026-07-11.md)
+- [July 13 — visual history of the first four versions](./docs/audits/2026-07-13-visual-history-audit.md)
+- [Current work and remaining items](./docs/SESSION-HUB.md)
