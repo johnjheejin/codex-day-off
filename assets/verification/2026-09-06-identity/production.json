@@ -1,0 +1,629 @@
+{
+  "run": "https://github.com/johnjheejin/codex-day-off/actions/runs/34003658777",
+  "head": "8da61a4694c94e069c7995eb54479b971c328ff3",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "verify",
+      "conclusion": "success",
+      "url": "https://github.com/johnjheejin/codex-day-off/actions/runs/34003658777/job/101406862947"
+    },
+    {
+      "name": "publish",
+      "conclusion": "success",
+      "url": "https://github.com/johnjheejin/codex-day-off/actions/runs/34003658777/job/101407275479"
+    }
+  ],
+  "checksBeforeDeployment": {
+    "unit": 21,
+    "browser": 32
+  },
+  "deployedBrowserChecksFromGitHub": 32,
+  "productionBinding": {
+    "checkedAt": "2026-09-06T01:27:56.867Z",
+    "project": "codex-day-off",
+    "domain": "dayoff.tmcowork.com",
+    "domainStatus": "active",
+    "deploymentId": "d6a52ab5-5740-46a3-8439-8d5c015b2cc5",
+    "deploymentURL": "https://d6a52ab5.codex-day-off.pages.dev",
+    "commit": "8da61a4694c94e069c7995eb54479b971c328ff3"
+  },
+  "manifest": [
+    {
+      "file": "index.html",
+      "bytes": 142287,
+      "sha256": "b675006fd2626f8ac0b138bd94f556425e09f07239d3410ea5f34493da1e970a"
+    },
+    {
+      "file": "assets/afterglow-three.js",
+      "bytes": 544282,
+      "sha256": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc"
+    },
+    {
+      "file": "assets/afterglow-garden.js",
+      "bytes": 6424,
+      "sha256": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45"
+    },
+    {
+      "file": "assets/afterglow-three.js.LEGAL.txt",
+      "bytes": 188,
+      "sha256": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674"
+    },
+    {
+      "file": "assets/THREE-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    {
+      "file": "assets/fonts/newsreader-display-latin.woff2",
+      "bytes": 21704,
+      "sha256": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821"
+    },
+    {
+      "file": "assets/fonts/NEWSREADER-OFL.txt",
+      "bytes": 4394,
+      "sha256": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8"
+    },
+    {
+      "file": "assets/fonts/README.md",
+      "bytes": 1056,
+      "sha256": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41"
+    },
+    {
+      "file": "assets/brand/mark.svg",
+      "bytes": 405,
+      "sha256": "52ee8e32921b40218119d0ea3de614cfa4a6679d5e8a0f9e12d262195d56605d"
+    },
+    {
+      "file": "assets/brand/wordmark.svg",
+      "bytes": 6245,
+      "sha256": "b4642d7f78129535c60d07c1f2f877b380112e6cb616624b3d98a630de95e63d"
+    },
+    {
+      "file": "assets/brand/afterglow.svg",
+      "bytes": 6630,
+      "sha256": "a96353ad5d5d28f4f2242956b543f1cda36c1cf6564c494ea12e698b01bf801c"
+    },
+    {
+      "file": "assets/brand/afterglow-night.svg",
+      "bytes": 6630,
+      "sha256": "6aef93208611fa9f26d02ae93d4d50c5e92983550a0dd0334a4d6f223fa30037"
+    },
+    {
+      "file": "assets/brand/favicon.svg",
+      "bytes": 492,
+      "sha256": "2d910618c05499062a5333aae19e89a237453347b301b465747998726c1a847e"
+    },
+    {
+      "file": "assets/brand/apple-touch-icon.png",
+      "bytes": 2238,
+      "sha256": "ad84d779658f3f7f8f39d7db1a9d026cac57276936c056fa555f556953ac9605"
+    },
+    {
+      "file": "assets/brand/social-card.png",
+      "bytes": 59362,
+      "sha256": "95fa0258c73b08e4c58ffdb7ce1d9ef1f1fa5a137d242b198e91a29fc5fc57ea"
+    }
+  ],
+  "immutableFiles": {
+    "base": "https://d6a52ab5.codex-day-off.pages.dev",
+    "checkedAt": "2026-09-06T01:24:42.701Z",
+    "state": "verified",
+    "files": [
+      {
+        "file": "index.html",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf659076182-ORD",
+        "expected": "b675006fd2626f8ac0b138bd94f556425e09f07239d3410ea5f34493da1e970a",
+        "actual": "b675006fd2626f8ac0b138bd94f556425e09f07239d3410ea5f34493da1e970a",
+        "normalized": "b675006fd2626f8ac0b138bd94f556425e09f07239d3410ea5f34493da1e970a",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf65cc7e13f-ORD",
+        "expected": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "actual": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "normalized": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-garden.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf638279d4a-ORD",
+        "expected": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "actual": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "normalized": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js.LEGAL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf63c3f80ba-ORD",
+        "expected": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "actual": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "normalized": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "matches": true
+      },
+      {
+        "file": "assets/THREE-LICENSE.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf64ca8771e-ORD",
+        "expected": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "actual": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "normalized": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/newsreader-display-latin.woff2",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf6588a7dd6-ORD",
+        "expected": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "actual": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "normalized": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/NEWSREADER-OFL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf638461e79-ORD",
+        "expected": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "actual": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "normalized": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/README.md",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf648a5f4a2-ORD",
+        "expected": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "actual": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "normalized": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/mark.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf64d5389c5-ORD",
+        "expected": "52ee8e32921b40218119d0ea3de614cfa4a6679d5e8a0f9e12d262195d56605d",
+        "actual": "52ee8e32921b40218119d0ea3de614cfa4a6679d5e8a0f9e12d262195d56605d",
+        "normalized": "52ee8e32921b40218119d0ea3de614cfa4a6679d5e8a0f9e12d262195d56605d",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/wordmark.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf658dccc1a-ORD",
+        "expected": "b4642d7f78129535c60d07c1f2f877b380112e6cb616624b3d98a630de95e63d",
+        "actual": "b4642d7f78129535c60d07c1f2f877b380112e6cb616624b3d98a630de95e63d",
+        "normalized": "b4642d7f78129535c60d07c1f2f877b380112e6cb616624b3d98a630de95e63d",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/afterglow.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf659a0ace0-ORD",
+        "expected": "a96353ad5d5d28f4f2242956b543f1cda36c1cf6564c494ea12e698b01bf801c",
+        "actual": "a96353ad5d5d28f4f2242956b543f1cda36c1cf6564c494ea12e698b01bf801c",
+        "normalized": "a96353ad5d5d28f4f2242956b543f1cda36c1cf6564c494ea12e698b01bf801c",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/afterglow-night.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf65f835810-ORD",
+        "expected": "6aef93208611fa9f26d02ae93d4d50c5e92983550a0dd0334a4d6f223fa30037",
+        "actual": "6aef93208611fa9f26d02ae93d4d50c5e92983550a0dd0334a4d6f223fa30037",
+        "normalized": "6aef93208611fa9f26d02ae93d4d50c5e92983550a0dd0334a4d6f223fa30037",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/favicon.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf64b19381e-ORD",
+        "expected": "2d910618c05499062a5333aae19e89a237453347b301b465747998726c1a847e",
+        "actual": "2d910618c05499062a5333aae19e89a237453347b301b465747998726c1a847e",
+        "normalized": "2d910618c05499062a5333aae19e89a237453347b301b465747998726c1a847e",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/apple-touch-icon.png",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf64ba6253f-ORD",
+        "expected": "ad84d779658f3f7f8f39d7db1a9d026cac57276936c056fa555f556953ac9605",
+        "actual": "ad84d779658f3f7f8f39d7db1a9d026cac57276936c056fa555f556953ac9605",
+        "normalized": "ad84d779658f3f7f8f39d7db1a9d026cac57276936c056fa555f556953ac9605",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/social-card.png",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369acf66f894783-ORD",
+        "expected": "95fa0258c73b08e4c58ffdb7ce1d9ef1f1fa5a137d242b198e91a29fc5fc57ea",
+        "actual": "95fa0258c73b08e4c58ffdb7ce1d9ef1f1fa5a137d242b198e91a29fc5fc57ea",
+        "normalized": "95fa0258c73b08e4c58ffdb7ce1d9ef1f1fa5a137d242b198e91a29fc5fc57ea",
+        "matches": true
+      }
+    ]
+  },
+  "publicFilesFromGitHub": {
+    "base": "https://dayoff.tmcowork.com",
+    "checkedAt": "2026-09-06T01:27:57.284Z",
+    "state": "challenged",
+    "files": [
+      {
+        "file": "index.html",
+        "status": 403,
+        "mitigated": "challenge",
+        "ray": "a369b1b61d46e148-ORD",
+        "expected": "b675006fd2626f8ac0b138bd94f556425e09f07239d3410ea5f34493da1e970a",
+        "actual": "9dd6f749009006d68d65eac9dec626b1642489405cf414ec03935fa779f65406",
+        "normalized": "9dd6f749009006d68d65eac9dec626b1642489405cf414ec03935fa779f65406",
+        "matches": false
+      },
+      {
+        "file": "assets/afterglow-three.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b61c612331-ORD",
+        "expected": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "actual": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "normalized": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-garden.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b5f8bcae29-ORD",
+        "expected": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "actual": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "normalized": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js.LEGAL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b5fd37d250-ORD",
+        "expected": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "actual": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "normalized": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "matches": true
+      },
+      {
+        "file": "assets/THREE-LICENSE.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b5ec6fcef7-ORD",
+        "expected": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "actual": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "normalized": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/newsreader-display-latin.woff2",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b5dc3311cd-ORD",
+        "expected": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "actual": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "normalized": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/NEWSREADER-OFL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b5ec54ca09-ORD",
+        "expected": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "actual": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "normalized": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/README.md",
+        "status": 403,
+        "mitigated": "challenge",
+        "ray": "a369b1b5fc35c6f1-ORD",
+        "expected": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "actual": "8a680044b5a4854dd5ba45a9e04a8830a3cbe8a30b54fd201992b2c5cb13a674",
+        "normalized": "8a680044b5a4854dd5ba45a9e04a8830a3cbe8a30b54fd201992b2c5cb13a674",
+        "matches": false
+      },
+      {
+        "file": "assets/brand/mark.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b5fb66fe20-ORD",
+        "expected": "52ee8e32921b40218119d0ea3de614cfa4a6679d5e8a0f9e12d262195d56605d",
+        "actual": "52ee8e32921b40218119d0ea3de614cfa4a6679d5e8a0f9e12d262195d56605d",
+        "normalized": "52ee8e32921b40218119d0ea3de614cfa4a6679d5e8a0f9e12d262195d56605d",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/wordmark.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b6194010dd-ORD",
+        "expected": "b4642d7f78129535c60d07c1f2f877b380112e6cb616624b3d98a630de95e63d",
+        "actual": "b4642d7f78129535c60d07c1f2f877b380112e6cb616624b3d98a630de95e63d",
+        "normalized": "b4642d7f78129535c60d07c1f2f877b380112e6cb616624b3d98a630de95e63d",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/afterglow.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b61e970041-ORD",
+        "expected": "a96353ad5d5d28f4f2242956b543f1cda36c1cf6564c494ea12e698b01bf801c",
+        "actual": "a96353ad5d5d28f4f2242956b543f1cda36c1cf6564c494ea12e698b01bf801c",
+        "normalized": "a96353ad5d5d28f4f2242956b543f1cda36c1cf6564c494ea12e698b01bf801c",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/afterglow-night.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b5de990558-ORD",
+        "expected": "6aef93208611fa9f26d02ae93d4d50c5e92983550a0dd0334a4d6f223fa30037",
+        "actual": "6aef93208611fa9f26d02ae93d4d50c5e92983550a0dd0334a4d6f223fa30037",
+        "normalized": "6aef93208611fa9f26d02ae93d4d50c5e92983550a0dd0334a4d6f223fa30037",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/favicon.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b61f4c1910-ORD",
+        "expected": "2d910618c05499062a5333aae19e89a237453347b301b465747998726c1a847e",
+        "actual": "2d910618c05499062a5333aae19e89a237453347b301b465747998726c1a847e",
+        "normalized": "2d910618c05499062a5333aae19e89a237453347b301b465747998726c1a847e",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/apple-touch-icon.png",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b5ffd334d9-ORD",
+        "expected": "ad84d779658f3f7f8f39d7db1a9d026cac57276936c056fa555f556953ac9605",
+        "actual": "ad84d779658f3f7f8f39d7db1a9d026cac57276936c056fa555f556953ac9605",
+        "normalized": "ad84d779658f3f7f8f39d7db1a9d026cac57276936c056fa555f556953ac9605",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/social-card.png",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369b1b5edf42d03-ORD",
+        "expected": "95fa0258c73b08e4c58ffdb7ce1d9ef1f1fa5a137d242b198e91a29fc5fc57ea",
+        "actual": "95fa0258c73b08e4c58ffdb7ce1d9ef1f1fa5a137d242b198e91a29fc5fc57ea",
+        "normalized": "95fa0258c73b08e4c58ffdb7ce1d9ef1f1fa5a137d242b198e91a29fc5fc57ea",
+        "matches": true
+      }
+    ]
+  },
+  "publicFilesFromLocal": {
+    "base": "https://dayoff.tmcowork.com",
+    "checkedAt": "2026-09-06T01:25:11.581Z",
+    "state": "verified",
+    "files": [
+      {
+        "file": "index.html",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada79d5bd773-NRT",
+        "expected": "b675006fd2626f8ac0b138bd94f556425e09f07239d3410ea5f34493da1e970a",
+        "actual": "71c15e91712b5695efa9582261627963570aff7f42bd152434b317d339f073d1",
+        "normalized": "b675006fd2626f8ac0b138bd94f556425e09f07239d3410ea5f34493da1e970a",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada79c63a5fb-KIX",
+        "expected": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "actual": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "normalized": "71b6a1ce78b418532a70085b2263976faf3d94a35cb6f8c2e3bf610746b9cccc",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-garden.js",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada79930eb6e-NRT",
+        "expected": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "actual": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "normalized": "8caf4d930bad43bc7f8f9f3c9ea3077349b7c68e68822f0e40ecbf1be05bdc45",
+        "matches": true
+      },
+      {
+        "file": "assets/afterglow-three.js.LEGAL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada7cfb8851b-HKG",
+        "expected": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "actual": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "normalized": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674",
+        "matches": true
+      },
+      {
+        "file": "assets/THREE-LICENSE.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada7be529b81-HKG",
+        "expected": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "actual": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "normalized": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/newsreader-display-latin.woff2",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada79e06d75f-NRT",
+        "expected": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "actual": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "normalized": "28b4315189ddc2d6e12983f2a39cfedc8fd40e63d6fdc9031e021b852c4a2821",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/NEWSREADER-OFL.txt",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada7aa73f619-NRT",
+        "expected": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "actual": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "normalized": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+        "matches": true
+      },
+      {
+        "file": "assets/fonts/README.md",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada7bed52104-HKG",
+        "expected": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "actual": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "normalized": "47457458b3bc40f718ba7be9b6ba26326e905b242ddb4ff5ab21febf113bed41",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/mark.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada7f9658b81-HKG",
+        "expected": "52ee8e32921b40218119d0ea3de614cfa4a6679d5e8a0f9e12d262195d56605d",
+        "actual": "52ee8e32921b40218119d0ea3de614cfa4a6679d5e8a0f9e12d262195d56605d",
+        "normalized": "52ee8e32921b40218119d0ea3de614cfa4a6679d5e8a0f9e12d262195d56605d",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/wordmark.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada838d1e34d-HKG",
+        "expected": "b4642d7f78129535c60d07c1f2f877b380112e6cb616624b3d98a630de95e63d",
+        "actual": "b4642d7f78129535c60d07c1f2f877b380112e6cb616624b3d98a630de95e63d",
+        "normalized": "b4642d7f78129535c60d07c1f2f877b380112e6cb616624b3d98a630de95e63d",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/afterglow.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada7c8422113-HKG",
+        "expected": "a96353ad5d5d28f4f2242956b543f1cda36c1cf6564c494ea12e698b01bf801c",
+        "actual": "a96353ad5d5d28f4f2242956b543f1cda36c1cf6564c494ea12e698b01bf801c",
+        "normalized": "a96353ad5d5d28f4f2242956b543f1cda36c1cf6564c494ea12e698b01bf801c",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/afterglow-night.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada7bb4addbe-HKG",
+        "expected": "6aef93208611fa9f26d02ae93d4d50c5e92983550a0dd0334a4d6f223fa30037",
+        "actual": "6aef93208611fa9f26d02ae93d4d50c5e92983550a0dd0334a4d6f223fa30037",
+        "normalized": "6aef93208611fa9f26d02ae93d4d50c5e92983550a0dd0334a4d6f223fa30037",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/favicon.svg",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada7ca384fc8-HKG",
+        "expected": "2d910618c05499062a5333aae19e89a237453347b301b465747998726c1a847e",
+        "actual": "2d910618c05499062a5333aae19e89a237453347b301b465747998726c1a847e",
+        "normalized": "2d910618c05499062a5333aae19e89a237453347b301b465747998726c1a847e",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/apple-touch-icon.png",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada79d1337c7-KIX",
+        "expected": "ad84d779658f3f7f8f39d7db1a9d026cac57276936c056fa555f556953ac9605",
+        "actual": "ad84d779658f3f7f8f39d7db1a9d026cac57276936c056fa555f556953ac9605",
+        "normalized": "ad84d779658f3f7f8f39d7db1a9d026cac57276936c056fa555f556953ac9605",
+        "matches": true
+      },
+      {
+        "file": "assets/brand/social-card.png",
+        "status": 200,
+        "mitigated": null,
+        "ray": "a369ada7ae25a88f-NRT",
+        "expected": "95fa0258c73b08e4c58ffdb7ce1d9ef1f1fa5a137d242b198e91a29fc5fc57ea",
+        "actual": "95fa0258c73b08e4c58ffdb7ce1d9ef1f1fa5a137d242b198e91a29fc5fc57ea",
+        "normalized": "95fa0258c73b08e4c58ffdb7ce1d9ef1f1fa5a137d242b198e91a29fc5fc57ea",
+        "matches": true
+      }
+    ]
+  },
+  "localBrowser": {
+    "base": "http://127.0.0.1:8000",
+    "stats": {
+      "startTime": "2026-09-06T01:15:57.110Z",
+      "duration": 95505.013,
+      "expected": 32,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "browser": "Chrome Beta"
+  },
+  "publicBrowserFromLocal": {
+    "base": "https://dayoff.tmcowork.com",
+    "stats": {
+      "startTime": "2026-09-06T01:25:12.555Z",
+      "duration": 110122.40800000001,
+      "expected": 32,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "browser": "Chrome Beta"
+  },
+  "identityReview": {
+    "viewports": [
+      "1440x900",
+      "390x844",
+      "320x568"
+    ],
+    "scenes": [
+      "Paper Sky",
+      "Night Sky"
+    ],
+    "sharedHeaderAndPNGOutlines": true,
+    "relativeDocumentationLinksChecked": 45,
+    "cover": {
+      "width": 1200,
+      "height": 630
+    },
+    "homeScreenIcon": {
+      "width": 180,
+      "height": 180
+    },
+    "githubREADME": "Latest text and cover were inspected in the public GitHub browser view."
+  },
+  "limits": [
+    "Social services may cache older link previews; their cache invalidation was not requested or verified.",
+    "Physical-device thermal measurements, reload restoration and personal live-sky links remain outstanding."
+  ]
+}
